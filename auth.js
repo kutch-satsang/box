@@ -91,12 +91,18 @@ function loadLib(){
   }).then(function(){
     client=supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     client.auth.onAuthStateChange(function(ev,s){
-      if(s)setTimeout(function(){busy=false;msgKey="";unlock()},0);
+      if(s)setTimeout(function(){busy=false;msgKey="";unlock();seen(s);if(window.sbFlush)sbFlush()},0);
       else if(ev==="SIGNED_OUT")setTimeout(function(){busy=false;showGate();draw()},0);
     });
     return client;
   });
   return loading;
+}
+var seenDone=false;
+function seen(s){
+  if(seenDone||!client)return;seenDone=true;
+  var th="mati";try{th=localStorage.getItem("satsangTheme")||"mati"}catch(e){}
+  client.from("profiles").update({language:lang(),theme:th,last_seen_at:new Date().toISOString()}).eq("id",s.user.id).then(function(){},function(){});
 }
 function login(){
   if(busy)return;
@@ -113,7 +119,27 @@ window.addEventListener("offline",draw);
 window.SatsangAuth={
   ready:function(){return loadLib()},
   user:function(){return loadLib().then(function(c){return c.auth.getSession()}).then(function(r){return r.data.session?r.data.session.user:null})},
-  signOut:function(){return loadLib().then(function(c){return c.auth.signOut({scope:"local"})})}
+  signOut:function(){
+    /* બાકી આંકડા મોકલી, કતાર ખાલી કરે જેથી બીજા ભક્તના ખાતામાં ન જાય */
+    return Promise.resolve(window.sbFlush?sbFlush():0).catch(function(){}).then(function(){
+      if(window.sbClearOutbox)sbClearOutbox();
+      return loadLib();
+    }).then(function(c){return c.auth.signOut({scope:"local"})});
+  },
+  deleteAccount:function(){
+    return loadLib().then(function(c){
+      return c.rpc("delete_my_account").then(function(r){
+        if(r.error)throw r.error;
+        if(window.sbClearOutbox)sbClearOutbox();
+        return c.auth.signOut({scope:"local"});
+      });
+    });
+  },
+  sendFeedback:function(row){
+    row.client_event_id=crypto.randomUUID?crypto.randomUUID():String(Date.now());
+    try{row.time_zone=Intl.DateTimeFormat().resolvedOptions().timeZone||null}catch(e){}
+    return loadLib().then(function(c){return c.from("feedback").insert(row)}).then(function(r){if(r.error)throw r.error});
+  }
 };
 
 if(hasSession()&&!returning){

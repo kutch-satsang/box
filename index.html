@@ -175,6 +175,25 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 .setp .abt h3{display:none}.setp .abt p{font-size:11.5px;line-height:1.45}
 .setp .sver{margin:8px 0 0;font-size:11px}
 </style>
+<style>/* Settings: ખાતું, ફીડબેક */
+.setp .acc2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.setp .acdel{color:#a4371c!important}
+.setp .abt p{text-align:center;font-weight:600;margin:0}
+.setp .spriv{display:block;width:max-content;margin:6px auto 0;padding:6px 10px;font-size:12px;color:inherit;text-decoration:underline}
+html.cl .setp .spriv{margin-top:2px;padding:2px 10px}
+.setp .sver{cursor:default;-webkit-user-select:none;user-select:none;text-align:center;margin-top:2px}
+.sdlg{position:fixed;inset:0;z-index:2147482000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(60,35,20,.45);color:#4a2c1c}
+.sdc{width:100%;max-width:360px;max-height:100%;overflow:auto;padding:18px;border-radius:24px;background:linear-gradient(160deg,#fdf5e8,#f3e3cb);box-shadow:0 .7rem 1.6rem rgba(60,35,20,.4)}
+.sdc h3{margin:0 0 10px;font:700 20px/1.3 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif}.sdc p{margin:0 0 8px;font-size:14px;line-height:1.45}
+.sdk{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.sdk button,.sdb button{min-height:44px;border:0;border-radius:22px;background:#eadcc7;color:#4a2c1c;font:600 14px 'Noto Sans Gujarati',sans-serif;cursor:pointer}
+.sdk button.on,.sdb .sdo{background:#e8845f;color:#fff}.sdb .sdr{background:#a4371c}
+.sdb button:disabled{opacity:.55}
+.sdc select,.sdc textarea{display:block;width:100%;margin-bottom:8px;padding:10px 12px;border:1px solid #e3c9a4;border-radius:12px;background:#fffaf0;color:#4a2c1c;font:500 15px 'Noto Sans Gujarati',sans-serif}
+.sdc select{min-height:44px}.sdc textarea{resize:vertical}
+.sdm{min-height:20px;font-weight:600}
+.sdb{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+</style>
 <style>/* ✨ ક્લાસિક થીમ (કાચ) — html.cl */
 html.cl{--ink:#2b3445;--deep:#2b3445;--muted:#6a768a;--accent:#f07b52;color-scheme:light}
 html.cl body{color:#2b3445}
@@ -241,9 +260,9 @@ g:{h1:"સત્સંગ બોક્સ",sub:"રમો અને શીખો
 e:{h1:"Satsang Box",sub:"Play and learn",z1:"Knowledge Quiz",z2:"Meditation & Devotion",z3:"Memory",z4:"Fun Games",z5:"Play and learn",one:"1 game",back:"← Back",n1:"Satsang Prashn",t1:"Naam Peti · five-box quiz",n2:"Dhyan Darshan",t2:"Dhyan Murti game · remember the marks and place them on the murti",n3:"Antahshatru Vijay",t3:"Divya Teja Pankh · defeat the faults",n4:"Fruit Flower Memory Game",t4:"Remember what you saw on the paper and put it back in place",play:"Play",soon:"Coming soon",pg1:"Kabaddi",pg2:"Kho-Kho",pg3:"Langdi (hopping tag)",pg4:"Gilli-Danda",pg5:"Satodiyu (seven stones)",n5:"Ekadashi",t5:"52 questions · names and dates of 26 Ekadashis",pnote:"How the old game was played, with a picture",foot:"New games will keep being added"},
 r:{h1:"Satsang Box",sub:"Ramo ane shikho",z1:"Gnan Prashn",z2:"Dhyan Bhakti",z3:"Yaadshakti",z4:"Majani Ramat",z5:"Ramo ane shikho",one:"1 game",back:"← Pachha",n1:"Satsang Prashn",t1:"Naam Peti · panch box prashnottari",n2:"Dhyan Darshan",t2:"Dhyan Murti game · chihna ane til yaad rakhi murti par mukho",n3:"Antahshatru Vijay",t3:"Divya Teja Pankh · doshone harawo",n4:"Fal Ful Memory Game",t4:"Kagal par joyelu yaad rakhi jagyae mukho",play:"Ramo",soon:"Tunk samay ma",pg1:"Kabaddi",pg2:"Kho-Kho",pg3:"Langdi",pg4:"Gilli-Danda",pg5:"Satodiyu",n5:"Ekadashi",t5:"52 prashna · 26 Ekadashi naam ane tithi",pnote:"Juni ramat ni mahiti ane chitra",foot:"Navi game umerati raheshe"}
 };
-var X={g:{ofT:"ઑફલાઇન",ofY:"✓ બધી ગેમ ફોનમાં સચવાઈ ગઈ, નેટ વગર ચાલશે",ofW:"⏳ હજી સચવાય છે, નેટ ચાલુ રાખો",ofN:"આ બ્રાઉઝરમાં ઑફલાઇન ચાલતું નથી",ofC:"તપાસ ચાલે છે…",upB:"🔄 નવી આવૃત્તિ લાવો",upD:"થઈ રહ્યું છે…",upO:"પહેલાં નેટ ચાલુ કરો",sdT:"અવાજ",sdN:"ગેમના અવાજ ચાલુ કે બંધ",on:"ચાલુ",off:"બંધ",tmT:"ઘડિયાળનો સમય",tmN:"ગેમમાં ⚙ થી બદલો તો ફક્ત એ ગેમ માટે.",sec:" સેક",thT:"થીમ",thC:"માટી (ક્લે)",thE:"ભરતકામ · જલ્દી આવશે",rsT:"બધું ડિફોલ્ટ કરો",rsN:"અવાજ, સમય અને થીમ પાછાં પહેલાંની જેમ થશે. ભાષા બદલાશે નહીં.",rsB:"↺ ડિફોલ્ટ કરો",rsD:"✓ ડિફોલ્ટ થઈ ગયું",ver:"સત્સંગ બોક્સ",nh:"હોમ",nl:"રમો અને શીખો",ns:"આંકડા",nt:"સેટિંગ્સ",stT:"આંકડા",stN:"ટૂંક સમયમાં — તમારા સ્કોર અને રમેલી ગેમ અહીં દેખાશે.",seT:"સેટિંગ્સ",lgT:"ભાષા",inT:"ઓપનિંગ",inB:"✦ ઓપનિંગ ફરી જુઓ",abT:"માહિતી",abN:"સત્સંગ બોક્સ — રમતાં રમતાં શીખવા માટે. દરેક ગેમના પોતાના સેટિંગ્સ ગેમની અંદર છે. ગેમ સુધારવા અનામી આંકડા લેવાય છે."},
-e:{ofT:"Offline",ofY:"✓ All games are saved on this phone, works without net",ofW:"⏳ Still saving, keep the net on",ofN:"Offline does not work in this browser",ofC:"Checking…",upB:"🔄 Get latest version",upD:"Working…",upO:"Turn on the net first",sdT:"Sound",sdN:"Turn game sounds on or off",on:"On",off:"Off",tmT:"Clock time",tmN:"Changed inside a game with ⚙ = only for that game.",sec:" s",thT:"Theme",thC:"Clay",thE:"Embroidery · coming soon",rsT:"Reset to default",rsN:"Sound, time and theme go back to how they were. Language does not change.",rsB:"↺ Reset",rsD:"✓ Reset done",ver:"Satsang Box",nh:"Home",nl:"Play & learn",ns:"Stats",nt:"Settings",stT:"Stats",stN:"Coming soon — your scores and games played will show here.",seT:"Settings",lgT:"Language",inT:"Opening",inB:"✦ Watch the opening again",abT:"About",abN:"Satsang Box — learn while you play. Each game keeps its own settings inside the game. Anonymous stats are collected to improve the games."},
-r:{ofT:"Offline",ofY:"✓ Badhi game phone ma sachvai gai, net vagar chalshe",ofW:"⏳ Haji sachvay chhe, net chalu rakho",ofN:"Aa browser ma offline chalatu nathi",ofC:"Tapas chale chhe…",upB:"🔄 Navi aavruti lavo",upD:"Thai rahyu chhe…",upO:"Pehla net chalu karo",sdT:"Avaj",sdN:"Game na avaj chalu ke bandh",on:"Chalu",off:"Bandh",tmT:"Ghadiyal no samay",tmN:"Game ma ⚙ thi badlo to fakt e game mate.",sec:" sec",thT:"Theme",thC:"Mati (Clay)",thE:"Bharatkam · jaldi aavshe",rsT:"Badhu default karo",rsN:"Avaj, samay ane theme pachha pehla jevu thashe. Bhasha badlashe nahi.",rsB:"↺ Default karo",rsD:"✓ Default thai gayu",ver:"Satsang Box",nh:"Home",nl:"Ramo ane shikho",ns:"Aankda",nt:"Settings",stT:"Aankda",stN:"Tunk samay ma — tamara score ane ramel game ahin dekhashe.",seT:"Settings",lgT:"Bhasha",inT:"Opening",inB:"✦ Opening fari juo",abT:"Mahiti",abN:"Satsang Box — ramta ramta shikhva mate. Darek game na potana settings game ni andar chhe. Game sudharva anami aankda levay chhe."}};
+var X={g:{ofT:"ઑફલાઇન",ofY:"✓ બધી ગેમ ફોનમાં સચવાઈ ગઈ, નેટ વગર ચાલશે",ofW:"⏳ હજી સચવાય છે, નેટ ચાલુ રાખો",ofN:"આ બ્રાઉઝરમાં ઑફલાઇન ચાલતું નથી",ofC:"તપાસ ચાલે છે…",upB:"🔄 નવી આવૃત્તિ લાવો",upD:"થઈ રહ્યું છે…",upO:"પહેલાં નેટ ચાલુ કરો",sdT:"અવાજ",sdN:"ગેમના અવાજ ચાલુ કે બંધ",on:"ચાલુ",off:"બંધ",tmT:"ઘડિયાળનો સમય",tmN:"ગેમમાં ⚙ થી બદલો તો ફક્ત એ ગેમ માટે.",sec:" સેક",thT:"થીમ",thC:"માટી (ક્લે)",thE:"ભરતકામ · જલ્દી આવશે",rsT:"બધું ડિફોલ્ટ કરો",rsN:"અવાજ, સમય અને થીમ પાછાં પહેલાંની જેમ થશે. ભાષા બદલાશે નહીં.",rsB:"↺ ડિફોલ્ટ કરો",rsD:"✓ ડિફોલ્ટ થઈ ગયું",ver:"સત્સંગ બોક્સ",nh:"હોમ",nl:"રમો અને શીખો",ns:"આંકડા",nt:"સેટિંગ્સ",stT:"આંકડા",stN:"ટૂંક સમયમાં — તમારા સ્કોર અને રમેલી ગેમ અહીં દેખાશે.",seT:"સેટિંગ્સ",lgT:"ભાષા",inT:"ઓપનિંગ",inB:"✦ ઓપનિંગ ફરી જુઓ",abT:"માહિતી",abN:"😊 તમે રમો અને સત્સંગમાં કેટલા આગળ છો તે જોઈએ. 😊"},
+e:{ofT:"Offline",ofY:"✓ All games are saved on this phone, works without net",ofW:"⏳ Still saving, keep the net on",ofN:"Offline does not work in this browser",ofC:"Checking…",upB:"🔄 Get latest version",upD:"Working…",upO:"Turn on the net first",sdT:"Sound",sdN:"Turn game sounds on or off",on:"On",off:"Off",tmT:"Clock time",tmN:"Changed inside a game with ⚙ = only for that game.",sec:" s",thT:"Theme",thC:"Clay",thE:"Embroidery · coming soon",rsT:"Reset to default",rsN:"Sound, time and theme go back to how they were. Language does not change.",rsB:"↺ Reset",rsD:"✓ Reset done",ver:"Satsang Box",nh:"Home",nl:"Play & learn",ns:"Stats",nt:"Settings",stT:"Stats",stN:"Coming soon — your scores and games played will show here.",seT:"Settings",lgT:"Language",inT:"Opening",inB:"✦ Watch the opening again",abT:"About",abN:"😊 Play and see how far you have come in satsang. 😊"},
+r:{ofT:"Offline",ofY:"✓ Badhi game phone ma sachvai gai, net vagar chalshe",ofW:"⏳ Haji sachvay chhe, net chalu rakho",ofN:"Aa browser ma offline chalatu nathi",ofC:"Tapas chale chhe…",upB:"🔄 Navi aavruti lavo",upD:"Thai rahyu chhe…",upO:"Pehla net chalu karo",sdT:"Avaj",sdN:"Game na avaj chalu ke bandh",on:"Chalu",off:"Bandh",tmT:"Ghadiyal no samay",tmN:"Game ma ⚙ thi badlo to fakt e game mate.",sec:" sec",thT:"Theme",thC:"Mati (Clay)",thE:"Bharatkam · jaldi aavshe",rsT:"Badhu default karo",rsN:"Avaj, samay ane theme pachha pehla jevu thashe. Bhasha badlashe nahi.",rsB:"↺ Default karo",rsD:"✓ Default thai gayu",ver:"Satsang Box",nh:"Home",nl:"Ramo ane shikho",ns:"Aankda",nt:"Settings",stT:"Aankda",stN:"Tunk samay ma — tamara score ane ramel game ahin dekhashe.",seT:"Settings",lgT:"Bhasha",inT:"Opening",inB:"✦ Opening fari juo",abT:"Mahiti",abN:"😊 Tame ramo ane satsang ma ketla aagal chho te joie. 😊"}};
 for(var xk in X)for(var xj in X[xk])D[xk][xj]=X[xk][xj];
 var L="g";try{var s0=localStorage.getItem(K);if(D[s0])L=s0}catch(e){}
 var app=document.getElementById("app");
@@ -274,7 +293,7 @@ function home(t){
     var zz=z==="z1"?"m1":z;var a=el("a","el");a.href="#"+zz;hook(a,zz);a.setAttribute("aria-label",t[z]);box(a,T0.t[i]);
     a.appendChild(img("themes/"+TD()+"/t"+(i+1)+".webp"));
     var lt=i<2?T0.lab[2]:T0.lab[3];
-    var s=lab(t[z],lt,T0.lab[1]);
+    var s=lab(t[z],lt,t[z].length>14?T0.lab[1]*.68:T0.lab[1]);
     if(TN==="mati"){s.style.top=px(T0.t[i][3]+10);}else{s.style.top=px(T0.lab[i<2?2:3])}
     s.style.left="0";s.style.width="100%";a.appendChild(s);st.appendChild(a)});
   var bn=el("a","el");bn.href="#z5";hook(bn,"z5");bn.setAttribute("aria-label",t.z5);box(bn,[T0.ban[0],T0.ban[1],T0.ban[2],T0.ban[3]]);
@@ -348,7 +367,7 @@ function special(w,t,zid){
   var TL={adhyatmik:[["mati",{g:"🏺 માટી",e:"🏺 Clay",r:"🏺 Mati"}]],classic:[["kaach",{g:"🔮 કાચ",e:"🔮 Glass",r:"🔮 Kaach"}]]};
   function pickT(v){if(!SB.set("theme",v))return;TN=v;T0=TH[v];document.documentElement.classList.toggle("cl",CLS());render("lang")}
   seg("🎨 "+t.thT,null,"c2",[{v:"adhyatmik",l:THL[L][0]},{v:"classic",l:THL[L][1]}],TG[TN],function(g){if(g!==TG[TN])pickT(TL[g][0][0]);return false});
-  seg("🖌 "+{g:"થીમ પસંદ કરો",e:"Choose a theme",r:"Theme pasand karo"}[L],null,"c3",TL[TG[TN]].map(function(x){return {v:x[0],l:x[1][L]}}),TN,function(v){if(v!==TN)pickT(v);return false});
+  if(TL[TG[TN]].length>1)seg("🖌 "+{g:"થીમ પસંદ કરો",e:"Choose a theme",r:"Theme pasand karo"}[L],null,"c3",TL[TG[TN]].map(function(x){return {v:x[0],l:x[1][L]}}),TN,function(v){if(v!==TN)pickT(v);return false});
   var ob=el("div","sbox");ob.appendChild(el("h3",null,"📶 "+t.ofT));var os=el("p","shint",t.ofC);os.style.margin="0";ob.appendChild(os);w.appendChild(ob);
   (function(){
     if(!window.caches){os.textContent=t.ofN;return}
@@ -371,9 +390,41 @@ function special(w,t,zid){
     if(window.caches)rs.push(caches.keys().then(function(a){return Promise.all(a.map(function(k){return caches.delete(k)}))}));
     Promise.all(rs).catch(function(){}).then(function(){location.reload()})});
   ar.appendChild(ub);w.appendChild(ar);
-  var b3=el("div","sbox abt");b3.appendChild(el("h3",null,t.abT));b3.appendChild(el("p",null,t.abN));w.appendChild(b3);
-  w.appendChild(el("div","sver",t.ver+" · "+SB.version));
+  var AC={g:{fb:"💬 સૂચન મોકલો",lo:"🚪 લૉગઆઉટ",del:"🗑 એકાઉન્ટ કાઢી નાખો",pv:"પ્રાઇવસી પૉલિસી"},e:{fb:"💬 Send feedback",lo:"🚪 Log out",del:"🗑 Delete account",pv:"Privacy policy"},r:{fb:"💬 Suchan moklo",lo:"🚪 Logout",del:"🗑 Account kadhi nakho",pv:"Privacy policy"}}[L];
+  var a2=el("div","sset act acc2"),fb=el("button",null,AC.fb),lo=el("button",null,AC.lo);fb.type=lo.type="button";
+  fb.addEventListener("click",function(){feedbackBox(L)});
+  lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.signOut().catch(function(){lo.disabled=false})});
+  a2.appendChild(fb);a2.appendChild(lo);w.appendChild(a2);
+  var a3=el("div","sset act"),db=el("button","acdel",AC.del);db.type="button";db.addEventListener("click",function(){deleteBox(L)});a3.appendChild(db);w.appendChild(a3);
+  var b3=el("div","sbox abt");b3.appendChild(el("p",null,t.abN));w.appendChild(b3);
+  var pv=el("a","spriv",AC.pv);pv.href="privacy.html";w.appendChild(pv);
+  var vr=el("div","sver",t.ver+" · "+SB.version),tp=0,tt=0;
+  vr.addEventListener("click",function(){clearTimeout(tt);tt=setTimeout(function(){tp=0},2500);if(++tp<7)return;tp=0;
+    SatsangAuth.user().then(function(u){if(u&&String(u.email).toLowerCase()==="vsbhuj@gmail.com")location.href="admin.html"})});
+  w.appendChild(vr);
   return w}
+/* Settings ની પેટીઓ: ફીડબેક, એકાઉન્ટ કાઢવું */
+function dlg(html){var o=el("div","sdlg");o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.innerHTML='<div class="sdc">'+html+"</div>";o.addEventListener("click",function(e){if(e.target===o)o.remove()});document.body.appendChild(o);return o}
+function feedbackBox(L){
+  var T={g:{h:"💬 સૂચન મોકલો",k:[["idea","💡 સૂચન"],["bug","🐞 ભૂલ"],["thanks","🙏 આભાર"]],g:"બધી ગેમ",p:"તમારી વાત અહીં લખો…",c:"બંધ",s:"મોકલો",ok:"🙏 આભાર! તમારો સંદેશો મળી ગયો.",lim:"આજના ૫ સંદેશા પૂરા થયા. કાલે ફરી મોકલજો.",er:"મોકલી ન શકાયું. નેટ ચકાસીને ફરી પ્રયત્ન કરો."},
+   e:{h:"💬 Send feedback",k:[["idea","💡 Idea"],["bug","🐞 Bug"],["thanks","🙏 Thanks"]],g:"All games",p:"Write your message here…",c:"Close",s:"Send",ok:"🙏 Thank you! Your message was received.",lim:"You have sent 5 messages today. Please try tomorrow.",er:"Could not send. Check your internet and try again."},
+   r:{h:"💬 Suchan moklo",k:[["idea","💡 Suchan"],["bug","🐞 Bhool"],["thanks","🙏 Aabhar"]],g:"Badhi game",p:"Tamari vaat ahi lakho…",c:"Bandh",s:"Moklo",ok:"🙏 Aabhar! Tamaro sandesho mali gayo.",lim:"Aaj na 5 sandesha pura thaya. Kale fari moklajo.",er:"Mokli na shakayu. Net chakasi ne fari prayatna karo."}}[L];
+  var GN=[["prashn-leela","સત્સંગ પ્રશ્ન","Satsang Prashn"],["dhyan-murti","ધ્યાન દર્શન","Dhyan Darshan"],["antahshatru-vijay","અંતઃશત્રુ વિજય","Antahshatru Vijay"],["fal-ful-memory","ફળ ફૂલ મેમરી","Fal Ful Memory"],["ekadashi","એકાદશી","Ekadashi"]];
+  var o=dlg('<h3>'+T.h+'</h3><div class="sdk">'+T.k.map(function(k,i){return '<button type="button" data-k="'+k[0]+'"'+(i?"":' class="on"')+">"+k[1]+"</button>"}).join("")+'</div><select aria-label="Game"><option value="">'+T.g+"</option>"+GN.map(function(g){return '<option value="'+g[0]+'">'+g[L==="g"?1:2]+"</option>"}).join("")+'</select><textarea maxlength="1000" rows="4" placeholder="'+T.p+'"></textarea><p class="sdm"></p><div class="sdb"><button type="button" class="sdx">'+T.c+'</button><button type="button" class="sdo">'+T.s+"</button></div>");
+  var kd="idea",m=o.querySelector(".sdm"),ta=o.querySelector("textarea"),go=o.querySelector(".sdo");
+  o.querySelector(".sdk").addEventListener("click",function(e){var k=e.target.getAttribute("data-k");if(!k)return;kd=k;[].forEach.call(this.children,function(b){b.classList.toggle("on",b===e.target)})});
+  o.querySelector(".sdx").addEventListener("click",function(){o.remove()});
+  go.addEventListener("click",function(){var v=ta.value.trim();if(!v){ta.focus();return}go.disabled=true;m.textContent="";
+    SatsangAuth.sendFeedback({kind:kd,game:o.querySelector("select").value||null,message:v}).then(function(){m.textContent=T.ok;ta.value="";setTimeout(function(){o.remove()},1400)}).catch(function(x){go.disabled=false;m.textContent=/limit/.test(x&&x.message||"")?T.lim:T.er})});
+}
+function deleteBox(L){
+  var T={g:{h:"🗑 એકાઉન્ટ કાઢી નાખવું છે?",p:"તમારું નામ, ઈમેઇલ, રમતના આંકડા અને ફીડબેક કાયમ માટે નીકળી જશે. પાછું નહીં આવે.",c:"ના",s:"હા, કાઢી નાખો",er:"કાઢી ન શકાયું. નેટ ચકાસીને ફરી પ્રયત્ન કરો."},
+   e:{h:"🗑 Delete your account?",p:"Your name, email, game stats and feedback will be removed for good. This cannot be undone.",c:"No",s:"Yes, delete",er:"Could not delete. Check your internet and try again."},
+   r:{h:"🗑 Account kadhi nakhvu chhe?",p:"Tamaru naam, email, ramat na aankda ane feedback kayam mate nikli jashe. Pachhu nahi aave.",c:"Na",s:"Ha, kadhi nakho",er:"Kadhi na shakayu. Net chakasi ne fari prayatna karo."}}[L];
+  var o=dlg("<h3>"+T.h+"</h3><p>"+T.p+'</p><p class="sdm"></p><div class="sdb"><button type="button" class="sdx">'+T.c+'</button><button type="button" class="sdo sdr">'+T.s+"</button></div>"),go=o.querySelector(".sdo");
+  o.querySelector(".sdx").addEventListener("click",function(){o.remove()});
+  go.addEventListener("click",function(){go.disabled=true;SatsangAuth.deleteAccount().then(function(){o.remove()}).catch(function(){go.disabled=false;o.querySelector(".sdm").textContent=T.er})});
+}
 function nav(t,cur){
   var P={h:'<path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',z5:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M9 7h6"/>',stats:'<path d="M5 20V10M12 20V4M19 20v-7"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>'};
   var it=[["","h",t.nh],["z5","z5",t.nl],["stats","stats",t.ns],["set","set",t.nt]];

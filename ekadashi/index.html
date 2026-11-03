@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   </section>
   <section id="coming" class="stage"><h1 id="comingTitle" class="title"></h1><div class="comingPanel clay"><p data-t="soon"></p></div><button class="primary" type="button" data-route="intro" data-t="goEkadashi"></button></section>
 </main>
+<script src="../analytics.js"></script>
 <script src="../box.js"></script>
 <script>/* હબ સાથે જોડાણ: ⚙ = હબ Settings, ✕ = સીધું હબ */
 function boxInFrame(){try{return window.parent!==window}catch(x){return false}}
@@ -215,7 +216,7 @@ function routeClick(button){const route=button.dataset.route;if(route==='coming'
 function pickOptions(q){const bad=q.options.filter(o=>o!==q.correct);if(bad.length!==7)throw Error('Source must have 7 wrong answers');const prev=lastWrong[q.id]||[];let unused=bad.filter(v=>!prev.includes(v));if(unused.length<3)unused=bad;const wrong=shuffle(unused).slice(0,3);lastWrong[q.id]=wrong;const four=shuffle([q.correct,...wrong]);const old=lastCorrectPosition[q.id];let pos=four.indexOf(q.correct);if(old!==undefined&&pos===old){let swap=(pos+1+randomInt(3))%4;[four[pos],four[swap]]=[four[swap],four[pos]];pos=swap;}lastCorrectPosition[q.id]=pos;return {...q,shown:four};}
 function restoreRoundHistory(){try{const v=JSON.parse(localStorage.getItem('satsang-ekadashi-52-round-history')||'null');if(v&&typeof v==='object'){prevQuestionOrder=v.order||'';lastWrong=v.wrong||{};lastCorrectPosition=v.positions||{};}}catch(e){}}
 function saveRoundHistory(){try{localStorage.setItem('satsang-ekadashi-52-round-history',JSON.stringify({order:prevQuestionOrder,wrong:lastWrong,positions:lastCorrectPosition}));}catch(e){}}
-function begin(){cancelTimers();totalPoints=0;questionIndex=0;answers=[];let list=shuffle(Q);if(list.map(q=>q.id).join(',')===prevQuestionOrder)list=list.slice(1).concat(list[0]);prevQuestionOrder=list.map(q=>q.id).join(',');round=list.map(pickOptions);saveRoundHistory();show('quiz');openQuestion();}
+function begin(){window.sbTrack&&sbTrack.start();cancelTimers();totalPoints=0;questionIndex=0;answers=[];let list=shuffle(Q);if(list.map(q=>q.id).join(',')===prevQuestionOrder)list=list.slice(1).concat(list[0]);prevQuestionOrder=list.map(q=>q.id).join(',');round=list.map(pickOptions);saveRoundHistory();show('quiz');openQuestion();}
 function openQuestion(){
  answered=false;selection=null;phase='normal';secondsRemaining=30;
  questionDeadline=Date.now()+30000;revealDeadline=questionDeadline+10000;
@@ -283,7 +284,7 @@ function renderFeedback(){
  $('feedbackPoints').textContent='+'+digits(a.earned)+' '+t('score');
  $('proceed').querySelector('span').textContent=questionIndex===round.length-1?t('result'):t('next');
 }
-function advance(){if(screen!=='quiz'||!answered)return;cancelTimers();if(questionIndex===round.length-1){show('result');renderResult();}else{questionIndex++;openQuestion();}}
+function advance(){if(screen!=='quiz'||!answered)return;cancelTimers();if(questionIndex===round.length-1){show('result');renderResult();window.sbTrack&&sbTrack.finish();}else{questionIndex++;openQuestion();}}
 function renderResult(){
  const right=answers.filter(a=>a.correct).length,wrong=answers.filter(a=>!a.correct&&!a.timeout&&!a.skipped).length;
  const timeout=answers.filter(a=>a.timeout||a.skipped).length;
