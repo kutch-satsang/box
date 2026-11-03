@@ -98,6 +98,8 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 .stage{--av:calc(100dvh - env(safe-area-inset-bottom,0px))!important}
 .wrap{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .wrap.home{padding-bottom:0}
+/* ડેસ્કટોપ સાઇટ: લાંબી સ્ક્રીનમાં ઘર આખી ઊંચાઈ ભરે (ચિત્રનું પ્રમાણ 1:1.876) */
+.wrap.home{max-width:max(520px,calc(100dvh / 1.876))}
 
 /* V68 ક્લે ઘર: નવું ચિત્ર + કોડનું લખાણ, ઓમ ફરતો */
 .omg{display:block;font-family:'Noto Sans Gujarati',sans-serif;font-weight:800;font-size:17.6cqw;line-height:1;color:#e0704a;text-shadow:0 .4cqw 0 #fff,0 -.3cqw 0 #d9754f,0 1cqw 1.2cqw rgba(120,60,20,.3)}
@@ -195,6 +197,8 @@ html.cl body{color:#2b3445}
 .clt.clwide{grid-column:1/-1}
 .clic{width:46px;height:46px;flex:0 0 46px;border-radius:16px;display:grid;place-items:center}.clic svg{width:26px;height:26px}
 @media(min-height:760px){.clt:not(.clwide){flex-direction:column;justify-content:center;text-align:center;gap:12px;font-size:18px}.clt:not(.clwide) .clic{width:62px;height:62px;flex-basis:62px;border-radius:20px}.clt:not(.clwide) .clic svg{width:32px;height:32px}.clt.clwide{justify-content:center;font-size:18px}}
+/* ડેસ્કટોપ સાઇટ: ક્લાસિક ઘર પણ મોટું */
+@media(min-width:700px) and (min-height:1100px){.clh{zoom:1.75;height:calc(100dvh / 1.75)}}
 @media(max-height:700px){.clh{gap:9px}.clt{padding:8px 10px;font-size:15px}.clic{width:40px;height:40px;flex-basis:40px}.cldate b{font-size:22px}.clhrow h1{font-size:25px}.clom{width:44px;height:44px;font-size:24px}}
 /* અંદરનાં પાનાં + Settings */
 html.cl .inner{background:transparent!important}
