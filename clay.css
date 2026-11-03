@@ -1,0 +1,12 @@
+/* સત્સંગ બોક્સ — સહિયારી માટી (ક્લે) ડિઝાઇન: બધી ગેમ અને હબ પેજ માટે એક જ રંગ-યાદી */
+:root{
+  --cl-page:#f4e3cc;--cl-ink:#4a2c1c;--cl-deep:#5a3524;--cl-muted:#8a6a52;--cl-line:#e3c9a4;
+  --cl-card:linear-gradient(160deg,#fdf5e8,#f3e3cb);
+  --cl-card2:linear-gradient(160deg,#fdf5e8,#efdcc0);
+  --cl-sh:0 .5rem 1.1rem rgba(120,80,40,.22),inset 0 2px 3px #fff,inset 0 -6px 10px rgba(180,130,80,.1);
+  --cl-sh-s:0 .25rem .6rem rgba(120,80,40,.22),inset 0 1px 2px #fff;
+  --cl-terra:linear-gradient(180deg,#f2a07f,#e8845f);
+  --cl-olive:linear-gradient(180deg,#a3b374,#7d8f4f);
+  --cl-btn-sh:inset 0 -3px 6px rgba(0,0,0,.15),0 4px 8px rgba(120,80,40,.3);
+}
+body.clay{background:linear-gradient(rgba(248,235,214,.86),rgba(240,218,186,.9)),#f4e3cc url(themes/adhyatmik/mati/bg.webp) center top/cover fixed;color:var(--cl-ink)}
