@@ -61,17 +61,43 @@ h2{font:700 18px/1.3 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif;margin:0 0 1
 .mk{display:block;min-height:36px;margin-top:4px;padding:0 12px;border:1px solid var(--line);border-radius:18px;background:none;color:inherit;font:600 13px 'Noto Sans Gujarati',sans-serif;cursor:pointer}
 .fb.rd{opacity:.6}.ms{overflow-wrap:anywhere;white-space:pre-wrap}
 span.col{cursor:default}
+html,body{height:100%;overflow:hidden}
+.app{height:100vh;height:100dvh;max-width:560px;margin:auto;display:flex;flex-direction:column;padding:max(8px,env(safe-area-inset-top)) 12px 0;position:relative}
+.app header{margin-bottom:6px}.app h1{font-size:20px}.app .x{width:40px;height:40px}
+#pg{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+#pg .card{padding:10px 12px;margin-bottom:8px}#pg h2{font-size:16px;margin:0 0 6px}#pg h2 small{font-weight:600;font-size:13px;color:var(--muted);margin-left:6px}
+#pg .hero b{font-size:36px}#pg .hero .rt{margin-left:auto;font-size:14px}.hero span{font-size:15px}
+#pg .tiles{margin-top:8px}#pg .tile b{font-size:21px}
+.chart.s{height:56px}.chart.s2{height:46px;gap:0}.chart.s2 .col{display:flex}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;text-align:center}.wk small{font-size:12px;color:var(--muted)}
+.mini{display:flex;flex-direction:column;align-items:flex-start;gap:0;color:inherit;font:inherit;text-align:left;width:100%;margin:0}.mini b{font:800 28px/1.1 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif}.mini small{font-size:13px;color:var(--muted)}
+button.go{cursor:pointer}
+.two{margin-bottom:0}.two .card{margin-bottom:8px}
+.hl2{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line);font-size:14px}.hl2:first-child{border-top:0}.hl2 span{color:var(--muted)}.hl2 b{text-align:right}
+.game{padding:7px 0}.gs{font-size:13px}.bar{margin:4px 0}
+#pg .row{margin-bottom:6px}
+.pgr{display:flex;align-items:center;justify-content:center;gap:16px;padding-top:6px;font-weight:700}
+.pgr button{width:48px;height:40px;border:1px solid var(--line);border-radius:12px;background:none;color:inherit;font:700 20px/1 sans-serif;cursor:pointer}.pgr button:disabled{opacity:.3}
+.ms{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ub{min-height:44px;padding:6px 0}.srch{min-height:40px;margin-bottom:4px}
+#upd{font-size:12px;margin:2px 0}
+#nav{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;padding:6px 0 max(8px,env(safe-area-inset-bottom))}
+#nav button{min-height:50px;border:var(--bd);border-radius:14px;background:var(--card);box-shadow:var(--sh);color:var(--muted);font:600 11px/1.1 'Noto Sans Gujarati',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
+#nav button i{font-style:normal;font-size:18px;line-height:1}
+#nav button.on{color:var(--ink);outline:2px solid var(--bar);outline-offset:-2px}
+#pg.inr{animation:inr .22s ease-out}#pg.inl{animation:inl .22s ease-out}@keyframes inr{from{transform:translateX(36px);opacity:0}to{transform:none;opacity:1}}@keyframes inl{from{transform:translateX(-36px);opacity:0}to{transform:none;opacity:1}}@media(prefers-reduced-motion:reduce){#pg.inr,#pg.inl{animation:none}}
+#fbb{display:none;position:absolute;right:3px;top:0;min-width:18px;height:18px;border-radius:9px;background:#c0392b;color:#fff;font:700 11px/18px sans-serif;text-align:center;padding:0 4px;pointer-events:none}
 @media(max-width:350px){.two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
 <header><h1>📊 સત્સંગ બોક્સ આંકડા</h1><a class="x" href="./" aria-label="પાછા">✕</a></header>
 <div class="note" id="note"></div>
-
 <section class="card" id="err"></section>
-<div id="app"></div>
+<main id="pg"></main>
 <p class="sm" id="upd"></p>
+<nav id="nav"><button data-t="sum"><i>📊</i>સારાંશ</button><button data-t="game"><i>🎮</i>ગેમ</button><button data-t="user"><i>👥</i>ભક્તો</button><button data-t="more"><i>🌍</i>વધુ</button><button data-t="fb"><i>💬</i>ફીડબેક</button><span id="fbb"></span></nav>
 </div>
 <script src="box.js"></script>
 <script src="auth.js"></script>
@@ -85,32 +111,70 @@ function num(n){return gu(Number(n||0).toLocaleString("en-IN"))}
 function esc(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML}
 function dur(s){if(!s)return "—";var t=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.round(s%60);return t?gu(t)+" ક "+gu(m)+" મિ":m?gu(m)+" મિ "+gu(x)+" સે":gu(x)+" સે"}
 function day(s){var p=s.split("-");return gu(+p[2])+" "+MON[+p[1]-1]}
-function rows(o,names,sum){var a=Object.keys(o).map(function(k){return [names[k]||(k==="unknown"?UNK:k),o[k]]}).sort(function(x,y){return y[1]-x[1]});
+function rows(o,names,sum,lim){var a=Object.keys(o).map(function(k){return [names[k]||(k==="unknown"?UNK:k),o[k]]}).sort(function(x,y){return y[1]-x[1]}).slice(0,lim||99);
  return a.map(function(r){var p=sum?Math.round(r[1]*100/sum):0;return '<div class="row"><div><span>'+esc(r[0])+'</span><b>'+gu(p)+'%</b></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join("")}
-function render(d){
- var total=d.total_users||0,ret=total?Math.round(d.returning_users*100/total):0,max=1,h="";
- (d.games||[]).forEach(function(g){if(g.starts>max)max=g.starts});
- h+='<section class="card"><div class="hero"><b>'+num(total)+'</b><span>કુલ ભક્તો જોડાયા</span></div><div class="tiles">'+
-  '<div class="tile"><b>'+num(d.active_today)+'</b><small>આજે રમ્યા</small></div><div class="tile"><b>'+num(d.active_7_days)+'</b><small>૭ દિવસમાં</small></div><div class="tile"><b>'+num(d.active_30_days)+'</b><small>૩૦ દિવસમાં</small></div></div>'+
-  '<div class="ret">🔁 <b>'+gu(ret)+'%</b> ભક્તો બીજા દિવસે પણ પાછા આવ્યા ('+num(d.returning_users)+')</div></section>';
- var nu=d.new_users_by_day||[],nm=1,sum=0;nu.forEach(function(x){if(x.count>nm)nm=x.count;sum+=x.count});
- h+='<section class="card"><h2>નવા જોડાયેલા ભક્તો (૩૦ દિવસ)</h2>';
- if(nu.length){h+='<div class="read" id="read"></div><div class="chart">'+nu.map(function(x,i){return '<button class="col" data-i="'+i+'" aria-label="'+esc(day(x.day))+': '+x.count+'"><i style="height:'+Math.max(2,x.count*100/nm)+'%"></i></button>'}).join("")+'</div><div class="ax"><span>'+day(nu[0].day)+'</span><span>'+day(nu[nu.length-1].day)+'</span></div>'}
+var ORD=["sum","game","user","more","fb"],DIR=0;
+function go(t){var a=ORD.indexOf(S.tab),b=ORD.indexOf(t);if(a===b)return;DIR=b>a?1:-1;S.tab=t;draw()}
+var S={tab:"sum",d:null,users:null,x:null,fb:null,q:"",up:0,fp:0},UP=4,FP=3;
+function pct(n,sum){return sum?Math.round(n*100/sum):0}
+function byCountry(x){var by={},tot=0;((x&&x.time_zones)||[]).forEach(function(z){var c=z.time_zone==="unknown"?UNK:(country(z.time_zone)||UNK);by[c]=(by[c]||0)+z.plays;tot+=z.plays});return {by:by,tot:tot}}
+function pager(key,n,per){var pages=Math.max(1,Math.ceil(n/per));if(S[key]>=pages)S[key]=pages-1;if(pages<2)return "";
+ return '<div class="pgr"><button data-pg="'+key+'" data-s="-1"'+(S[key]<=0?" disabled":"")+' aria-label="પાછળ">‹</button><span>'+gu(S[key]+1)+' / '+gu(pages)+'</span><button data-pg="'+key+'" data-s="1"'+(S[key]>=pages-1?" disabled":"")+' aria-label="આગળ">›</button></div>'}
+function bindPg(root){[].forEach.call(root.querySelectorAll("[data-pg]"),function(b){b.addEventListener("click",function(){S[b.dataset.pg]+=+b.dataset.s;if(b.dataset.pg==="up")fillUsers();else draw()})})}
+function tabSum(){var d=S.d,x=S.x||{},total=d.total_users||0,ret=pct(d.returning_users,total),h="";
+ h+='<section class="card"><div class="hero"><b>'+num(total)+'</b><span>કુલ ભક્તો</span><span class="rt">🔁 '+gu(ret)+'% પાછા આવ્યા</span></div><div class="tiles">'+
+  '<div class="tile"><b>'+num(d.active_today)+'</b><small>આજે રમ્યા</small></div><div class="tile"><b>'+num(d.active_7_days)+'</b><small>૭ દિવસમાં</small></div><div class="tile"><b>'+num(d.active_30_days)+'</b><small>૩૦ દિવસમાં</small></div></div></section>';
+ var nu=d.new_users_by_day||[],nm=1,sum=0;nu.forEach(function(r){if(r.count>nm)nm=r.count;sum+=r.count});
+ h+='<section class="card"><h2>નવા ભક્તો <small>૩૦ દિવસમાં +'+num(sum)+'</small></h2>';
+ if(nu.length)h+='<div class="chart s">'+nu.map(function(r){return '<span class="col"><i style="height:'+Math.max(3,r.count*100/nm)+'%"></i></span>'}).join("")+'</div><div class="ax"><span>'+day(nu[0].day)+'</span><span>'+day(nu[nu.length-1].day)+'</span></div>';
  else h+='<div class="sm">હજી કોઈ નવા ભક્ત નથી</div>';
- h+='</section><section class="card"><h2>ગેમ પ્રમાણે</h2>';
- (d.games||[]).forEach(function(g){h+='<div class="game"><div class="gh"><span>'+esc(GAMES[g.game]||g.game)+'</span><span>'+num(g.starts)+' વાર</span></div><div class="bar"><i style="width:'+Math.round(g.starts*100/max)+'%"></i></div><div class="gs"><span>✓ '+gu(g.completion_percent)+'% પૂરી કરી</span><span>⏱ સરેરાશ '+dur(g.average_seconds)+'</span></div></div>'});
+ h+='</section>';
+ var st=x.stars||{},un=x.unread_feedback||0;
+ h+='<div class="two"><section class="card mini"><small>⭐ ગેમના તારા</small>'+(st.count?'<b>'+gu(st.average)+'</b><small>'+num(st.count)+' મત</small>':'<b>—</b><small>હજી મત નથી</small>')+'</section>'+
+  '<button class="card mini go" data-go="fb"><small>💬 ફીડબેક</small><b>'+num(un)+'</b><small>નવા ›</small></button></div>';
+ var g=(d.games||[]).slice().sort(function(a,b){return b.starts-a.starts})[0],c=byCountry(x),ck=Object.keys(c.by).sort(function(a,b){return c.by[b]-c.by[a]})[0],hrs=x.by_hour||[],mx=0,mi=0;hrs.forEach(function(r,i){if(r.plays>mx){mx=r.plays;mi=i}});
+ h+='<section class="card"><div class="hl2"><span>🎮 મુખ્ય ગેમ</span><b>'+(g?esc(GAMES[g.game]||g.game)+' · '+num(g.starts):'—')+'</b></div><div class="hl2"><span>🌍 મુખ્ય દેશ</span><b>'+(ck?esc(ck):'—')+'</b></div><div class="hl2"><span>🕘 સૌથી વધુ સમય</span><b>'+(mx?hour(mi):'—')+'</b></div></section>';
+ return h}
+function tabGame(){var d=S.d,x=S.x||{},max=1,sg={};(d.games||[]).forEach(function(g){if(g.starts>max)max=g.starts});(x.stars_by_game||[]).forEach(function(r){sg[r.game]=r});
+ var h='<section class="card"><h2>ગેમ પ્રમાણે</h2>';
+ (d.games||[]).forEach(function(g){var s=sg[g.game];h+='<div class="game"><div class="gh"><span>'+esc(GAMES[g.game]||g.game)+'</span><span>'+num(g.starts)+' વાર</span></div><div class="bar"><i style="width:'+Math.round(g.starts*100/max)+'%"></i></div><div class="gs"><span>✓ '+gu(g.completion_percent)+'%</span><span>⏱ '+dur(g.average_seconds)+'</span><span>'+(s?'⭐ '+gu(s.average)+' ('+num(s.count)+')':'⭐ —')+'</span></div></div>'});
  if(!(d.games||[]).length)h+='<div class="sm">હજી કોઈ ગેમ રમાઈ નથી</div>';
- h+='</section><div class="two"><section class="card"><h2>ભાષા</h2>'+rows(d.languages||{},LANGS,total)+'</section><section class="card"><h2>થીમ</h2>'+rows(d.themes||{},THEMES,total)+'</section></div>';
- document.getElementById("app").innerHTML=h;
- if(nu.length){var R=document.getElementById("read"),C=document.querySelectorAll(".col");
-  function pick(i){C.forEach(function(c){c.classList.remove("on")});C[i].classList.add("on");R.innerHTML='<b>'+day(nu[i].day)+'</b>: '+num(nu[i].count)+' નવા ભક્ત'}
-  C.forEach(function(c){c.addEventListener("click",function(){pick(+c.dataset.i)})});pick(nu.length-1)}
-}
+ return h+'</section>'}
+function tabUsers(){var n=(S.users||[]).length;return '<section class="card"><h2>ભક્તો <small>'+num(n)+'</small></h2><input class="srch" type="search" placeholder="નામ કે ઈમેઇલથી શોધો" aria-label="શોધો" value="'+esc(S.q)+'"><div id="ulist"></div><div id="upg"></div></section>'}
+function fillUsers(){var box=document.getElementById("ulist");if(!box)return;var q=(S.q||"").trim().toLowerCase();
+ var a=(S.users||[]).filter(function(u){return !q||String(u.name||"").toLowerCase().indexOf(q)>=0||String(u.email||"").toLowerCase().indexOf(q)>=0});
+ var pg=pager("up",a.length,UP),page=a.slice(S.up*UP,S.up*UP+UP);
+ box.innerHTML=page.length?page.map(function(u,i){return '<div class="u"><button class="ub" data-i="'+i+'"><div class="ur"><span>'+esc(u.name||u.email||"નામ નથી")+'</span><span>'+num(u.plays)+' વાર ›</span></div><div class="um">'+esc(u.email||"")+'</div><div class="um">✓ '+num(u.finishes)+' પૂરી · ⏱ '+dur(u.total_seconds)+' · છેલ્લે '+when(u.last_played)+'</div></button></div>'}).join(""):'<div class="sm">કોઈ મળ્યું નહીં</div>';
+ box.querySelectorAll(".ub").forEach(function(b){b.addEventListener("click",function(){openUser(page[+b.dataset.i])})});
+ var w=document.getElementById("upg");w.innerHTML=pg;bindPg(w)}
+function tabMore(){var d=S.d,x=S.x||{},total=d.total_users||0,c=byCountry(x),h="";
+ var th=d.themes||{},tl=Object.keys(th).sort(function(a,b){return th[b]-th[a]}).map(function(k){return esc(THEMES[k]||k)+' '+gu(pct(th[k],total))+'%'}).join(' · ');
+ h+='<div class="two"><section class="card"><h2>🌍 દેશ</h2>'+(c.tot?rows(c.by,{},c.tot,3):'<div class="sm">હજી આંકડા નથી</div>')+'</section><section class="card"><h2>🗣 ભાષા</h2>'+rows(d.languages||{},LANGS,total,3)+(tl?'<div class="sm">🎨 '+tl+'</div>':'')+'</section></div>';
+ var hrs=x.by_hour||[],mx=0,mi=0;hrs.forEach(function(r,i){if(r.plays>mx){mx=r.plays;mi=i}});
+ h+='<section class="card"><h2>🕘 કયા સમયે <small>'+(mx?hour(mi)+' સૌથી વધુ':'હજી આંકડા નથી')+'</small></h2><div class="chart s">'+hrs.map(function(r,i){return '<span class="col'+(i===mi&&mx?" on":"")+'"><i style="height:'+(mx?Math.max(3,r.plays*100/mx):3)+'%"></i></span>'}).join("")+'</div><div class="ax"><span>૧૨ રાત</span><span>૧૨ બપોર</span><span>૧૧ રાત</span></div></section>';
+ var W=["રવિ","સોમ","મંગળ","બુધ","ગુરુ","શુક્ર","શનિ"],wd=x.by_weekday||[],wm=1;wd.forEach(function(r){if(r.plays>wm)wm=r.plays});
+ h+='<section class="card"><h2>📅 કયા વારે</h2><div class="wk">'+wd.map(function(r){return '<div><div class="chart s2"><span class="col"><i style="height:'+Math.max(3,r.plays*100/wm)+'%"></i></span></div><small>'+W[r.weekday]+'</small></div>'}).join("")+'</div></section>';
+ return h}
+function tabFb(){var fb=S.fb||[],I={idea:"💡",bug:"🐞",thanks:"🙏"},pg=pager("fp",fb.length,FP),page=fb.slice(S.fp*FP,S.fp*FP+FP);
+ return '<section class="card"><h2>💬 ફીડબેક <small>'+num((S.x||{}).unread_feedback)+' નવા</small></h2>'+(page.length?page.map(function(f,i){return '<div class="hd fb'+(f.is_read?" rd":"")+'" data-i="'+i+'"><span class="ic">'+(I[f.kind]||"💬")+'</span><span class="tx"><b>'+esc(f.name||f.email||"નામ નથી")+(f.game?" · "+esc(GAMES[f.game]||f.game):"")+'</b><small class="ms">'+esc(f.message)+'</small>'+(f.is_read?'':'<button class="mk">✓ વાંચ્યું</button>')+'</span><span class="tm">'+when(f.created_at)+", "+clock(f.created_at)+(country(f.time_zone)?'<small class="ct">📍 '+esc(country(f.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ફીડબેક નથી</div>')+pg+'</section>'}
+function draw(){var el=document.getElementById("pg"),h;
+ if(!S.d)h='<div class="sm">લાવી રહ્યા છીએ…</div>';
+ else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb}[S.tab]();
+ el.innerHTML=h;el.scrollTop=0;el.className="";if(DIR){void el.offsetWidth;el.className=DIR>0?"inr":"inl";DIR=0}
+ [].forEach.call(document.querySelectorAll("#nav button"),function(b){b.classList.toggle("on",b.dataset.t===S.tab)});
+ var bd=document.getElementById("fbb"),un=(S.x||{}).unread_feedback||0;bd.textContent=un?gu(un):"";bd.style.display=un?"block":"none";
+ if(!S.d)return;
+ if(S.tab==="user"){var inp=el.querySelector(".srch");inp.addEventListener("input",function(){S.q=this.value;S.up=0;fillUsers()});fillUsers()}
+ if(S.tab==="fb"){bindPg(el);[].forEach.call(el.querySelectorAll(".mk"),function(b){b.addEventListener("click",function(){var r=b.closest(".fb"),f=S.fb[S.fp*FP+(+r.dataset.i)];b.disabled=true;window.AdminPage.markRead(f,function(ok){if(ok){f.is_read=true;S.x.unread_feedback=Math.max(0,(S.x.unread_feedback||0)-1);draw()}else b.disabled=false})})})}
+ [].forEach.call(el.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){go(b.dataset.go)})})}
+function render(d){S.d=d;draw()}
+function renderUsers(l){S.users=l;draw()}
+function renderExtra(x,fb){S.x=x;S.fb=fb;draw()}
+[].forEach.call(document.querySelectorAll("#nav button"),function(b){b.addEventListener("click",function(){go(b.dataset.t)})});
+(function(){var el=document.getElementById("pg"),x0=0,y0=0,on=false;
+ el.addEventListener("touchstart",function(e){if(e.touches.length!==1){on=false;return}on=true;x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+ el.addEventListener("touchend",function(e){if(!on)return;on=false;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.5)return;var i=ORD.indexOf(S.tab)+(dx<0?1:-1);if(i>=0&&i<ORD.length)go(ORD[i])},{passive:true})})();
 function when(s){if(!s)return "હજી રમ્યા નથી";var d=new Date(s),p=new Intl.DateTimeFormat("en-CA",{timeZone:"Australia/Adelaide",year:"numeric",month:"2-digit",day:"2-digit"}).format(d);return day(p)}
-function users(list,q){var box=document.getElementById("ulist");if(!box)return;q=(q||"").trim().toLowerCase();
- var a=list.filter(function(u){return !q||String(u.name||"").toLowerCase().indexOf(q)>=0||String(u.email||"").toLowerCase().indexOf(q)>=0});
- box.innerHTML=a.length?a.map(function(u,i){return '<div class="u"><button class="ub" data-i="'+i+'"><div class="ur"><span>'+esc(u.name||u.email||"નામ નથી")+'</span><span>'+num(u.plays)+' વાર ›</span></div><div class="um">'+esc(u.email||"")+'</div><div class="um">✓ '+num(u.finishes)+' પૂરી · ⏱ '+dur(u.total_seconds)+' · છેલ્લે '+when(u.last_played)+'</div></button></div>'}).join(""):'<div class="sm">કોઈ મળ્યું નહીં</div>';
- box.querySelectorAll(".ub").forEach(function(b){b.addEventListener("click",function(){openUser(a[+b.dataset.i])})})}
 function country(z){if(!z)return "";var M={"Asia/Kolkata":"ભારત","Asia/Calcutta":"ભારત","Pacific/Auckland":"ન્યૂઝીલેન્ડ","Europe/London":"યુ.કે.","Africa/Nairobi":"કેન્યા","Africa/Kampala":"યુગાન્ડા","Africa/Dar_es_Salaam":"ટાન્ઝાનિયા","Asia/Dubai":"યુ.એ.ઈ.","Asia/Singapore":"સિંગાપોર","America/Toronto":"કેનેડા","America/Vancouver":"કેનેડા","America/Edmonton":"કેનેડા","America/Winnipeg":"કેનેડા"};if(M[z])return M[z];if(/^Australia\//.test(z))return "ઑસ્ટ્રેલિયા";if(/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise)$/.test(z))return "અમેરિકા";return z.split("/").pop().replace(/_/g," ")}
 function clock(s){var d=new Date(s),p=new Intl.DateTimeFormat("en-GB",{timeZone:"Australia/Adelaide",hour:"2-digit",minute:"2-digit",hour12:false}).format(d);return gu(p)}
 function openUser(u){var o=document.createElement("div");o.className="ov";
@@ -118,21 +182,6 @@ function openUser(u){var o=document.createElement("div");o.className="ov";
  o.querySelector(".x").addEventListener("click",function(){o.remove()});document.body.appendChild(o);
  function fill(list){var e=o.querySelector(".hl");e.innerHTML=list.length?list.map(function(x){var f=x.event==="finish";return '<div class="hd"><span class="ic">'+(f?"✓":"▶")+'</span><span class="tx"><b>'+esc(GAMES[x.game]||x.game)+'</b><small>'+(f?"પૂરી કરી"+(x.duration_seconds?" · "+dur(x.duration_seconds):""):"શરૂ કરી")+'</small></span><span class="tm">'+when(x.played_at)+", "+clock(x.played_at)+(country(x.time_zone)?'<small class="ct">📍 '+esc(country(x.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ હિસ્ટ્રી નથી</div>'}
  window.AdminPage.history(u,fill)}
-function renderUsers(list){var c=document.createElement("section");c.className="card";c.innerHTML='<h2>ભક્તોની યાદી ('+num(list.length)+')</h2><input class="srch" type="search" placeholder="નામ કે ઈમેઇલથી શોધો" aria-label="શોધો"><div id="ulist"></div>';document.getElementById("app").appendChild(c);c.querySelector("input").addEventListener("input",function(){users(list,this.value)});users(list,"")}
-function pct(n,sum){return sum?Math.round(n*100/sum):0}
-function renderExtra(x,fb){
- var by={},tot=0;(x.time_zones||[]).forEach(function(z){var c=z.time_zone==="unknown"?UNK:(country(z.time_zone)||UNK);by[c]=(by[c]||0)+z.plays;tot+=z.plays});
- var h='<section class="card"><h2>🌍 દેશ પ્રમાણે</h2>'+(tot?rows(by,{},tot):'<div class="sm">હજી કોઈ ગેમ રમાઈ નથી</div>')+'</section>';
- var hrs=x.by_hour||[],mx=0,mi=0;hrs.forEach(function(r,i){if(r.plays>mx){mx=r.plays;mi=i}});
- h+='<section class="card"><h2>🕘 કયા સમયે રમે છે</h2><div class="read">'+(mx?'<b>'+hour(mi)+'</b> સૌથી વધુ':'હજી આંકડા નથી')+'</div><div class="chart">'+hrs.map(function(r,i){return '<span class="col'+(i===mi&&mx?" on":"")+'"><i style="height:'+(mx?Math.max(2,r.plays*100/mx):2)+'%"></i></span>'}).join("")+'</div><div class="ax"><span>૧૨ રાત</span><span>૧૨ બપોર</span><span>૧૧ રાત</span></div><div class="sm">ભક્તના પોતાના સ્થાનિક સમય પ્રમાણે</div></section>';
- var W=["રવિ","સોમ","મંગળ","બુધ","ગુરુ","શુક્ર","શનિ"],wd=x.by_weekday||[],ws=0,wm=1;wd.forEach(function(r){ws+=r.plays;if(r.plays>wm)wm=r.plays});
- h+='<section class="card"><h2>📅 કયા વારે રમે છે</h2>'+wd.map(function(r){return '<div class="row"><div><span>'+W[r.weekday]+'</span><b>'+gu(pct(r.plays,ws))+'%</b></div><div class="bar"><i style="width:'+pct(r.plays,wm)+'%"></i></div></div>'}).join("")+'</section>';
- var st=x.stars||{},sg=x.stars_by_game||[];
- h+='<section class="card"><h2>⭐ ગેમના તારા</h2>'+(st.count?'<div class="hero"><b>'+gu(st.average)+'</b><span>સરેરાશ ('+num(st.count)+' મત)</span></div>'+sg.map(function(g){return '<div class="gs" style="margin-top:6px"><span>'+esc(GAMES[g.game]||g.game)+'</span><span>⭐ '+gu(g.average)+' ('+num(g.count)+')</span></div>'}).join(""):'<div class="sm">હજી કોઈ મત નથી</div>')+'</section>';
- var I={idea:"💡",bug:"🐞",thanks:"🙏"};
- h+='<section class="card"><h2>💬 ફીડબેક ('+num(x.unread_feedback)+' નવા)</h2><div id="fbl">'+(fb.length?fb.map(function(f,i){return '<div class="hd fb'+(f.is_read?" rd":"")+'" data-i="'+i+'"><span class="ic">'+(I[f.kind]||"💬")+'</span><span class="tx"><b>'+esc(f.name||f.email||"નામ નથી")+(f.game?" · "+esc(GAMES[f.game]||f.game):"")+'</b><small class="ms">'+esc(f.message)+'</small>'+(f.is_read?'':'<button class="mk">✓ વાંચ્યું</button>')+'</span><span class="tm">'+when(f.created_at)+", "+clock(f.created_at)+(country(f.time_zone)?'<small class="ct">📍 '+esc(country(f.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ફીડબેક નથી</div>')+'</div></section>';
- var c=document.createElement("div");c.innerHTML=h;var app=document.getElementById("app");while(c.firstChild)app.appendChild(c.firstChild);
- [].forEach.call(document.querySelectorAll(".mk"),function(b){b.addEventListener("click",function(){var r=b.closest(".fb");b.disabled=true;window.AdminPage.markRead(fb[+r.dataset.i],function(ok){if(ok){b.remove();r.classList.add("rd")}else b.disabled=false})})})}
 function hour(i){var n=i%12||12;return (i<4?"રાત્રે ":i<12?"સવારે ":i<16?"બપોરે ":i<20?"સાંજે ":"રાત્રે ")+gu(n)+" વાગ્યે"}
 function applyTheme(t){document.documentElement.classList.toggle("cl",t==="kaach")}
 window.AdminPage={history:function(u,cb){cb([])},markRead:function(f,cb){cb(false)},render:render,renderUsers:renderUsers,renderExtra:renderExtra,applyTheme:applyTheme};
