@@ -19,9 +19,9 @@ if(inGame){
 }
 
 var T={
- g:{sub:"રમો અને શીખો",btn:"Google થી લૉગિન કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
- e:{sub:"Play and learn",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
- r:{sub:"Ramo ane shikho",btn:"Google thi login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
+ g:{or:"અથવા",nm:"First & Last name",guest:"Login વગર આગળ વધો",need:"પૂરું નામ લખો (નામ અને અટક).",btn:"Google થી Login કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
+ e:{or:"or",nm:"First & Last name",guest:"Continue without login",need:"Please write your full name (first and last).",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
+ r:{or:"athva",nm:"First & Last name",guest:"Login vagar aagal vadho",need:"Puru naam lakho (naam ane atak).",btn:"Google thi Login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
 };
 var NAME={g:"સત્સંગ બોક્સ",e:"Satsang Box",r:"Satsang Box"};
 var LB={g:"G",e:"E",r:"G.a"};
@@ -44,13 +44,17 @@ css.textContent=
 "#sbGate *{box-sizing:border-box}"+
 ".sbc{position:relative;width:100%;max-width:340px;padding:26px 22px 20px;text-align:center;border-radius:28px;background:linear-gradient(160deg,#fdf5e8,#f3e3cb);box-shadow:0 .7rem 1.6rem rgba(120,80,40,.25),inset 0 2px 3px #fff,inset 0 -6px 10px rgba(180,130,80,.1)}"+
 "#sbGate.cl .sbc{background:linear-gradient(150deg,rgba(255,255,255,.72),rgba(255,255,255,.38));border:1px solid rgba(255,255,255,.9);box-shadow:0 .7rem 1.8rem rgba(70,90,120,.18);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}"+
-".sbo{display:block;width:104px;height:104px;object-fit:contain;margin:0 auto 8px}"+
+".sbo{display:block;width:96px;height:96px;object-fit:contain;margin:0 auto 4px}"+
 ".sbt{margin:0;font:700 31px/1.2 'Baloo Bhai 2','Noto Serif Gujarati',serif;letter-spacing:0}"+
-".sbs{margin:2px 0 20px;font-size:15px;color:#7b5a3a}#sbGate.cl .sbs,#sbGate.cl .sbn{color:#5f6b7f}"+
+".sbt{margin-bottom:16px}#sbGate.cl .sbn,#sbGate.cl .sbor,#sbGate.cl .sbf{color:#5f6b7f}"+
+".sbor{display:flex;align-items:center;gap:10px;margin:12px 0 10px;font-size:13px;color:#7b5a3a}.sbor:before,.sbor:after{content:'';flex:1;height:1px;background:rgba(120,80,40,.25)}"+
+".sbf{display:block;text-align:left;margin:0 0 8px;font-size:13px;font-weight:600;color:#7b5a3a}.sbf i{color:#a4371c;font-style:normal}"+
+".sbf input{display:block;width:100%;min-height:46px;margin-top:3px;padding:8px 16px;border:1px solid #e3c9a4;border-radius:23px;background:#fffaf0;color:#4a2c1c;font:500 16px 'Hind Vadodara','Noto Sans Gujarati',sans-serif;outline:none}.sbf input:focus{border-color:#e8845f}"+
+".sbk{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;padding:8px 14px;border:0;border-radius:25px;background:#e8845f;color:#fff;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}.sbk:disabled{opacity:.6}"+
 ".sbg{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;padding:8px 14px;border:1px solid #dadce0;border-radius:26px;background:#fff;color:#2b2b2b;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}"+
 ".sbg:active{transform:translateY(1px)}.sbg:disabled{opacity:.6;cursor:default}.sbg svg{flex:none;width:20px;height:20px}"+
-".sbn{min-height:40px;margin:12px 0 10px;font-size:13px;line-height:1.45;color:#7b5a3a}.sbn.bad{color:#a4371c;font-weight:600}"+
-".sbl-row{display:inline-flex;gap:2px;padding:3px;border-radius:18px;background:rgba(120,80,40,.1)}"+
+".sbn{margin:10px 0 0;font-size:13px;line-height:1.45;color:#7b5a3a}.sbn:empty{display:none}.sbn.bad{color:#a4371c;font-weight:600}"+
+".sbl-row{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;display:inline-flex;gap:2px;padding:3px;border-radius:18px;background:rgba(255,248,236,.85);box-shadow:0 2px 6px rgba(120,80,40,.15)}"+
 ".sbl-row button{min-width:46px;min-height:36px;padding:0 10px;border:0;border-radius:15px;background:none;color:inherit;font:600 13px 'Hind Vadodara',sans-serif;cursor:pointer}"+
 ".sbl-row button.on{background:#e8845f;color:#fff}";
 (document.head||root).appendChild(css);
@@ -59,21 +63,25 @@ function draw(){
   if(!gate||!document.body)return;
   var l=lang(),t=T[l],note=gate.querySelector(".sbn"),btn=gate.querySelector(".sbg");
   gate.querySelector(".sbt").textContent=NAME[l];
-  gate.querySelector(".sbs").textContent=t.sub;
-  gate.querySelector(".sbgt").textContent=busy?t.busy:t.btn;
-  btn.disabled=busy;
-  var k=msgKey||(webview()?"wv":(navigator.onLine===false?"off":"note"));
-  note.textContent=t[k];note.classList.toggle("bad",k!=="note");
+  gate.querySelector(".sbgt").textContent=busy==="g"?t.busy:t.btn;
+  gate.querySelector(".sbor").textContent=t.or;
+  gate.querySelector(".sbfl").textContent=t.nm+" ";
+  var kb=gate.querySelector(".sbk");kb.textContent=busy==="n"?t.busy:t.guest;
+  btn.disabled=kb.disabled=!!busy;
+  var k=msgKey||(webview()?"wv":(navigator.onLine===false?"off":""));
+  note.textContent=k?t[k]:"";note.classList.toggle("bad",!!k);
   [].forEach.call(gate.querySelectorAll(".sbl-row button"),function(b){b.classList.toggle("on",b.getAttribute("data-l")===l)});
 }
 function buildGate(){
   if(gate)return;
   gate=document.createElement("div");gate.id="sbGate";if(classic())gate.className="cl";
   gate.setAttribute("role","dialog");gate.setAttribute("aria-modal","true");
-  gate.innerHTML='<div class="sbc"><img class="sbo" src="themes/adhyatmik/mati/om.webp" alt=""><h1 class="sbt"></h1><p class="sbs"></p>'+
+  gate.innerHTML='<div class="sbc"><img class="sbo" src="themes/adhyatmik/mati/om.webp" alt=""><h1 class="sbt"></h1>'+
    '<button class="sbg" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.9 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.9c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 7.1-10.3 7.1-17.7z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.5 0 20.1 0 24s1 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.7-6c-2.1 1.4-4.9 2.3-8.1 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span class="sbgt"></span></button>'+
-   '<p class="sbn"></p><div class="sbl-row">'+["g","e","r"].map(function(k){return '<button type="button" data-l="'+k+'">'+LB[k]+"</button>"}).join("")+"</div></div>";
+   '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="go"></label>'+
+   '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><div class="sbl-row">'+["g","e","r"].map(function(k){return '<button type="button" data-l="'+k+'">'+LB[k]+"</button>"}).join("")+"</div>";
   gate.querySelector(".sbg").addEventListener("click",login);
+  gate.querySelector(".sbfm").addEventListener("submit",function(e){e.preventDefault();guest()});
   gate.querySelector(".sbl-row").addEventListener("click",function(e){
     var k=e.target.getAttribute("data-l");if(!k)return;
     if(window.SatsangBox)SatsangBox.set("lang",k);else try{localStorage.setItem("satsangLang",k)}catch(x){}
@@ -107,9 +115,20 @@ function seen(s){
 function login(){
   if(busy)return;
   if(navigator.onLine===false){msgKey="off";draw();return}
-  busy=true;msgKey="";draw();
+  busy="g";msgKey="";draw();
   loadLib().then(function(c){
     return c.auth.signInWithOAuth({provider:"google",options:{redirectTo:new URL("./",location.href).href}});
+  }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
+}
+
+function guest(){
+  if(busy)return;
+  var v=gate.querySelector(".sbin").value.replace(/\s+/g," ").trim();
+  if(v.split(" ").length<2||v.length<4){msgKey="need";draw();gate.querySelector(".sbin").focus();return}
+  if(navigator.onLine===false){msgKey="off";draw();return}
+  busy="n";msgKey="";draw();
+  loadLib().then(function(c){
+    return c.auth.signInAnonymously({options:{data:{full_name:v}}});
   }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
 }
 
@@ -149,7 +168,7 @@ if(hasSession()&&!returning){
 }
 showGate();
 if(returning){
-  busy=true;
+  busy="g";
   loadLib().then(function(c){return c.auth.getSession()}).then(function(r){
     if(!r.data.session){busy=false;msgKey="err";draw()}
   }).catch(function(){busy=false;msgKey="err";draw()});
