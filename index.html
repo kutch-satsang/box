@@ -482,7 +482,9 @@ function inner(t,zid){
   w.appendChild(el("h2","ztitle",t[zid]));
   var g=el("nav","grid");if(zid==="z1")g.classList.add("gz1");g.setAttribute("aria-label",t[zid]);
   if(zid==="z5"){OLD.forEach(function(k,i){g.appendChild(card(null,String(i+1),t[k],t.pnote,t.soon,true))})}
-  else ZG[zid].forEach(function(k,i){var gg=G[k];var cd=card(k+"/index.html"+(k==="ekadashi"?"#intro":""),String(i+1),t[gg.n],t[gg.t],t.play);if(k==="ekadashi")cd.addEventListener("click",function(e){e.preventDefault();openEk()});g.appendChild(cd)});
+  else ZG[zid].forEach(function(k,i){var gg=G[k],off=OFFG.indexOf(k)>=0;
+    if(off&&!ADMG){g.appendChild(card(null,String(i+1),t[gg.n],t[gg.t],WIP[L],true));return}
+    var cd=card(k+"/index.html"+(k==="ekadashi"?"#intro":""),String(i+1),(off?"🧪 ":"")+t[gg.n],t[gg.t],t.play);if(k==="ekadashi")cd.addEventListener("click",function(e){e.preventDefault();openEk()});g.appendChild(cd)});
   if(zid==="z1"){var vv={g:["📜 વચનામૃત","વચનામૃત પર અલગ અલગ રમતો"],e:["📜 Vachanamrut","Different games on the Vachanamrut"],r:["📜 Vachanamrut","Vachanamrut par alag alag ramato"]}[L]||["📜 વચનામૃત",""];g.appendChild(card(null,String(ZG.z1.length+1),vv[0],vv[1],t.soon,true))}
   w.appendChild(g);return w;
 }
@@ -514,21 +516,42 @@ function ekShow(on){
     if(!ekReady)ekTimer=setTimeout(function(){if(!ekReady&&ekOn())location.href=EKSRC},7000)}
   else if(ekOn()){ekL.classList.remove("on");clearTimeout(ekTimer);setTimeout(function(){if(!ekOn())ekReload()},400)}
 }
-function openEk(){try{history.pushState({p:1,ek:1},"","#ek")}catch(e){location.href=EKSRC;return}render()}
+function openEk(){if(OFFG.indexOf("ekadashi")>=0&&!ADMG)return;try{history.pushState({p:1,ek:1},"","#ek")}catch(e){location.href=EKSRC;return}render()}
 function closeEk(){var st=history.state;if(st&&st.ek){history.back();return}try{history.replaceState({p:1},"","#z1")}catch(e){location.hash="z1";return}render()}
 window.addEventListener("message",function(e){if(!ekF||e.source!==ekF.contentWindow)return;var d=e.data||{};
   if(d.satsangBox==="ready"){ekReady=true;if(ekOn())ekF.classList.add("rd")}
   else if(d.satsangBox==="close")closeEk()
   else if(d.satsangBox==="settings"){try{history.replaceState({p:1},"","#set")}catch(x){location.hash="set";return}render()}});
 var curKey=null,bgT=0;
+/* ગેમ ચાલુ/બંધ: એડમિનમાં નક્કી થાય. નેટ ન હોય તો છેલ્લી સચવાયેલી યાદી, એ પણ ન હોય તો બધી ચાલુ */
+var OFFG=[],ADMG=false,GSK="sbGameOff",gsAt=0,WIP={g:"કામ ચાલુ છે",e:"Coming back soon",r:"Kaam chalu chhe"};
+try{OFFG=JSON.parse(localStorage.getItem(GSK)||"[]")||[]}catch(e){OFFG=[]}
+function gsRedraw(){if(curKey&&curKey!=="home")render("lang")}
+function gsLoad(){
+  if(!window.SatsangAuth||Date.now()-gsAt<20000)return;gsAt=Date.now();
+  SatsangAuth.ready().then(function(c){return c.from("game_status").select("game,enabled")}).then(function(r){
+    if(r.error||!r.data)return;
+    var o=r.data.filter(function(x){return !x.enabled}).map(function(x){return x.game}).sort();
+    if(o.join()===OFFG.join())return;
+    OFFG=o;try{localStorage.setItem(GSK,JSON.stringify(o))}catch(e){}
+    gsRedraw();
+  }).catch(function(){});
+}
+function gsAdmin(){
+  if(!window.SatsangAuth)return;
+  SatsangAuth.user().then(function(u){var a=!!(u&&String(u.email||"").toLowerCase()==="vsbhuj@gmail.com");if(a!==ADMG){ADMG=a;if(OFFG.length)gsRedraw()}}).catch(function(){});
+}
+document.addEventListener("visibilitychange",function(){if(!document.hidden){gsLoad();gsAdmin()}});
 function render(force){
   var h=(location.hash||"").slice(1),zid=null,i,ek=(h==="ek");
   if(ek)h="z1";
+  if(ek&&OFFG.indexOf("ekadashi")>=0&&!ADMG)ek=false;
   var wasEk=ekOn();
   ekShow(ek);
   if(wasEk&&!ek){try{var s1=localStorage.getItem(K);if(D[s1]&&s1!==L){L=s1;force="lang"}}catch(e){}}
   var t=D[L];
   for(i=0;i<Z.length;i++)if(Z[i].id===h)zid=h;
+  if(zid){gsLoad();gsAdmin()}
   var key=zid||"home";
   if(!force&&key===curKey)return;
   /* Desktop site (html.fit) માં જૂનું-નવું પાનું સાથે રહે તો zoom ગડબડે અને પાનું ઝબકે, એટલે સીધું બદલે */
@@ -552,7 +575,7 @@ function render(force){
   var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",T0.col);
 }
 window.addEventListener("popstate",function(){render();window.scrollTo(0,0)});window.addEventListener("hashchange",function(){render();window.scrollTo(0,0)});
-render();setTimeout(ekPreload,1500);
+render();gsLoad();gsAdmin();setTimeout(function(){if(OFFG.indexOf("ekadashi")<0||ADMG)ekPreload()},1500);
 })();
 </script>
 <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>

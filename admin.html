@@ -88,7 +88,9 @@ button.go{cursor:pointer}
 #pg.inr{animation:inr .22s ease-out}#pg.inl{animation:inl .22s ease-out}@keyframes inr{from{transform:translateX(36px);opacity:0}to{transform:none;opacity:1}}@keyframes inl{from{transform:translateX(-36px);opacity:0}to{transform:none;opacity:1}}@media(prefers-reduced-motion:reduce){#pg.inr,#pg.inl{animation:none}}
 #fbb{display:none;position:absolute;right:3px;top:0;min-width:18px;height:18px;border-radius:9px;background:#c0392b;color:#fff;font:700 11px/18px sans-serif;text-align:center;padding:0 4px;pointer-events:none}
 @media(max-width:350px){.two{grid-template-columns:1fr}}
-#nav{grid-template-columns:1fr 1fr}#nav button{min-height:44px;flex-direction:row;gap:6px;font-size:14px}#nback{display:none!important}#nav.sub button{display:none!important}#nav.sub #nback{display:flex!important;grid-column:1/-1}#nav.sub #fbb{display:none!important}
+.fdh{display:flex;width:100%;min-height:52px;align-items:center;justify-content:space-between;gap:8px;padding:0;border:0;background:none;color:inherit;font:700 16px 'Noto Sans Gujarati',sans-serif;cursor:pointer;text-align:left}.fdh small{flex:none;color:var(--muted);font-size:13px;font-weight:600}.fd .swr:first-of-type{border-top:1px solid var(--line)}
+.swr{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;padding:6px 0;border-top:1px solid var(--line)}.swr:first-of-type{border-top:0}.swr b{display:block;font-size:16px}.swr small{color:var(--muted);font-size:13px}.swb{flex:none;min-width:84px;min-height:44px;border:0;border-radius:22px;background:var(--track);color:var(--muted);font:700 15px "Noto Sans Gujarati",sans-serif;cursor:pointer}.swb.on{background:#2e8b57;color:#fff}.swb:disabled{opacity:.5}
+#nav{grid-template-columns:1fr 1fr 1fr}#nav button{min-height:44px;flex-direction:row;gap:6px;font-size:14px}#nback{display:none!important}#nav.sub button{display:none!important}#nav.sub #nback{display:flex!important;grid-column:1/-1}#nav.sub #fbb{display:none!important}
 #pg{overflow:hidden}#pg:has(.srch),#pg:has(.fb){overflow:auto}
 #pg .card.one{padding:7px 10px;margin-bottom:6px;border-radius:16px}#pg .one h2{font-size:14px;margin:0 0 3px}#pg .one h2 small{font-size:12px;margin-left:4px}
 .kp{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;text-align:center}.kp b{display:block;font:800 20px/1.1 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif}.kp small{font-size:10.5px;color:var(--muted);line-height:1.1;display:block}
@@ -110,7 +112,7 @@ button.go{cursor:pointer}
 <section class="card" id="err"></section>
 <main id="pg"></main>
 <p class="sm" id="upd"></p>
-<nav id="nav"><button data-t="user"><i>👥</i><span id="nu">ભક્તો</span></button><button data-t="fb"><i>💬</i>ફીડબેક</button><button data-t="sum" id="nback"><i>←</i>પાછા</button><span id="fbb"></span></nav>
+<nav id="nav"><button data-t="sw"><i>🎮</i>ગેમ</button><button data-t="user"><i>👥</i><span id="nu">ભક્તો</span></button><button data-t="fb"><i>💬</i>ફીડબેક</button><button data-t="sum" id="nback"><i>←</i>પાછા</button><span id="fbb"></span></nav>
 </div>
 <script src="box.js"></script>
 <script src="auth.js"></script>
@@ -126,9 +128,9 @@ function dur(s){if(!s)return "—";var t=Math.floor(s/3600),m=Math.floor(s%3600/
 function day(s){var p=s.split("-");return gu(+p[2])+" "+MON[+p[1]-1]}
 function rows(o,names,sum,lim){var a=Object.keys(o).map(function(k){return [names[k]||(k==="unknown"?UNK:k),o[k]]}).sort(function(x,y){return y[1]-x[1]}).slice(0,lim||99);
  return a.map(function(r){var p=sum?Math.round(r[1]*100/sum):0;return '<div class="row"><div><span>'+esc(r[0])+'</span><b>'+gu(p)+'%</b></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join("")}
-var ORD=["sum","game","user","more","fb"],DIR=0;
+var ORD=["sum","game","user","more","fb","sw"],DIR=0;
 function go(t){var a=ORD.indexOf(S.tab),b=ORD.indexOf(t);if(a===b)return;DIR=b>a?1:-1;S.tab=t;draw()}
-var S={tab:"sum",d:null,users:null,x:null,fb:null,q:"",up:0,fp:0},UP=4,FP=3;
+var S={swo:0,tab:"sum",d:null,users:null,x:null,fb:null,q:"",up:0,fp:0},UP=4,FP=3;
 function pct(n,sum){return sum?Math.round(n*100/sum):0}
 function byCountry(x){var by={},tot=0;((x&&x.time_zones)||[]).forEach(function(z){var c=z.time_zone==="unknown"?UNK:(country(z.time_zone)||UNK);by[c]=(by[c]||0)+z.plays;tot+=z.plays});return {by:by,tot:tot}}
 function pager(key,n,per){var pages=Math.max(1,Math.ceil(n/per));if(S[key]>=pages)S[key]=pages-1;if(pages<2)return "";
@@ -175,15 +177,25 @@ function tabMore(){var d=S.d,x=S.x||{},total=d.total_users||0,c=byCountry(x),h="
  return h}
 function tabFb(){var fb=S.fb||[],I={idea:"💡",bug:"🐞",thanks:"🙏"},pg=pager("fp",fb.length,FP),page=fb.slice(S.fp*FP,S.fp*FP+FP);
  return '<section class="card"><h2>💬 ફીડબેક <small>'+num((S.x||{}).unread_feedback)+' નવા</small></h2>'+(page.length?page.map(function(f,i){return '<div class="hd fb'+(f.is_read?" rd":"")+'" data-i="'+i+'"><span class="ic">'+(I[f.kind]||"💬")+'</span><span class="tx"><b>'+esc(f.name||f.email||"નામ નથી")+(f.game?" · "+esc(GAMES[f.game]||f.game):"")+'</b><small class="ms">'+esc(f.message)+'</small>'+(f.is_read?'':'<button class="mk">✓ વાંચ્યું</button>')+'</span><span class="tm">'+when(f.created_at)+", "+clock(f.created_at)+(country(f.time_zone)?'<small class="ct">📍 '+esc(country(f.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ફીડબેક નથી</div>')+pg+'</section>'}
+var DEPT=[["📚","જ્ઞાન-પ્રશ્ન",["prashn-leela","ekadashi"]],["🙏","ધ્યાન-ભક્તિ",["dhyan-murti"]],["🧠","યાદશક્તિ",["fal-ful-memory"]],["🎉","મજાની રમત",["antahshatru-vijay"]]];
+function tabSw(){var l=S.sw;if(!l)return '<section class="card"><div class="sm">લાવી રહ્યા છીએ…</div></section>';
+ var used={},h='';
+ function rows(a){return a.map(function(g){return '<div class="swr"><span><b>'+esc(GAMES[g.game]||g.game)+'</b><small>'+(g.enabled?'બધા ભક્તો રમી શકે':'ભક્તોને "કામ ચાલુ છે" · તમે રમી શકો 🧪')+'</small></span><button class="swb'+(g.enabled?' on':'')+'" data-sw="'+l.indexOf(g)+'" aria-pressed="'+g.enabled+'">'+(g.enabled?'ON':'OFF')+'</button></div>'}).join("")}
+ function folder(i,ic,nm,a){var o=S.swo===i,on=a.filter(function(g){return g.enabled}).length;return '<section class="card one fd"><button class="fdh" data-fd="'+i+'" aria-expanded="'+o+'"><span>'+(o?'📂':'📁')+' '+ic+' '+nm+'</span><small>'+gu(on)+'/'+gu(a.length)+' ચાલુ '+(o?'⌃':'⌄')+'</small></button>'+(o?rows(a):'')+'</section>'}
+ DEPT.forEach(function(d,i){var a=l.filter(function(g){return d[2].indexOf(g.game)>=0});a.forEach(function(g){used[g.game]=1});h+=folder(i,d[0],d[1],a)});
+ var rest=l.filter(function(g){return !used[g.game]});if(rest.length)h+=folder(9,"🆕","બીજી",rest);
+ return h}
 function draw(){var el=document.getElementById("pg"),h;
  if(!S.d)h='<div class="sm">લાવી રહ્યા છીએ…</div>';
- else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb}[S.tab]();
+ else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb,sw:tabSw}[S.tab]();
  el.innerHTML=h;el.scrollTop=0;el.className="";if(DIR){void el.offsetWidth;el.className=DIR>0?"inr":"inl";DIR=0}
  var isum=S.tab==="sum",nv=document.getElementById("nav");nv.className=isum?"":"sub";document.getElementById("nu").textContent="ભક્તો"+(S.users?" ("+num(S.users.length)+")":"");
  var bd=document.getElementById("fbb"),un=(S.x||{}).unread_feedback||0;bd.textContent=un?gu(un):"";bd.style.display=un?"block":"none";
  if(!S.d)return;
  if(S.tab==="user"){var inp=el.querySelector(".srch");inp.addEventListener("input",function(){S.q=this.value;S.up=0;fillUsers()});fillUsers()}
  if(S.tab==="fb"){bindPg(el);[].forEach.call(el.querySelectorAll(".mk"),function(b){b.addEventListener("click",function(){var r=b.closest(".fb"),f=S.fb[S.fp*FP+(+r.dataset.i)];b.disabled=true;window.AdminPage.markRead(f,function(ok){if(ok){f.is_read=true;S.x.unread_feedback=Math.max(0,(S.x.unread_feedback||0)-1);draw()}else b.disabled=false})})})}
+ [].forEach.call(el.querySelectorAll("[data-fd]"),function(b){b.addEventListener("click",function(){var i=+b.dataset.fd;S.swo=S.swo===i?-1:i;draw()})});
+ [].forEach.call(el.querySelectorAll("[data-sw]"),function(b){b.addEventListener("click",function(){var g=S.sw[+b.dataset.sw],v=!g.enabled;b.disabled=true;window.AdminPage.setGame(g.game,v,function(ok){if(ok)g.enabled=v;else alertErr();draw()})})});
  [].forEach.call(el.querySelectorAll("[data-top]"),function(b){b.addEventListener("click",function(){var a=(S.users||[]).slice().sort(function(x,y){return (y.plays||0)-(x.plays||0)});openUser(a[+b.dataset.top])})});
  [].forEach.call(el.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){go(b.dataset.go)})})}
 function render(d){S.d=d;draw()}
@@ -205,11 +217,15 @@ function applyTheme(t){document.documentElement.classList.toggle("cl",t==="kaach
 window.AdminPage={history:function(u,cb){cb([])},markRead:function(f,cb){cb(false)},render:render,renderUsers:renderUsers,renderExtra:renderExtra,applyTheme:applyTheme};
 applyTheme(window.SatsangBox?SatsangBox.theme():"mati");
 /* સાચો ડેટા: સુરક્ષા Supabase માં છે, ફક્ત vsbhuj@gmail.com ને જ જવાબ મળે */
+function alertErr(){fail("બદલી ન શકાયું. નેટ ચકાસીને ફરી પ્રયત્ન કરો.");setTimeout(function(){document.getElementById("err").style.display="none"},4000)}
 function fail(t){var e=document.getElementById("err");e.textContent=t;e.style.display="block"}
 function load(c){
  function call(n,a){return c.rpc(n,a).then(function(r){if(r.error)throw r.error;return r.data})}
  window.AdminPage.history=function(u,cb){call("admin_user_history",{target:u.id}).then(function(d){cb(d||[])},function(){cb([])})};
  window.AdminPage.markRead=function(f,cb){call("admin_mark_feedback_read",{target:f.id}).then(function(){cb(true)},function(){cb(false)})};
+ var ORDER=Object.keys(GAMES);
+ c.from("game_status").select("game,enabled").then(function(r){if(r.error)throw r.error;S.sw=r.data.sort(function(a,b){return ORDER.indexOf(a.game)-ORDER.indexOf(b.game)});if(S.tab==="sw")draw()}).catch(function(){S.sw=[];if(S.tab==="sw")draw()});
+ window.AdminPage.setGame=function(g,v,cb){call("admin_set_game",{target:g,turn_on:v}).then(function(){cb(true)},function(){cb(false)})};
  Promise.all([call("admin_stats"),call("admin_users"),call("admin_extra_stats"),call("admin_feedback")]).then(function(r){
   render(r[0]);renderExtra(r[2],r[3]);renderUsers(r[1]);
   document.getElementById("upd").textContent="સમય "+TZN+" પ્રમાણે · "+when(new Date().toISOString())+", "+clock(new Date().toISOString())
