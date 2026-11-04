@@ -96,7 +96,11 @@ button.go{cursor:pointer}
 .one2{gap:6px}.one2 .card{margin-bottom:6px}#pg .one .row{margin-bottom:2px;font-size:12px}#pg .one .bar{height:5px;margin:1px 0 0}.th{font-size:11px;margin:2px 0 0;text-align:left}
 .chart.s3{height:30px;gap:1px}.wl{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}.wl small{font-size:10px;color:var(--muted)}.chart.wkk{gap:5px}
 #upd{font-size:11px;margin:0}
-@media(min-height:760px){.kp b{font-size:24px}.kp small{font-size:12px}.gl{font-size:12.5px;line-height:2}.chart.s3{height:48px}#pg .one .row{font-size:13px;margin-bottom:5px}#pg .card.one{padding:10px 12px;margin-bottom:8px}#pg .one h2{font-size:15px;margin:0 0 6px}}
+.st4{display:flex;justify-content:space-between;gap:4px;font-size:11.5px;white-space:nowrap}#pg .card.st4{padding:4px 10px}.st4 b{font-weight:800}
+.tp{width:100%;padding:0;border:0;background:none;color:inherit;font-family:inherit;cursor:pointer;text-align:left;display:flex;justify-content:space-between;gap:6px;font-size:11.5px;line-height:1.4}.tp span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gx.lo{color:#c0392b;font-weight:700}
+@media(max-height:700px){.chart.s3{height:24px}.kp b{font-size:18px}.kp small{font-size:10px}.gl{line-height:1.45}#pg .card.one{padding:5px 10px;margin-bottom:5px}.one2{gap:5px}.one2 .card{margin-bottom:5px}#pg .one h2{margin:0 0 2px;font-size:13px}#pg .one .row{font-size:11.5px;margin-bottom:0}.th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10.5px}.app header{margin-bottom:3px}#nav{padding-top:4px}#nav button{min-height:40px}}
+@media(min-height:760px){.st4{font-size:13px}#pg .card.st4{padding:7px 12px}.tp{font-size:13px;line-height:1.6}.kp b{font-size:24px}.kp small{font-size:12px}.gl{font-size:12.5px;line-height:2}.chart.s3{height:48px}#pg .one .row{font-size:13px;margin-bottom:5px}#pg .card.one{padding:10px 12px;margin-bottom:8px}#pg .one h2{font-size:15px;margin:0 0 6px}}
 </style>
 </head>
 <body>
@@ -134,12 +138,16 @@ function tabSum(){var d=S.d,x=S.x||{},total=d.total_users||0,ret=pct(d.returning
  var nu=d.new_users_by_day||[],sum=0;nu.forEach(function(r){sum+=r.count});
  function t(n,l){return '<div><b>'+n+'</b><small>'+l+'</small></div>'}
  h+='<section class="card one kp">'+t(num(total),'કુલ ભક્તો')+t(num(d.active_today),'આજે')+t(num(d.active_7_days),'૭ દિવસ')+t(num(d.active_30_days),'૩૦ દિવસ')+t('+'+num(sum),'નવા')+t(gu(ret)+'%','પાછા')+'</section>';
+ var us=S.users||[],plays=0,secs=0,gst=0;(d.games||[]).forEach(function(g){plays+=g.starts});us.forEach(function(u){secs+=u.total_seconds||0;if(!u.email)gst++});
+ h+='<section class="card one st4"><span>🎯 <b>'+num(plays)+'</b> રમત</span><span>⏱ <b>'+dur(secs)+'</b></span><span>👤 <b>'+num(gst)+'</b></span><span>🔵 <b>'+num(us.length-gst)+'</b> Google</span></section>';
  var max=1,sg={},st=x.stars||{};(d.games||[]).forEach(function(g){if(g.starts>max)max=g.starts});(x.stars_by_game||[]).forEach(function(r){sg[r.game]=r});
  h+='<section class="card one"><h2>🎮 ગેમ'+(st.count?' <small>⭐ '+gu(st.average)+' ('+num(st.count)+' મત)</small>':'')+'</h2>';
  var gs=(d.games||[]).slice().sort(function(a,b){return b.starts-a.starts});
- h+=gs.length?gs.map(function(g){var q=sg[g.game];return '<div class="gl"><span class="gn">'+esc(GAMES[g.game]||g.game)+'</span><span class="gb"><i style="width:'+Math.round(g.starts*100/max)+'%"></i></span><b>'+num(g.starts)+'</b><span class="gx">✓'+gu(g.completion_percent)+'%</span><span class="gx">⏱'+dur(g.average_seconds)+'</span><span class="gx">'+(q?'⭐'+gu(q.average):'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ગેમ રમાઈ નથી</div>';
+ h+=gs.length?gs.map(function(g){var q=sg[g.game];return '<div class="gl"><span class="gn">'+esc(GAMES[g.game]||g.game)+'</span><span class="gb"><i style="width:'+Math.round(g.starts*100/max)+'%"></i></span><b>'+num(g.starts)+'</b><span class="gx'+(g.starts>=3&&g.completion_percent<50?' lo':'')+'">✓'+gu(g.completion_percent)+'%</span><span class="gx">⏱'+dur(g.average_seconds)+'</span><span class="gx">'+(q?'⭐'+gu(q.average):'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ગેમ રમાઈ નથી</div>';
  h+='</section>';
  var c=byCountry(x),th=d.themes||{},tl=Object.keys(th).sort(function(a,b){return th[b]-th[a]}).map(function(k){return esc(THEMES[k]||k)+' '+gu(pct(th[k],total))+'%'}).join(' · ');
+ var top=us.slice().sort(function(a,b){return (b.plays||0)-(a.plays||0)}).slice(0,3),nm=1;nu.forEach(function(r){if(r.count>nm)nm=r.count});
+ h+='<div class="two one2"><section class="card one"><h2>🏆 ટોચના ભક્તો</h2>'+(top.length?top.map(function(u,i){return '<button class="tp" data-top="'+i+'"><span>'+esc(u.name||u.email||"નામ નથી")+'</span><b>'+num(u.plays)+' ›</b></button>'}).join(""):'<div class="sm">—</div>')+'</section><section class="card one"><h2>📈 નવા ભક્તો</h2><div class="chart s3">'+nu.map(function(r){return '<span class="col"><i style="height:'+Math.max(3,r.count*100/nm)+'%"></i></span>'}).join("")+'</div></section></div>';
  h+='<div class="two one2"><section class="card one"><h2>🌍 દેશ</h2>'+(c.tot?rows(c.by,{},c.tot,3):'<div class="sm">—</div>')+'</section><section class="card one"><h2>🗣 ભાષા</h2>'+rows(d.languages||{},LANGS,total,2)+(tl?'<div class="sm th">🎨 '+tl+'</div>':'')+'</section></div>';
  var hrs=x.by_hour||[],mx=0,mi=0;hrs.forEach(function(r,i){if(r.plays>mx){mx=r.plays;mi=i}});
  var W=["ર","સો","મં","બુ","ગુ","શુ","શ"],wd=x.by_weekday||[],wm=1;wd.forEach(function(r){if(r.plays>wm)wm=r.plays});
@@ -176,6 +184,7 @@ function draw(){var el=document.getElementById("pg"),h;
  if(!S.d)return;
  if(S.tab==="user"){var inp=el.querySelector(".srch");inp.addEventListener("input",function(){S.q=this.value;S.up=0;fillUsers()});fillUsers()}
  if(S.tab==="fb"){bindPg(el);[].forEach.call(el.querySelectorAll(".mk"),function(b){b.addEventListener("click",function(){var r=b.closest(".fb"),f=S.fb[S.fp*FP+(+r.dataset.i)];b.disabled=true;window.AdminPage.markRead(f,function(ok){if(ok){f.is_read=true;S.x.unread_feedback=Math.max(0,(S.x.unread_feedback||0)-1);draw()}else b.disabled=false})})})}
+ [].forEach.call(el.querySelectorAll("[data-top]"),function(b){b.addEventListener("click",function(){var a=(S.users||[]).slice().sort(function(x,y){return (y.plays||0)-(x.plays||0)});openUser(a[+b.dataset.top])})});
  [].forEach.call(el.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){go(b.dataset.go)})})}
 function render(d){S.d=d;draw()}
 function renderUsers(l){S.users=l;draw()}
