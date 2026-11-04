@@ -405,7 +405,7 @@ function special(w,t,zid){
   var a2=el("div","sset act acc2"),fb=el("button",null,AC.fb),lo=el("button",null,AC.lo);fb.type=lo.type="button";
   fb.addEventListener("click",function(){feedbackBox(L)});
   /* મહેમાનનું ખાતું ફક્ત આ ફોનમાં છે, લૉગઆઉટથી પાછું ન મળે. એટલે તેની જગ્યાએ Google Login */
-  if(SatsangAuth.isGuest()){lo.textContent=AC.go;lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.linkGoogle().catch(function(){lo.disabled=false;lo.textContent=AC.goE})})}
+  if(SatsangAuth.isGuest&&SatsangAuth.isGuest()){lo.textContent=AC.go;lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.linkGoogle().catch(function(){lo.disabled=false;lo.textContent=AC.goE})})}
   else lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.signOut().catch(function(){lo.disabled=false})});
   a2.appendChild(fb);a2.appendChild(lo);w.appendChild(a2);
   var a3=el("div","sset act"),db=el("button","acdel",AC.del);db.type="button";db.addEventListener("click",function(){deleteBox(L)});a3.appendChild(db);w.appendChild(a3);
