@@ -530,7 +530,8 @@ function render(force){
   for(i=0;i<Z.length;i++)if(Z[i].id===h)zid=h;
   var key=zid||"home";
   if(!force&&key===curKey)return;
-  var first=curKey===null,quick=first||force==="lang";curKey=key;
+  /* Desktop site (html.fit) માં જૂનું-નવું પાનું સાથે રહે તો zoom ગડબડે અને પાનું ઝબકે, એટલે સીધું બદલે */
+  var first=curKey===null,quick=first||force==="lang"||document.documentElement.classList.contains("fit");curKey=key;
   var olds=Array.prototype.slice.call(app.children);
   var nv=zid==="m1"?(CLS()?inner(t,"z1"):mandir(t)):zid?inner(t,zid):home(t);
   if(quick){app.innerHTML="";nv.style.animation="none"}
