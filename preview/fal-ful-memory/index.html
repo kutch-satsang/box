@@ -1,0 +1,453 @@
+<!doctype html><html><head>
+<script src="../auth.js"></script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../analytics.js" defer></script>
+</head><body>
+<title>ફળ ફૂલ મેમરી ગેમ</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* Layout: heading, one control strip, then the stage = A4 paper on the left + a single tray column on the right */
+:root{
+  --bg:#0e3b38;
+  --panel:#134b47;
+  --line:#2d716b;
+  --fg:#f1f8f6;
+  --muted:#a4cbc5;
+  --paper:#fffef9;
+  --ink:#17302e;
+  --accent:#f59e0b;
+  --accent-ink:#2a1700;
+  --good:#2fbf71;
+  --bad:#ef5b5b;
+  --ring:#9fb3b0;
+  --font-body:'Noto Sans Gujarati',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --slot:60px;
+  --tbox:50px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5}
+.app{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:14px 28px;display:flex;flex-direction:column;gap:12px}
+h1{margin:0;font-size:22px;font-weight:800;line-height:1.3;text-wrap:balance}
+.sub{margin:2px 0 0;color:var(--muted);font-size:13px}
+.panel{background:var(--panel);border-radius:14px;padding:12px;display:grid;gap:12px}
+.panel[hidden]{display:none}
+.row{display:grid;gap:6px;min-width:0}
+.lbl{font-size:12px;letter-spacing:.04em;color:var(--muted);font-weight:600}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;min-width:0;padding:9px 4px;border:1.5px solid var(--line);border-radius:10px;background:transparent;color:var(--fg);font:inherit;font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.go{padding:13px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font:inherit;font-size:17px;font-weight:800;cursor:pointer}
+.ghost{padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:transparent;color:var(--fg);font:inherit;font-weight:600;cursor:pointer}
+
+.hud-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.phase{font-weight:600;min-width:0}
+.clock{flex:none;min-width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);border-radius:99px}
+.hud-bot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stats{color:var(--muted);font-variant-numeric:tabular-nums}
+.msg{min-height:1.5em;font-weight:800}
+.msg.good{color:#6ee7a4}
+.msg.bad{color:#ff9b9b}
+
+.stage{display:flex;gap:3%;align-items:flex-start;position:relative}
+.paper{flex:1;min-width:0;aspect-ratio:210/297;background:var(--paper);color:var(--ink);border-radius:3px;box-shadow:0 12px 30px rgba(0,0,0,.4);position:relative;z-index:1}
+.paper::after{content:"A4";position:absolute;right:8px;bottom:5px;font-size:10px;letter-spacing:.12em;color:#9aa8a6}
+.note{position:absolute;inset:0;display:grid;place-content:center;gap:6px;padding:16px;text-align:center;color:#51615f}
+.note b{font-size:18px;color:var(--ink)}
+.stage[data-tc="1"] .tray{flex:0 0 24%}
+.stage[data-tc="2"] .tray{flex:0 0 40%}
+.stage[data-tc="0"] .tray{display:none}
+.tray{display:grid;grid-auto-rows:minmax(0,1fr);position:relative;z-index:2;touch-action:none}
+.t{display:grid;place-items:center;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;position:relative;transition:transform .25s}
+.t b{width:var(--tbox);height:var(--tbox);border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:calc(var(--tbox)*.7);line-height:1;font-weight:400}
+.t.drag{z-index:50;cursor:grabbing;transition:none}
+.t.done{visibility:hidden}
+.t.shake b{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+.slot{position:absolute;width:var(--slot);height:var(--slot);transform:translate(-50%,-50%)}
+.ring,.it{position:absolute;inset:0;display:grid;place-items:center}
+.ring{opacity:0;transition:opacity .4s}
+.ring::after{content:"";width:16px;height:16px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 4px rgba(239,91,91,.25);animation:blink 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.15;transform:scale(.7)}}
+.it{font-size:calc(var(--slot)*.68);line-height:1;transform:rotate(var(--rot,0deg));transition:opacity .35s,transform .35s}
+.paper:not(.play) .it{animation:pop .45s backwards}
+@keyframes pop{from{opacity:0;transform:rotate(var(--rot,0deg)) scale(.3)}}
+.play .ring{opacity:1}
+.play .slot:not(.ok) .it{opacity:0;transform:rotate(var(--rot,0deg)) scale(.4)}
+.slot.ok .ring{opacity:0}
+.slot.ok .ring::after{animation:none}
+
+.win{position:fixed;inset:0;background:rgba(5,25,23,.72);display:grid;place-items:center;padding:16px;z-index:100}
+.win[hidden]{display:none}
+.card{background:var(--paper);color:var(--ink);border-radius:18px;padding:22px 20px;width:min(340px,100%);text-align:center;display:grid;gap:10px}
+.card h2{margin:0;font-size:26px;font-weight:800}
+.stars{font-size:38px;color:var(--accent);letter-spacing:.1em;line-height:1.1}
+.card p{margin:0;color:#44514f}
+.card .go{margin-top:4px}
+.card .ghost{color:var(--ink);border-color:#c8d2d0}
+@media (prefers-reduced-motion:reduce){.it,.ring,.t{transition:none}.paper:not(.play) .it{animation:none}}
+</style>
+
+<link rel="stylesheet" href="../clay.css">
+<style id="zumar">
+/* ફળ ફૂલ મેમરી — માટી (ક્લે) સ્ટાઇલ, રંગ ../clay.css માંથી */
+:root{--bg:#f4e3cc;--panel:#fbf1e2;--line:#e3c9a4;--fg:#5a3524;--muted:#8a6a52;--paper:#fffdf6;--ink:#4a2c1c;--accent:#e8845f;--accent-ink:#fff;--good:#6f8a4a;--bad:#d9573b;--ring:#c9b08f;color-scheme:light}
+body{background:linear-gradient(rgba(248,235,214,.86),rgba(240,218,186,.9)),#f4e3cc url(../themes/adhyatmik/mati/bg.webp) center top/cover fixed;background-attachment:fixed}
+h1{color:var(--cl-deep)}
+.panel{background:var(--cl-card);border:0;box-shadow:var(--cl-sh);border-radius:26px}
+.seg button{border:0;background:var(--cl-card2);color:var(--cl-deep);border-radius:16px;box-shadow:var(--cl-sh-s)}
+.seg button[aria-pressed="true"],.go,.clock{background:var(--cl-terra);color:#fff;border:0;box-shadow:var(--cl-btn-sh)}
+.go{border-radius:18px}
+.ghost{border:0;background:var(--cl-card2);color:var(--cl-deep);box-shadow:var(--cl-sh-s);border-radius:16px}
+.bar{background:rgba(120,80,40,.15)}
+.bar i{background:var(--cl-olive)}
+.paper{border:0;border-radius:10px;box-shadow:var(--cl-sh)}
+.paper::after{color:#b9a58a}
+.note{color:#8a6a52}
+.t b{background:var(--cl-card);border:0;box-shadow:var(--cl-sh)}
+.msg.good{color:#5f7d3a}.msg.bad{color:#c0452a}
+.win{background:rgba(90,53,36,.55)}
+.card{border:0;box-shadow:0 14px 34px rgba(90,53,36,.4);border-radius:28px;background:var(--cl-card)}
+.card .ghost{color:var(--cl-deep)}
+.stars{color:#e8a53a;text-shadow:0 2px 3px rgba(120,80,40,.25)}
+button:focus-visible{outline:3px solid #e8845f}
+</style>
+<main class="app">
+  <header>
+    <h1>ફળ ફૂલ મેમરી ગેમ</h1>
+    <p class="sub">કાગળ પર જોયેલી વસ્તુઓ યાદ રાખો, પછી દરેકને તેની જગ્યાએ પાછી મૂકો.</p>
+  </header>
+
+  <section class="panel" id="setup">
+    <div class="row">
+      <span class="lbl">કાગળ કેટલી સેકન્ડ દેખાશે</span>
+      <div class="seg" data-key="time" id="seg-time">
+        <button type="button" data-val="15" aria-pressed="false">15 સેકન્ડ</button>
+        <button type="button" data-val="20" aria-pressed="true">20 સેકન્ડ</button>
+        <button type="button" data-val="25" aria-pressed="false">25 સેકન્ડ</button>
+      </div>
+    </div>
+    <div class="row">
+      <span class="lbl">કેટલી વસ્તુઓ</span>
+      <div class="seg" data-key="count" id="seg-count">
+        <button type="button" data-val="6" aria-pressed="true">સરળ · 6</button>
+        <button type="button" data-val="9" aria-pressed="false">મધ્યમ · 9</button>
+        <button type="button" data-val="12" aria-pressed="false">અઘરું · 12</button>
+      </div>
+    </div>
+    <button type="button" class="go" id="start">ગેમ શરૂ કરો</button>
+  </section>
+
+  <section class="panel" id="hud" hidden>
+    <div class="hud-top">
+      <div class="phase" id="phase"></div>
+      <div class="clock" id="clock">0</div>
+    </div>
+    <div class="bar" id="bar"><i id="barfill"></i></div>
+    <div class="hud-bot">
+      <div class="stats" id="stats"></div>
+      <button type="button" class="ghost" id="quit" aria-label="નવી ગેમ" title="નવી ગેમ">↺</button>
+    </div>
+    <div class="msg" id="msg"></div>
+  </section>
+
+  <section class="stage" id="stage" data-tc="0">
+    <div class="paper" id="paper"></div>
+    <div class="tray" id="tray"></div>
+  </section>
+</main>
+
+<div class="win" id="win" hidden>
+  <div class="card">
+    <div class="stars" id="stars"></div>
+    <h2 id="wintitle">શાબાશ!</h2>
+    <p id="wintext"></p>
+    <button type="button" class="go" id="again">ફરી રમો</button>
+    <button type="button" class="ghost" id="back">સેટિંગ બદલો</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(s){ return document.querySelector(s); };
+  var paper = $('#paper'), tray = $('#tray'), stage = $('#stage');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var POOL = [
+    {id:'apple',e:'🍎',n:'સફરજન',c:'ફળ'},{id:'banana',e:'🍌',n:'કેળું',c:'ફળ'},
+    {id:'grape',e:'🍇',n:'દ્રાક્ષ',c:'ફળ'},{id:'orange',e:'🍊',n:'સંતરું',c:'ફળ'},
+    {id:'straw',e:'🍓',n:'સ્ટ્રોબેરી',c:'ફળ'},{id:'melon',e:'🍉',n:'તરબૂચ',c:'ફળ'},
+    {id:'mango',e:'🥭',n:'કેરી',c:'ફળ'},{id:'pine',e:'🍍',n:'અનાનસ',c:'ફળ'},
+    {id:'rose',e:'🌹',n:'ગુલાબ',c:'ફૂલ'},{id:'sun',e:'🌻',n:'સૂરજમુખી',c:'ફૂલ'},
+    {id:'tulip',e:'🌷',n:'ટ્યૂલિપ',c:'ફૂલ'},{id:'hibis',e:'🌺',n:'જાસૂદ',c:'ફૂલ'},
+    {id:'pink',e:'🌸',n:'ગુલાબી ફૂલ',c:'ફૂલ'},{id:'yellow',e:'🌼',n:'પીળું ફૂલ',c:'ફૂલ'},
+    {id:'carrot',e:'🥕',n:'ગાજર',c:'શાકભાજી'},{id:'tomato',e:'🍅',n:'ટામેટું',c:'શાકભાજી'},
+    {id:'potato',e:'🥔',n:'બટાકા',c:'શાકભાજી'},{id:'corn',e:'🌽',n:'મકાઈ',c:'શાકભાજી'},
+    {id:'brinjal',e:'🍆',n:'રીંગણ',c:'શાકભાજી'},{id:'broccoli',e:'🥦',n:'બ્રોકલી',c:'શાકભાજી'},
+    {id:'chilli',e:'🌶️',n:'મરચું',c:'શાકભાજી'},{id:'cucumber',e:'🥒',n:'કાકડી',c:'શાકભાજી'}
+  ];
+
+  var state = {time:20, count:6, phase:'setup', mist:0, placed:0, slots:[], cols:0, rows:0, tc:1, timer:null};
+
+  function shuffle(a){
+    a = a.slice();
+    for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+
+  /* setting buttons */
+  document.querySelectorAll('.seg').forEach(function(seg){
+    seg.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if(!b) return;
+      seg.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true' : 'false'); });
+      state[seg.dataset.key] = +b.dataset.val;
+    });
+  });
+
+  function say(text, kind){
+    var m = $('#msg'); m.textContent = text || ''; m.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function ui(){
+    var p = state.phase;
+    $('#setup').hidden = p !== 'setup';
+    $('#hud').hidden = p === 'setup';
+    var texts = {
+      show:'👀', fly:'…', play:'✋', done:'✓'
+    };
+    $('#phase').textContent = texts[p] || '';
+    $('#clock').hidden = p !== 'show';
+    $('#bar').hidden = p !== 'show';
+    $('#stats').innerHTML = '<b class="ok">✓ ' + state.placed + '/' + state.count + '</b> <b class="ng">✗ ' + state.mist + '</b>';
+  }
+
+  function showSetup(){
+    clearInterval(state.timer);
+    state.phase = 'setup';
+    paper.className = 'paper';
+    paper.innerHTML = '<div class="zbox"><div class="zr" data-k="time"><span class="zi" aria-label="સમય">⏱</span><button data-v="15">15″</button><button data-v="20">20″</button><button data-v="25">25″</button></div><div class="zr" data-k="count"><span class="zi" aria-label="વસ્તુઓ">🍎</span><button data-v="6">⭐ 6</button><button data-v="9">⭐⭐ 9</button><button data-v="12">⭐⭐⭐ 12</button></div><button class="zplay" aria-label="ગેમ શરૂ કરો" title="ગેમ શરૂ કરો">▶</button></div>';
+    paper.querySelectorAll('.zr').forEach(function(r){ var k = r.dataset.k;
+      r.querySelectorAll('button').forEach(function(b){
+        b.setAttribute('aria-pressed', String(+b.dataset.v === state[k]));
+        b.addEventListener('click', function(){ state[k] = +b.dataset.v; r.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); }); });
+      }); });
+    paper.querySelector('.zplay').addEventListener('click', start);
+    tray.innerHTML = '';
+    stage.dataset.tc = '0';
+    state.cols = 0;
+    $('#win').hidden = true;
+    say('');
+    ui();
+  }
+
+  function layout(){
+    if(!state.cols) return;
+    var W = paper.clientWidth, H = paper.clientHeight;
+    if(!W) return;
+    var slot = Math.min(W/state.cols, H/state.rows) * 0.74;
+    stage.style.setProperty('--slot', slot + 'px');
+    tray.style.height = H + 'px';
+    var tw = tray.clientWidth / state.tc;
+    var th = H / Math.ceil(state.count / state.tc);
+    stage.style.setProperty('--tbox', Math.min(tw, th) * 0.8 + 'px');
+  }
+  if(window.ResizeObserver){ new ResizeObserver(layout).observe(paper); }
+  window.addEventListener('resize', layout);
+
+  function start(){
+    window.sbTrack&&sbTrack.start({count:state.count});
+    clearInterval(state.timer);
+    $('#win').hidden = true;
+    var n = state.count;
+    var cols = n === 6 ? 2 : 3, rows = n / cols, per = n / 3;
+    var picked = [];
+    ['ફળ','ફૂલ','શાકભાજી'].forEach(function(c){
+      picked = picked.concat(shuffle(POOL.filter(function(p){ return p.c === c; })).slice(0, per));
+    });
+    picked = shuffle(picked);
+    var cells = [];
+    for(var r=0;r<rows;r++){ for(var c=0;c<cols;c++){ cells.push({r:r,c:c}); } }
+    cells = shuffle(cells);
+
+    state.cols = cols; state.rows = rows; state.tc = n === 6 ? 1 : 2;
+    state.mist = 0; state.placed = 0; state.slots = [];
+    paper.className = 'paper';
+    paper.innerHTML = ''; tray.innerHTML = '';
+    stage.dataset.tc = String(state.tc);
+    tray.style.gridTemplateColumns = 'repeat(' + state.tc + ',minmax(0,1fr))';
+
+    picked.forEach(function(it, i){
+      var cell = cells[i];
+      var x = (cell.c + 0.5 + (Math.random()-0.5)*0.22) / cols * 100;
+      var y = (cell.r + 0.5 + (Math.random()-0.5)*0.22) / rows * 100;
+      var rot = Math.round((Math.random()-0.5)*24);
+      var s = document.createElement('div');
+      s.className = 'slot';
+      s.style.left = x + '%'; s.style.top = y + '%';
+      s.innerHTML = '<span class="ring"></span><span class="it" style="--rot:' + rot + 'deg;animation-delay:' + (i*60) + 'ms">' + it.e + '</span>';
+      paper.appendChild(s);
+      state.slots.push({el:s, it:it, filled:false});
+    });
+
+    layout();
+    state.phase = 'show';
+    say('');
+    ui();
+
+    var t0 = performance.now(), total = state.time;
+    var fill = $('#barfill'), clock = $('#clock');
+    fill.style.width = '100%'; clock.textContent = total;
+    state.timer = setInterval(function(){
+      var rem = Math.max(0, total - (performance.now() - t0)/1000);
+      fill.style.width = (rem/total*100) + '%';
+      clock.textContent = Math.ceil(rem);
+      if(rem <= 0){ clearInterval(state.timer); vanish(); }
+    }, 100);
+  }
+
+  function vanish(){
+    state.phase = 'fly'; ui();
+    var from = state.slots.map(function(s){ return s.el.querySelector('.ring').getBoundingClientRect(); });
+    var order = shuffle(state.slots.map(function(s,i){ return i; }));
+    order.forEach(function(i){
+      var it = state.slots[i].it;
+      var t = document.createElement('div');
+      t.className = 't'; t.dataset.id = it.id; t.dataset.idx = i;
+      t.innerHTML = '<b>' + it.e + '</b>';
+      tray.appendChild(t);
+    });
+    paper.classList.add('play');
+    var n = order.length;
+    Array.prototype.forEach.call(tray.children, function(t, k){
+      var a = from[order[k]], inner = t.firstChild, b = inner.getBoundingClientRect();
+      var dx = a.left + a.width/2 - (b.left + b.width/2);
+      var dy = a.top + a.height/2 - (b.top + b.height/2);
+      var sc = a.width / b.width;
+      if(!reduce && inner.animate){
+        inner.animate(
+          [{transform:'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')'},{transform:'translate(0,0) scale(1)'}],
+          {duration:900, delay:k*70, easing:'cubic-bezier(.2,.8,.2,1)', fill:'backwards'}
+        );
+      }
+    });
+    setTimeout(function(){
+      if(state.phase === 'fly'){ state.phase = 'play'; ui(); }
+    }, reduce ? 50 : 900 + n*70 + 60);
+  }
+
+  /* dragging */
+  var drag = null;
+  tray.addEventListener('pointerdown', function(e){
+    var t = e.target.closest('.t');
+    if(!t || state.phase !== 'play' || t.classList.contains('done')) return;
+    drag = {t:t, x:e.clientX, y:e.clientY};
+    try{ t.setPointerCapture(e.pointerId); }catch(err){}
+    t.classList.add('drag');
+    e.preventDefault();
+  });
+  tray.addEventListener('pointermove', function(e){
+    if(!drag) return;
+    drag.t.style.transform = 'translate(' + (e.clientX - drag.x) + 'px,' + (e.clientY - drag.y) + 'px) scale(1.12)';
+  });
+  function nearest(px, py){
+    var best = null, bd = Infinity;
+    state.slots.forEach(function(s){
+      if(s.filled) return;
+      var r = s.el.querySelector('.ring').getBoundingClientRect();
+      var d = Math.hypot(px - (r.left + r.width/2), py - (r.top + r.height/2));
+      if(d < bd){ bd = d; best = {s:s, r:r}; }
+    });
+    return best && bd < best.r.width * 0.75 ? best.s : null;
+  }
+  function release(e, cancelled){
+    if(!drag) return;
+    var t = drag.t; drag = null;
+    t.classList.remove('drag');
+    var hit = cancelled ? null : nearest(e.clientX, e.clientY);
+    t.style.transform = '';
+    if(hit && hit.it.id === t.dataset.id){
+      hit.filled = true;
+      hit.el.classList.add('ok');
+      t.classList.add('done');
+      state.placed++;
+      say('સાચું! ' + hit.it.n, 'good');
+      ui();
+      if(state.placed === state.count){ state.phase = 'done'; ui(); setTimeout(win, 700); }
+    } else if(hit){
+      state.mist++;
+      say('આ જગ્યા નથી, ફરી યાદ કરો', 'bad');
+      ui();
+      t.classList.remove('shake'); void t.offsetWidth; t.classList.add('shake');
+    }
+  }
+  tray.addEventListener('pointerup', function(e){ release(e, false); });
+  tray.addEventListener('pointercancel', function(e){ release(e, true); });
+
+  function win(){
+    var m = state.mist;
+    window.sbTrack&&sbTrack.finish({mistakes:m, count:state.count});
+    var stars = m === 0 ? 3 : (m <= 3 ? 2 : 1);
+    $('#stars').textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
+    $('#wintitle').textContent = m === 0 ? 'શાબાશ!' : 'સરસ!';
+    $('#wintext').textContent = m === 0
+      ? 'એક પણ ભૂલ વગર બધી વસ્તુઓ સાચી જગ્યાએ મૂકી.'
+      : 'બધી વસ્તુઓ સાચી જગ્યાએ મૂકાઈ. ભૂલ: ' + m + '. ફરી રમીને વધુ સારું કરો.';
+    $('#win').hidden = false;
+  }
+
+  $('#start').addEventListener('click', start);
+  $('#again').addEventListener('click', start);
+  $('#back').addEventListener('click', showSetup);
+  $('#quit').addEventListener('click', showSetup);
+
+  showSetup();
+})();
+</script>
+
+<script>/* back system: Chrome/Android back = game's own back; top level -> hub */
+(function(){var $=function(i){return document.getElementById(i)},vis=function(e){return !!e&&!e.hidden&&e.getClientRects().length>0};
+try{history.replaceState({g:1},'');history.pushState({g:2},'')}catch(e){}
+function leave(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.back();else location.replace('../')}
+function back(){if(vis($('win'))){$('back').click();return true}
+if(vis($('hud'))){$('quit').click();return true}
+return false}
+addEventListener('popstate',function(){if(back()===false){leave();return}history.pushState({g:2},'')})})();</script>
+<script>/* ✕ exit to hub */
+(function(){var gu=(function(){try{var l=localStorage.getItem('satsangLang');return !l||l==='g'}catch(e){return true}})();
+var x=document.createElement('button');x.type='button';x.id='exitHub';x.setAttribute('aria-label',gu?'હોમપેજ પર જાઓ':'Back to home page');
+x.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+function running(){var h=document.getElementById('hud');return !!h&&!h.hidden}
+function goHub(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.go(-2);else location.replace('../')}
+function askLeave(){if(document.getElementById('exitAsk'))return;var lg='g';try{lg=localStorage.getItem('satsangLang')||'g'}catch(e){}
+var T={g:['ગેમ બંધ કરીને હોમપેજ પર જવું છે?','હા, 🏠 હોમપેજ','ના, રમતા રહો'],e:['Close the game and go to the home page?','Yes, 🏠 Home page','No, keep playing'],r:['Game band karine homepage par javu chhe?','Ha, 🏠 Homepage','Na, ramta raho']}[lg]||['Close the game and go to the home page?','Yes, 🏠 Home page','No, keep playing'];
+var o=document.createElement('div');o.id='exitAsk';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');
+o.style.cssText='position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;background:rgba(60,35,20,.55)';
+var c=document.createElement('div');c.style.cssText='width:min(320px,100%);background:#fbf1e2;color:#5a3524;border-radius:22px;padding:22px 18px 18px;box-shadow:0 10px 28px rgba(60,35,20,.5);display:flex;flex-direction:column;gap:12px;text-align:center;font:700 18px/1.4 system-ui,sans-serif';
+var p=document.createElement('div');p.textContent=T[0];
+function b(t,pri,fn){var e=document.createElement('button');e.type='button';e.textContent=t;e.style.cssText='border:0;border-radius:99px;padding:13px 10px;font:700 16px system-ui,sans-serif;cursor:pointer;'+(pri?'background:#d0693a;color:#fff;box-shadow:0 3px 0 #9c4a22':'background:#efdcc0;color:#5a3524;box-shadow:0 3px 0 #cdb592');e.addEventListener('click',fn);return e}
+c.appendChild(p);c.appendChild(b(T[1],1,function(){o.remove();goHub()}));c.appendChild(b(T[2],0,function(){o.remove()}));o.appendChild(c);document.body.appendChild(o)}
+x.addEventListener('click',function(){if(running()){askLeave();return}goHub()});
+document.body.appendChild(x)})();</script>
+<style>#exitHub{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:8px;z-index:9999;width:34px;height:34px;border-radius:50%;border:0;display:grid;place-items:center;padding:0;cursor:pointer;background:#fbf1e2;color:#5a3524;box-shadow:0 3px 8px rgba(90,53,36,.35)}h1{padding-left:44px}</style>
+<style id="zicons">
+/* 14 ઉપરનું સેટિંગ બોક્સ અને લાંબી લાઇન કાઢી */
+.sub{display:none!important}
+#setup{display:none!important}
+/* 13 માટીનો કાગળ */
+.paper{background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.6),transparent 40%),linear-gradient(160deg,#fdf5e8,#f1dfc2)!important;border-radius:26px!important;box-shadow:0 .6rem 1.2rem rgba(120,80,40,.25),inset 0 2px 3px #fff,inset 0 -8px 14px rgba(180,130,80,.15)!important;outline:2px dashed rgba(125,143,79,.45);outline-offset:-10px}
+.paper::after{content:""!important;position:absolute;right:-6px;bottom:-6px;width:70px;height:70px;background:radial-gradient(ellipse at 30% 70%,#a3b374 0 34%,transparent 35%),radial-gradient(ellipse at 75% 40%,#e8845f 0 26%,transparent 27%);opacity:.85;pointer-events:none;z-index:0}
+.zbox{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px}
+.zbox .zr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+.zbox .zi{font-size:22px;width:30px;text-align:center}
+.zbox .zr button{border:0;border-radius:99px;padding:8px 12px;font:800 14px system-ui,sans-serif;background:linear-gradient(160deg,#fdf5e8,#efdcc0);color:#5a3524;box-shadow:0 .25rem .6rem rgba(120,80,40,.22),inset 0 1px 2px #fff;cursor:pointer}
+.zbox .zr button[aria-pressed="true"]{background:linear-gradient(180deg,#f2a07f,#e8845f);color:#fff}
+.zbox .zplay{width:96px;height:96px;border:0;border-radius:50%;padding:0 0 0 8px;font-size:44px;line-height:1;color:#fff;cursor:pointer;background:linear-gradient(180deg,#f2a07f,#e8845f);box-shadow:0 0 0 10px rgba(232,132,95,.2),0 8px 16px rgba(120,80,40,.35);margin-top:8px}
+/* 18 રમત વખતે નિશાની */
+.phase{font-size:24px!important}
+
+#stats{font-size:16px!important}
+#stats .ok{color:#3f8f4f;margin-right:10px}#stats .ng{color:#c0392b}
+#quit{width:44px;height:44px;border-radius:50%!important;padding:0!important;font-size:22px!important}
+</style></body></html>
