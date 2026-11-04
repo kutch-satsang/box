@@ -141,7 +141,19 @@ function pinStep(s){
   if(pinChecked||!s.user.is_anonymous)return;pinChecked=true;
   var p=pendingPin;pendingPin="";
   if(p){client.rpc("guest_pin_set",{pin:p}).then(function(r){if(r.error){pinChecked=false;askPin()}},function(){pinChecked=false});return}
-  client.rpc("guest_has_pin").then(function(r){if(!r.error&&r.data===false)askPin()},function(){});
+  client.rpc("guest_has_pin").then(function(r){
+    if(r.error||r.data!==false)return;
+    /* ખાતું બીજા ફોનમાં ખસ્યું હોય તો આ જૂનું સત્ર છે: Login પાનું બતાવે */
+    return client.auth.getUser().then(function(u){
+      if(!u.error)askPin();else if(u.error.status>=400&&u.error.status<500)staleGuest();
+    });
+  }).catch(function(){});
+}
+function staleGuest(){
+  if(pinBox&&pinBox.parentNode)pinBox.parentNode.removeChild(pinBox);
+  pinBox=null;pinChecked=false;
+  if(window.sbClearOutbox)sbClearOutbox();
+  return client.auth.signOut({scope:"local"});
 }
 function digits(v){return v.replace(/[૦-૯]/g,function(c){return "૦૧૨૩૪૫૬૭૮૯".indexOf(c)}).replace(/[^0-9]/g,"")}
 function askPin(){
@@ -157,7 +169,10 @@ function askPin(){
     e.preventDefault();var v=digits(inp.value);
     if(v.length!==4){f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");return}
     b.disabled=true;
-    client.rpc("guest_pin_set",{pin:v}).then(function(r){if(r.error)throw r.error;pinBox.parentNode.removeChild(pinBox);pinBox=null},function(){b.disabled=false});
+    client.rpc("guest_pin_set",{pin:v}).then(function(r){
+      if(r.error){if(r.error.code==="42501")return staleGuest();b.disabled=false;return}
+      pinBox.parentNode.removeChild(pinBox);pinBox=null;
+    },function(){b.disabled=false});
   });
   inp.addEventListener("input",function(){f.classList.remove("bad")});
   document.body.appendChild(pinBox);
