@@ -19,15 +19,16 @@ if(inGame){
 }
 
 var T={
- g:{or:"અથવા",nm:"First & Last name",guest:"Login વગર આગળ વધો",need:"પૂરું નામ લખો (નામ અને અટક).",taken:"આ નામ લેવાઈ ગયું છે. પાછળ નંબર ઉમેરો, દા.ત. રમેશ પટેલ 2",btn:"Google થી Login કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
- e:{or:"or",nm:"First & Last name",guest:"Continue without login",need:"Please write your full name (first and last).",taken:"This name is already taken. Add a number at the end, e.g. Ramesh Patel 2",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
- r:{or:"athva",nm:"First & Last name",guest:"Login vagar aagal vadho",need:"Puru naam lakho (naam ane atak).",taken:"Aa naam levai gayu chhe. Pachhal number umero, d.t. Ramesh Patel 2",btn:"Google thi Login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
+ g:{or:"અથવા",nm:"First & Last name",pin:"4 આંકડાનો PIN",fg:"PIN ભૂલી ગયા?",locked:"ઘણા ખોટા પ્રયત્ન થયા. એક કલાક પછી ફરી કરો.",setpin:"બીજા ફોનમાં રમવા માટે PIN રાખો",save:"PIN રાખો",forgot:"નવા નામ અને નવા PIN થી શરૂ કરો, દા.ત. રમેશ પટેલ 2",guest:"Login વગર આગળ વધો",need:"પૂરું નામ લખો (નામ અને અટક).",taken:"આ નામ લેવાઈ ગયું છે અથવા PIN ખોટો છે.",btn:"Google થી Login કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
+ e:{or:"or",nm:"First & Last name",pin:"4-digit PIN",fg:"Forgot PIN?",locked:"Too many wrong tries. Try again after one hour.",setpin:"Set a PIN to play on another phone",save:"Save PIN",forgot:"Start with a new name and new PIN, e.g. Ramesh Patel 2",guest:"Continue without login",need:"Please write your full name (first and last).",taken:"This name is taken or the PIN is wrong.",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
+ r:{or:"athva",nm:"First & Last name",pin:"4 aankda no PIN",fg:"PIN bhuli gaya?",locked:"Ghana khota prayatna thaya. Ek kalak pachhi fari karo.",setpin:"Bija phone ma ramva mate PIN rakho",save:"PIN rakho",forgot:"Nava naam ane nava PIN thi sharu karo, d.t. Ramesh Patel 2",guest:"Login vagar aagal vadho",need:"Puru naam lakho (naam ane atak).",taken:"Aa naam levai gayu chhe athva PIN khoto chhe.",btn:"Google thi Login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
 };
 var NAME={g:"સત્સંગ બોક્સ",e:"Satsang Box",r:"Satsang Box"};
 var LB={g:"G",e:"E",r:"G.a"};
 var q=location.search;
 var returning=/[?&]code=/.test(q);
 var failed=/[?&]error/.test(q)||/error_description=/.test(location.hash);
+var pendingPin="",claiming=false,pinChecked=false,pinBox=null;
 var client=null,gate=null,loading=null,busy=false,msgKey="";
 var dup=/identity_already_exists/.test(q+location.hash);
 
@@ -67,6 +68,8 @@ css.textContent=
 ".sbg{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;padding:8px 14px;border:1px solid #dadce0;border-radius:26px;background:#fff;color:#2b2b2b;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}"+
 ".sbg:active{transform:translateY(1px)}.sbg:disabled{opacity:.6;cursor:default}.sbg svg{flex:none;width:20px;height:20px}"+
 ".sbn{margin:10px 0 0;font-size:13px;line-height:1.45;color:#7b5a3a}.sbn:empty{display:none}.sbn.bad{color:#a4371c;font-weight:600}"+
+".sbfg{display:block;margin:8px auto 0;padding:4px 8px;border:0;background:none;color:#a4371c;font:600 13px 'Hind Vadodara','Noto Sans Gujarati',sans-serif;text-decoration:underline;cursor:pointer}#sbGate.cl .sbfg{color:#46618c}"+
+".sbpin{letter-spacing:.35em;text-align:center}"+
 ".sbl-one{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;min-width:72px;min-height:40px;padding:0 14px;border:0;border-radius:20px;background:#e8845f;color:#fff;font:700 15px 'Hind Vadodara',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(120,80,40,.25);-webkit-tap-highlight-color:transparent}.sbl-one:active{transform:translateY(1px)}";
 (document.head||root).appendChild(css);
 
@@ -76,7 +79,7 @@ function draw(){
   gate.querySelector(".sbt").textContent=NAME[l];
   gate.querySelector(".sbgt").textContent=busy==="g"?t.busy:t.btn;
   gate.querySelector(".sbor").textContent=t.or;
-  gate.querySelector(".sbfl").textContent=t.nm+" ";
+  gate.querySelector(".sbfl").textContent=t.nm+" ";gate.querySelector(".sbpl").textContent=t.pin+" ";gate.querySelector(".sbfg").textContent=t.fg;
   var kb=gate.querySelector(".sbk");kb.textContent=busy==="n"?t.busy:t.guest;
   btn.disabled=kb.disabled=!!busy;
   var k=msgKey||(webview()?"wv":(navigator.onLine===false?"off":""));
@@ -89,10 +92,10 @@ function buildGate(){
   gate.setAttribute("role","dialog");gate.setAttribute("aria-modal","true");
   gate.innerHTML='<div class="sbc"><img class="sbo" src="themes/adhyatmik/mati/om.webp" alt=""><h1 class="sbt"></h1>'+
    '<button class="sbg" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.9 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.9c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 7.1-10.3 7.1-17.7z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.5 0 20.1 0 24s1 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.7-6c-2.1 1.4-4.9 2.3-8.1 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span class="sbgt"></span></button>'+
-   '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="go"></label>'+
-   '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><button class="sbl-one" type="button" aria-label="Language"></button>';
-  gate.querySelector(".sbg").addEventListener("click",login);
-  gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad");if(msgKey==="taken"){msgKey="";draw()}});
+   '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="next"></label><label class="sbf sbp"><span class="sbpl"></span><i>*</i><input class="sbpin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" enterkeyhint="go"></label>'+
+   '<button class="sbk" type="submit"></button></form><button class="sbfg" type="button"></button><p class="sbn"></p></div><button class="sbl-one" type="button" aria-label="Language"></button>';
+  gate.querySelector(".sbg").addEventListener("click",login);gate.querySelector(".sbfg").addEventListener("click",function(){msgKey="forgot";draw()});
+  gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad");if(msgKey==="taken"){msgKey="";draw()}});gate.querySelector(".sbpin").addEventListener("input",function(){gate.querySelector(".sbp").classList.remove("bad");if(msgKey==="taken"||msgKey==="forgot"){msgKey="";draw()}});
   gate.querySelector(".sbfm").addEventListener("submit",function(e){e.preventDefault();guest()});
   gate.querySelector(".sbl-one").addEventListener("click",function(){
     var o=["g","e","r"],k=o[(o.indexOf(lang())+1)%3];
@@ -111,7 +114,7 @@ function loadLib(){
   }).then(function(){
     client=supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     client.auth.onAuthStateChange(function(ev,s){
-      if(s)setTimeout(function(){busy=false;msgKey="";unlock();seen(s);mergeFinish(s);if(window.sbFlush)sbFlush()},0);
+      if(s)setTimeout(function(){if(claiming||!hasSession())return;busy=false;msgKey="";unlock();seen(s);mergeFinish(s);pinStep(s);if(window.sbFlush)sbFlush()},0);
       else if(ev==="SIGNED_OUT")setTimeout(function(){busy=false;showGate();draw()},0);
     });
     return client;
@@ -133,6 +136,33 @@ function login(){
   }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
 }
 
+/* મહેમાનનો PIN: નવા મહેમાનનો સાચવે; જૂના મહેમાન પાસે ન હોય તો એક વાર પૂછે */
+function pinStep(s){
+  if(pinChecked||!s.user.is_anonymous)return;pinChecked=true;
+  var p=pendingPin;pendingPin="";
+  if(p){client.rpc("guest_pin_set",{pin:p}).then(function(r){if(r.error){pinChecked=false;askPin()}},function(){pinChecked=false});return}
+  client.rpc("guest_has_pin").then(function(r){if(!r.error&&r.data===false)askPin()},function(){});
+}
+function digits(v){return v.replace(/[૦-૯]/g,function(c){return "૦૧૨૩૪૫૬૭૮૯".indexOf(c)}).replace(/[^0-9]/g,"")}
+function askPin(){
+  if(pinBox||!document.body)return;
+  var t=T[lang()];
+  pinBox=document.createElement("div");pinBox.id="sbGate";if(classic())pinBox.className="cl";
+  pinBox.setAttribute("role","dialog");pinBox.setAttribute("aria-modal","true");
+  pinBox.innerHTML='<form class="sbc" novalidate><h1 class="sbt" style="font-size:22px"></h1><label class="sbf"><span></span><i>*</i><input class="sbpin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" enterkeyhint="go"></label><button class="sbk" type="submit"></button></form>';
+  pinBox.querySelector(".sbt").textContent=t.setpin;
+  pinBox.querySelector("span").textContent=t.pin+" ";
+  var b=pinBox.querySelector(".sbk"),f=pinBox.querySelector(".sbf"),inp=pinBox.querySelector("input");b.textContent=t.save;
+  pinBox.querySelector("form").addEventListener("submit",function(e){
+    e.preventDefault();var v=digits(inp.value);
+    if(v.length!==4){f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");return}
+    b.disabled=true;
+    client.rpc("guest_pin_set",{pin:v}).then(function(r){if(r.error)throw r.error;pinBox.parentNode.removeChild(pinBox);pinBox=null},function(){b.disabled=false});
+  });
+  inp.addEventListener("input",function(){f.classList.remove("bad")});
+  document.body.appendChild(pinBox);
+}
+
 function okName(v){
   /* ફક્ત અક્ષરો (ગુજરાતી/English), ઓછામાં ઓછા બે શબ્દ, દરેકમાં ૨+ અક્ષર, એક જ શબ્દ બધે નહીં */
   var w=v.split(" ");
@@ -149,18 +179,41 @@ function okName(v){
 function guest(){
   if(busy)return;
   var v=gate.querySelector(".sbin").value.replace(/\s+/g," ").trim();
-  if(!okName(v)){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");gate.querySelector(".sbin").focus();return}
+  var nf=gate.querySelector(".sbf:not(.sbp)"),pf=gate.querySelector(".sbp");
+  function shake(f){f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");f.querySelector("input").focus()}
+  if(!okName(v)){shake(nf);return}
+  var pin=digits(gate.querySelector(".sbpin").value);
+  if(pin.length!==4){shake(pf);return}
   if(navigator.onLine===false){msgKey="off";draw();return}
   busy="n";msgKey="";draw();
   var cl;
-  loadLib().then(function(c){cl=c;return c.rpc("name_taken",{n:v})}).then(function(r){
+  loadLib().then(function(c){cl=c;return c.rpc("guest_pin_check",{n:v,pin:pin})}).then(function(r){
     if(r.error)throw r.error;
-    if(r.data===true)throw {taken:true};
-    return cl.auth.signInAnonymously({options:{data:{full_name:v}}});
-  }).then(function(r){if(r&&r.error)throw r.error}).catch(function(e){
-    var t=e&&(e.taken||/name_taken|saving new user/i.test(e.message||""));
-    busy=false;msgKey=t?"taken":"err";draw();
-    if(t){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad")}
+    if(r.data==="locked")throw {key:"locked"};
+    if(r.data==="free"){
+      pendingPin=pin;
+      return cl.auth.signInAnonymously({options:{data:{full_name:v}}}).then(function(a){if(a.error)throw a.error});
+    }
+    if(r.data!=="ok")throw {key:"taken"};
+    /* સાચો PIN: નવા ફોનનું ખાતું જૂના ખાતાની જગ્યા લે, હિસ્ટ્રી સાથે */
+    claiming=true;
+    return cl.auth.signInAnonymously().then(function(a){
+      if(a.error)throw a.error;
+      return cl.rpc("guest_claim",{n:v,pin:pin});
+    }).then(function(c){
+      if(c.error||c.data!==true)throw {key:"err",undo:true};
+      claiming=false;pinChecked=true;busy=false;msgKey="";unlock();
+      return cl.auth.getSession().then(function(g){if(g.data.session)seen(g.data.session)});
+    }).catch(function(e){
+      if(!claiming)throw e;
+      var end=function(){claiming=false;throw e};
+      return cl.rpc("delete_my_account").then(function(){},function(){}).then(function(){return cl.auth.signOut({scope:"local"})}).then(end,end);
+    });
+  }).catch(function(e){
+    pendingPin="";
+    var k=e&&e.key?e.key:(/name_taken|saving new user/i.test((e&&e.message)||"")?"taken":"err");
+    busy=false;msgKey=k;showGate();draw();
+    if(k==="taken")shake(pf);
   });
 }
 
