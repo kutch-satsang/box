@@ -29,6 +29,19 @@ var q=location.search;
 var returning=/[?&]code=/.test(q);
 var failed=/[?&]error/.test(q)||/error_description=/.test(location.hash);
 var client=null,gate=null,loading=null,busy=false,msgKey="";
+var dup=/identity_already_exists/.test(q+location.hash);
+
+/* મહેમાન → Google: Google બીજે ઓળખાય નહીં તે પહેલાં સર્વર પાસેથી એક-વારની ચિઠ્ઠી લે.
+   Google ખાતું નવું હોય તો એ જ ખાતું જોડાય; પહેલેથી હોય તો ચિઠ્ઠીથી હિસ્ટ્રી ત્યાં ખસે. */
+var MK="sbMerge",merging=false;
+function mergeGet(){try{var o=JSON.parse(localStorage.getItem(MK)||"null");return o&&o.exp>Date.now()?o:null}catch(e){return null}}
+function mergeDrop(){try{localStorage.removeItem(MK)}catch(e){}}
+function mergeFinish(s){
+  if(merging||s.user.is_anonymous)return;
+  var m=mergeGet();if(!m){mergeDrop();return}
+  merging=true;
+  client.rpc("guest_merge_finish",{token:m.t}).then(function(r){merging=false;if(!r.error)mergeDrop()},function(){merging=false});
+}
 
 function lang(){var v="g";try{v=localStorage.getItem("satsangLang")||"g"}catch(e){}return T[v]?v:"g"}
 function classic(){try{return localStorage.getItem("satsangTheme")==="kaach"}catch(e){return false}}
@@ -98,7 +111,7 @@ function loadLib(){
   }).then(function(){
     client=supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     client.auth.onAuthStateChange(function(ev,s){
-      if(s)setTimeout(function(){busy=false;msgKey="";unlock();seen(s);if(window.sbFlush)sbFlush()},0);
+      if(s)setTimeout(function(){busy=false;msgKey="";unlock();seen(s);mergeFinish(s);if(window.sbFlush)sbFlush()},0);
       else if(ev==="SIGNED_OUT")setTimeout(function(){busy=false;showGate();draw()},0);
     });
     return client;
@@ -114,7 +127,7 @@ function seen(s){
 function login(){
   if(busy)return;
   if(navigator.onLine===false){msgKey="off";draw();return}
-  busy="g";msgKey="";draw();
+  busy="g";msgKey="";draw();mergeDrop();
   loadLib().then(function(c){
     return c.auth.signInWithOAuth({provider:"google",options:{redirectTo:new URL("./",location.href).href}});
   }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
@@ -161,8 +174,20 @@ window.SatsangAuth={
     /* બાકી આંકડા મોકલી, કતાર ખાલી કરે જેથી બીજા ભક્તના ખાતામાં ન જાય */
     return Promise.resolve(window.sbFlush?sbFlush():0).catch(function(){}).then(function(){
       if(window.sbClearOutbox)sbClearOutbox();
+      mergeDrop();
       return loadLib();
     }).then(function(c){return c.auth.signOut({scope:"local"})});
+  },
+  isGuest:function(){try{var o=JSON.parse(localStorage.getItem(TOKEN)||"null");return !!(o&&o.user&&o.user.is_anonymous)}catch(e){return false}},
+  linkGoogle:function(){
+    if(navigator.onLine===false)return Promise.reject(new Error("offline"));
+    return Promise.resolve(window.sbFlush?sbFlush():0).catch(function(){}).then(loadLib).then(function(c){
+      return c.rpc("guest_merge_start").then(function(r){
+        if(r.error)throw r.error;
+        localStorage.setItem(MK,JSON.stringify({t:r.data,exp:Date.now()+36e5}));
+        return c.auth.linkIdentity({provider:"google",options:{redirectTo:new URL("./",location.href).href}});
+      });
+    }).then(function(r){if(r&&r.error)throw r.error});
   },
   deleteAccount:function(){
     return loadLib().then(function(c){
@@ -180,6 +205,14 @@ window.SatsangAuth={
   }
 };
 
+if(dup&&mergeGet()){
+  /* આ Google ખાતું પહેલેથી છે: તેમાં Login કરો, પછી મહેમાનની હિસ્ટ્રી ત્યાં ખસશે */
+  history.replaceState(null,"",location.pathname);
+  lock();
+  loadLib().then(function(c){return c.auth.signInWithOAuth({provider:"google",options:{redirectTo:new URL("./",location.href).href}})}).catch(function(){unlock()});
+  return;
+}
+if(hasSession()&&failed)history.replaceState(null,"",location.pathname);
 if(hasSession()&&!returning){
   /* બાકીનું સત્ર ચકાસે. નેટ ન હોય તો સત્ર રહે છે; Supabase એ કાઢી નાખ્યું હોય તો જ લૉગિન પાનું */
   loadLib().then(function(c){return c.auth.getSession()}).then(function(){if(!hasSession())showGate()}).catch(function(){});

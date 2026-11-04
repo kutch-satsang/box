@@ -401,10 +401,12 @@ function special(w,t,zid){
     if(window.caches)rs.push(caches.keys().then(function(a){return Promise.all(a.map(function(k){return caches.delete(k)}))}));
     Promise.all(rs).catch(function(){}).then(function(){location.reload()})});
   ar.appendChild(ub);w.appendChild(ar);
-  var AC={g:{fb:"💬 સૂચન મોકલો",lo:"🚪 લૉગઆઉટ",del:"🗑 એકાઉન્ટ કાઢી નાખો",pv:"પ્રાઇવસી પૉલિસી"},e:{fb:"💬 Send feedback",lo:"🚪 Log out",del:"🗑 Delete account",pv:"Privacy policy"},r:{fb:"💬 Suchan moklo",lo:"🚪 Logout",del:"🗑 Account kadhi nakho",pv:"Privacy policy"}}[L];
+  var AC={g:{go:"Google થી Login",goE:"ન થયું, ફરી પ્રયત્ન કરો",fb:"💬 સૂચન મોકલો",lo:"🚪 લૉગઆઉટ",del:"🗑 એકાઉન્ટ કાઢી નાખો",pv:"પ્રાઇવસી પૉલિસી"},e:{go:"Login with Google",goE:"Failed, try again",fb:"💬 Send feedback",lo:"🚪 Log out",del:"🗑 Delete account",pv:"Privacy policy"},r:{go:"Google thi Login",goE:"Na thayu, fari prayatna karo",fb:"💬 Suchan moklo",lo:"🚪 Logout",del:"🗑 Account kadhi nakho",pv:"Privacy policy"}}[L];
   var a2=el("div","sset act acc2"),fb=el("button",null,AC.fb),lo=el("button",null,AC.lo);fb.type=lo.type="button";
   fb.addEventListener("click",function(){feedbackBox(L)});
-  lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.signOut().catch(function(){lo.disabled=false})});
+  /* મહેમાનનું ખાતું ફક્ત આ ફોનમાં છે, લૉગઆઉટથી પાછું ન મળે. એટલે તેની જગ્યાએ Google Login */
+  if(SatsangAuth.isGuest()){lo.textContent=AC.go;lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.linkGoogle().catch(function(){lo.disabled=false;lo.textContent=AC.goE})})}
+  else lo.addEventListener("click",function(){lo.disabled=true;SatsangAuth.signOut().catch(function(){lo.disabled=false})});
   a2.appendChild(fb);a2.appendChild(lo);w.appendChild(a2);
   var a3=el("div","sset act"),db=el("button","acdel",AC.del);db.type="button";db.addEventListener("click",function(){deleteBox(L)});a3.appendChild(db);w.appendChild(a3);
   var b3=el("div","sbox abt");b3.appendChild(el("p",null,t.abN));w.appendChild(b3);
