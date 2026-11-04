@@ -384,6 +384,7 @@ function special(w,t,zid){
     acd.appendChild(acn);acd.appendChild(acs);acr.appendChild(acf);acr.appendChild(acd);w.appendChild(acr);
     var acg=SatsangAuth.isGuest&&SatsangAuth.isGuest();
     if(acg)acs.textContent={g:"મહેમાન",e:"Guest",r:"Mehman"}[L];
+    try{var acc=JSON.parse(localStorage.getItem("sbProf"))||{};acn.textContent=acc.name||"";if(!acg)acs.textContent=acc.email||""}catch(e){}
     SatsangAuth.profile().then(function(p){acn.textContent=p.name||"";if(!acg)acs.textContent=p.email||""},function(){});
   }
   if(zid==="stats"){var b=el("div","sbox");b.appendChild(el("p",null,t.stN));w.appendChild(b);return w}
