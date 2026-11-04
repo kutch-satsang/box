@@ -2512,32 +2512,8 @@ if(lq){lq.placeholder='🔍 '+T('શોધો');lq.addEventListener('input',filt
 var stEl=document.createElement('div');stEl.id='savedToast';stEl.hidden=true;stEl.textContent='✓ પ્રગતિ સચવાઈ ગઈ';document.body.appendChild(stEl);
 var stT=null;
 window.dmSaved=function(){setTimeout(function(){var has=false;try{has=!!localStorage.getItem('dm_resume')}catch(e){}if(!has)return;stEl.hidden=false;clearTimeout(stT);stT=setTimeout(function(){stEl.hidden=true},2200)},250)};
-/* C: player (name + picture), this phone only */
-var EM=['🙏','🦁','🐘','🦚','🌸','🪔','🐚','🌟','🦋','🐬','🌿','🏵️'];
-function getP(){try{var p=JSON.parse(localStorage.getItem('satsangPlayer')||'null');return p&&typeof p==='object'?p:{n:'',e:'🙏'}}catch(e){return {n:'',e:'🙏'}}}
-function setP(p){try{localStorage.setItem('satsangPlayer',JSON.stringify(p))}catch(e){}}
-var tiles=$('tiles');
-if(tiles){var row=document.createElement('div');row.id='whoRow';row.className='who';row.innerHTML='<button type="button" id="whoBtn"><span id="whoE">👤</span><span id="whoN"></span></button>';tiles.insertAdjacentElement('afterend',row);}
-function paintWho(){var p=getP(),n=$('whoN'),e=$('whoE');if(!n||!e)return;e.textContent=p.n?(p.e||'🙏'):'👤';n.textContent=p.n?p.n:'નામ લખો';
- var w=$('wwho');if(w)w.textContent=p.n?((p.e||'🙏')+' '+p.n):'';}
-var wt=document.createElement('p');wt.id='wwho';var wtl=$('wintitle');if(wtl)wtl.parentNode.insertBefore(wt,wtl);
-paintWho();
-function openWho(){
- var o=$('whoov');if(o)o.remove();
- var p=getP();o=document.createElement('div');o.id='whoov';o.className='overlay';
- var sel=p.e||'🙏';
- o.innerHTML='<div class="card"><div class="rhead"><h2>તમારું નામ</h2><button type="button" class="xbtn" aria-label="બંધ કરો" title="બંધ કરો">✕</button></div><div class="wi"><input id="whoIn" type="text" maxlength="16" autocomplete="off"><div class="lb">ચિત્ર પસંદ કરો</div><div class="em6"></div><button type="button" class="go" id="whoSave">સાચવો</button></div></div>';
- document.body.appendChild(o);
- var inp=o.querySelector('#whoIn');inp.value=p.n||'';inp.placeholder=T('તમારું નામ');
- var g=o.querySelector('.em6');EM.forEach(function(e){var b=document.createElement('button');b.type='button';b.textContent=e;b.setAttribute('aria-pressed',e===sel?'true':'false');b.addEventListener('click',function(){sel=e;g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})});g.appendChild(b)});
- function close(){o.remove()}
- o.querySelector('.xbtn').addEventListener('click',close);
- var dn=false;o.addEventListener('pointerdown',function(e){dn=e.target===o});o.addEventListener('click',function(e){if(dn&&e.target===o)close();dn=false});
- o.querySelector('#whoSave').addEventListener('click',function(){var n=(inp.value||'').replace(/\s+/g,' ').trim().slice(0,16);setP({n:n,e:sel});paintWho();close()});
- inp.addEventListener('keydown',function(e){if(e.key==='Enter')o.querySelector('#whoSave').click()});
-}
-var wb=$('whoBtn');if(wb)wb.addEventListener('click',openWho);
-var winEl=$('win');if(winEl)new MutationObserver(function(){if(!winEl.hidden)paintWho()}).observe(winEl,{attributes:true,attributeFilter:['hidden']});
+/* નામ-સિસ્ટમ કાઢી નાખી: નામ હબના Login માંથી */
+function getP(){return {n:'',e:'🙏'}}
 /* C: share card */
 function mmss(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
 function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
