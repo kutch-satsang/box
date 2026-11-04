@@ -115,7 +115,7 @@ function loadLib(){
     client=supabase.createClient(URL_,KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     client.auth.onAuthStateChange(function(ev,s){
       if(s)setTimeout(function(){if(claiming||!hasSession())return;busy=false;msgKey="";unlock();seen(s);mergeFinish(s);pinStep(s);if(window.sbFlush)sbFlush()},0);
-      else if(ev==="SIGNED_OUT")setTimeout(function(){busy=false;showGate();draw()},0);
+      else if(ev==="SIGNED_OUT")setTimeout(function(){try{localStorage.removeItem("sbProf")}catch(e){}busy=false;showGate();draw()},0);
     });
     return client;
   });
@@ -245,6 +245,14 @@ window.SatsangAuth={
       mergeDrop();
       return loadLib();
     }).then(function(c){return c.auth.signOut({scope:"local"})});
+  },
+  profile:function(){
+    return loadLib().then(function(c){return c.auth.getSession().then(function(r){
+      var u=r.data.session&&r.data.session.user;if(!u)return {};
+      return c.from("profiles").select("display_name,email").eq("id",u.id).single().then(function(p){
+        if(p.error)throw p.error;
+        var o={name:p.data.display_name,email:p.data.email};try{localStorage.setItem("sbProf",JSON.stringify(o))}catch(e){}return o});
+    })}).catch(function(){try{return JSON.parse(localStorage.getItem("sbProf"))||{}}catch(e){return {}}});
   },
   isGuest:function(){try{var o=JSON.parse(localStorage.getItem(TOKEN)||"null");return !!(o&&o.user&&o.user.is_anonymous)}catch(e){return false}},
   linkGoogle:function(){

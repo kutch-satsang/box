@@ -153,6 +153,14 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 .gz1 .game:active{transform:translateY(4px)}
 </style>
 <style>html.nosc,html.nosc body{overflow:hidden!important;height:100%;overscroll-behavior:none;touch-action:none}html.nosc .mand{touch-action:manipulation}</style>
+<style>/* એકાઉન્ટ: ગોળ મંદિર */
+.lng3d.ac{right:16.5cqw;background:url(themes/adhyatmik/mati/acc.webp) center/cover!important;box-shadow:0 2px 6px rgba(90,53,36,.35)}
+.acp{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
+.acf{width:92px;height:92px;border-radius:50%;background:url(themes/adhyatmik/mati/acc.webp) center/cover;box-shadow:0 4px 10px rgba(90,53,36,.3);margin-bottom:6px}
+.acn{font:700 22px/1.25 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif;color:var(--deep)}
+.acs{font-size:13px;color:var(--muted);min-height:18px;margin-bottom:10px;word-break:break-all}
+.ack{width:100%;min-height:48px;border:0;border-radius:24px;background:var(--ca);color:#fff;font:600 16px 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer}.ack:disabled{opacity:.6}
+</style>
 <style>/* હબ Settings: સહિયારાં બટન + ઘર પર ⚙ */
 .sset{display:grid;gap:8px}
 .sset.c2{grid-template-columns:repeat(2,1fr)}.sset.c3{grid-template-columns:repeat(3,1fr)}.sset.c5{grid-template-columns:repeat(5,1fr)}
@@ -294,13 +302,25 @@ function mkLang(cls){
 function mkGear(){
   var b=el("button","lng3d hm gr");b.type="button";b.setAttribute("aria-label","Settings");b.innerHTML='<span class="le">\u2699\uFE0F</span>';
   b.addEventListener("click",function(){go("set")});return b}
+function mkAcc(){
+  var b=el("button","lng3d hm ac");b.type="button";b.setAttribute("aria-label","Account");
+  b.addEventListener("click",accBox);return b}
+function accBox(){
+  var A={g:{gu:"મહેમાન",go:"Google થી Login",lo:"લૉગઆઉટ"},e:{gu:"Guest",go:"Login with Google",lo:"Log out"},r:{gu:"Mehman",go:"Google thi Login",lo:"Logout"}}[L];
+  var guest=SatsangAuth.isGuest&&SatsangAuth.isGuest();
+  var o=dlg('<div class="acp"><span class="acf"></span><b class="acn"></b><small class="acs"></small><button type="button" class="ack"></button></div>');
+  var nm=o.querySelector(".acn"),sb=o.querySelector(".acs"),k=o.querySelector(".ack");
+  sb.textContent=guest?A.gu:"";k.textContent=guest?A.go:A.lo;
+  k.addEventListener("click",function(){k.disabled=true;(guest?SatsangAuth.linkGoogle():SatsangAuth.signOut()).then(function(){if(!guest)o.remove()},function(){k.disabled=false})});
+  SatsangAuth.profile().then(function(p){nm.textContent=p.name||"";if(!guest)sb.textContent=p.email||""},function(){});
+}
 function themeVars(n){for(var k in T0.v)n.style.setProperty(k,T0.v[k]);n.style.setProperty("--bg","url(themes/"+TD()+"/bg.webp)")}
 function img(src){var i=new Image();i.src=src;i.alt="";i.decoding="async";i.draggable=false;return i}
 function lab(txt,top,size,left,w){var s=el("span","st",txt);s.style.top=px(top);s.style.fontSize=px(size);if(left!=null){s.style.left=px(left);s.style.width=px(w)}return s}
 function home(t){
   if(CLS())return homeClassic(t);
   var st=el("div","stage");themeVars(st);
-  st.appendChild(mkLang("hm"));st.appendChild(mkGear());
+  st.appendChild(mkLang("hm"));st.appendChild(mkAcc());st.appendChild(mkGear());
   var sc=el("div","sc");st.appendChild(sc);var stm=st;st=sc;
   var om=el("div","el om");box(om,T0.om);om.appendChild(img("themes/"+TD()+"/om.webp"));st.appendChild(om);
   var ti=lab(t.h1,T0.ti[0],T0.ti[1]);ti.className="st ti";st.appendChild(ti);
@@ -319,7 +339,7 @@ function home(t){
 }
 function homeClay(t){
   var st=el("div","stage");themeVars(st);
-  st.appendChild(mkLang("hm"));st.appendChild(mkGear());
+  st.appendChild(mkLang("hm"));st.appendChild(mkAcc());st.appendChild(mkGear());
   var sc=el("div","sc");st.appendChild(sc);
   var bg=img("themes/adhyatmik/mati/home.webp");bg.style.cssText="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none";sc.appendChild(bg);
   var cv=el("div","cov");box(cv,[284,165,286,307]);cv.style.borderRadius=px(44);sc.appendChild(cv);
