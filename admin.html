@@ -61,8 +61,8 @@ h2{font:700 18px/1.3 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif;margin:0 0 1
 .mk{display:block;min-height:36px;margin-top:4px;padding:0 12px;border:1px solid var(--line);border-radius:18px;background:none;color:inherit;font:600 13px 'Noto Sans Gujarati',sans-serif;cursor:pointer}
 .fb.rd{opacity:.6}.ms{overflow-wrap:anywhere;white-space:pre-wrap}
 span.col{cursor:default}
-html,body{height:100%;overflow:hidden}
-.app{height:100vh;height:100dvh;max-width:560px;margin:auto;display:flex;flex-direction:column;padding:max(8px,env(safe-area-inset-top)) 12px 0;position:relative}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+.app{position:fixed;top:0;right:0;bottom:0;left:0;max-width:560px;margin:0 auto;display:flex;flex-direction:column;padding:max(8px,env(safe-area-inset-top)) 12px 0;overscroll-behavior:none}
 .app header{margin-bottom:6px}.app h1{font-size:20px}.app .x{width:40px;height:40px}
 #pg{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
 #pg .card{padding:10px 12px;margin-bottom:8px}#pg h2{font-size:16px;margin:0 0 6px}#pg h2 small{font-weight:600;font-size:13px;color:var(--muted);margin-left:6px}
@@ -174,9 +174,11 @@ function renderExtra(x,fb){S.x=x;S.fb=fb;draw()}
 (function(){var el=document.getElementById("pg"),x0=0,y0=0,on=false;
  el.addEventListener("touchstart",function(e){if(e.touches.length!==1){on=false;return}on=true;x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
  el.addEventListener("touchend",function(e){if(!on)return;on=false;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.5)return;var i=ORD.indexOf(S.tab)+(dx<0?1:-1);if(i>=0&&i<ORD.length)go(ORD[i])},{passive:true})})();
-function when(s){if(!s)return "હજી રમ્યા નથી";var d=new Date(s),p=new Intl.DateTimeFormat("en-CA",{timeZone:"Australia/Adelaide",year:"numeric",month:"2-digit",day:"2-digit"}).format(d);return day(p)}
+var TZ="Australia/Perth";try{TZ=Intl.DateTimeFormat().resolvedOptions().timeZone||TZ}catch(e){}
+var TZN=TZ.split("/").pop().replace(/_/g," ");
+function when(s){if(!s)return "હજી રમ્યા નથી";var d=new Date(s),p=new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit"}).format(d);return day(p)}
 function country(z){if(!z)return "";var M={"Asia/Kolkata":"ભારત","Asia/Calcutta":"ભારત","Pacific/Auckland":"ન્યૂઝીલેન્ડ","Europe/London":"યુ.કે.","Africa/Nairobi":"કેન્યા","Africa/Kampala":"યુગાન્ડા","Africa/Dar_es_Salaam":"ટાન્ઝાનિયા","Asia/Dubai":"યુ.એ.ઈ.","Asia/Singapore":"સિંગાપોર","America/Toronto":"કેનેડા","America/Vancouver":"કેનેડા","America/Edmonton":"કેનેડા","America/Winnipeg":"કેનેડા"};if(M[z])return M[z];if(/^Australia\//.test(z))return "ઑસ્ટ્રેલિયા";if(/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise)$/.test(z))return "અમેરિકા";return z.split("/").pop().replace(/_/g," ")}
-function clock(s){var d=new Date(s),p=new Intl.DateTimeFormat("en-GB",{timeZone:"Australia/Adelaide",hour:"2-digit",minute:"2-digit",hour12:false}).format(d);return gu(p)}
+function clock(s){var d=new Date(s),p=new Intl.DateTimeFormat("en-GB",{timeZone:TZ,hour:"2-digit",minute:"2-digit",hour12:false}).format(d);return gu(p)}
 function openUser(u){var o=document.createElement("div");o.className="ov";
  o.innerHTML='<div class="wrap"><header><h1>'+esc(u.name||u.email||"નામ નથી")+'</h1><button class="x" aria-label="પાછા">✕</button></header><div class="note">'+esc(u.email||"👤 મહેમાન (Login વગર)")+'</div><section class="card"><div class="tiles" style="margin-top:0"><div class="tile" style="border:0;padding:0"><b>'+num(u.plays)+'</b><small>વાર રમ્યા</small></div><div class="tile" style="border:0;padding:0"><b>'+num(u.finishes)+'</b><small>પૂરી કરી</small></div><div class="tile" style="border:0;padding:0"><b>'+dur(u.total_seconds)+'</b><small>કુલ સમય</small></div></div></section><section class="card"><h2>ગેમ પ્રમાણે</h2>'+((u.games||[]).map(function(g){return '<div class="game"><div class="gh"><span>'+esc(GAMES[g.game]||g.game)+'</span><span>'+num(g.plays)+' વાર</span></div><div class="gs"><span>✓ '+num(g.finishes)+' પૂરી</span><span>⏱ '+dur(g.total_seconds)+'</span></div></div>'}).join("")||'<div class="sm">હજી કોઈ ગેમ નથી</div>')+'</section><section class="card"><h2>હિસ્ટ્રી (છેલ્લી ૧૦૦ નોંધ)</h2><div class="hl"><div class="sm">લાવી રહ્યા છીએ…</div></div></section></div>';
  o.querySelector(".x").addEventListener("click",function(){o.remove()});document.body.appendChild(o);
@@ -194,7 +196,7 @@ function load(c){
  window.AdminPage.markRead=function(f,cb){call("admin_mark_feedback_read",{target:f.id}).then(function(){cb(true)},function(){cb(false)})};
  Promise.all([call("admin_stats"),call("admin_users"),call("admin_extra_stats"),call("admin_feedback")]).then(function(r){
   render(r[0]);renderExtra(r[2],r[3]);renderUsers(r[1]);
-  document.getElementById("upd").textContent="સમય Adelaide પ્રમાણે · "+when(new Date().toISOString())+", "+clock(new Date().toISOString())
+  document.getElementById("upd").textContent="સમય "+TZN+" પ્રમાણે · "+when(new Date().toISOString())+", "+clock(new Date().toISOString())
  }).catch(function(e){fail(e&&e.code==="42501"?"આ પાનું ફક્ત એડમિન માટે છે.":"આંકડા લાવી ન શકાયા. નેટ ચકાસીને ફરી ખોલો.")})}
 if(window.SatsangAuth)SatsangAuth.ready().then(function(c){return c.auth.getSession().then(function(r){if(r.data.session)load(c)})}).catch(function(){fail("આંકડા લાવી ન શકાયા. નેટ ચકાસીને ફરી ખોલો.")});
 })();
