@@ -1,0 +1,31 @@
+<!doctype html><html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>તપાસ</title>
+<style>body{margin:0;padding:16px;font:15px/1.5 system-ui,sans-serif;background:#fdf5e8;color:#4a2c1c}h1{font-size:20px;margin:0 0 10px}pre{white-space:pre-wrap;word-break:break-all;background:#fff;border-radius:12px;padding:12px;font-size:13px}button{font:700 16px system-ui;padding:12px 18px;border:0;border-radius:24px;background:#e8845f;color:#fff;margin:6px 0}</style></head>
+<body><h1>સત્સંગ બોક્સ તપાસ</h1><p>આ પાનાનો ફોટો Claude ને મોકલો.</p><pre id="o">…</pre><button id="b">હમણાં મોકલો</button><pre id="r"></pre>
+<script src="analytics.js"></script>
+<script>
+(function(){
+function g(k){try{return localStorage.getItem(k)}catch(e){return 'ERR '+e.message}}
+var L=[],t=null;try{t=JSON.parse(g('sb-fexjcqyaopfilwixwfpn-auth-token')||'null')}catch(e){}
+L.push('સમય: '+new Date().toString().slice(0,24));
+L.push('નેટ: '+(navigator.onLine?'ચાલુ':'બંધ'));
+L.push('Login: '+(t&&t.access_token?'હા':'ના')+(t&&t.expires_at?' · ટોકન પૂરો: '+new Date(t.expires_at*1000).toTimeString().slice(0,8)+(t.expires_at*1000<Date.now()?' (પૂરો થઈ ગયો!)':' (ચાલુ)'):''));
+L.push('મહેમાન: '+(t&&t.user&&t.user.is_anonymous?'હા':'ના'));
+var ob=[];try{ob=JSON.parse(g('sbOutbox')||'[]')}catch(e){L.push('કતાર વાંચી ન શકાઈ')}
+L.push('કતારમાં: '+ob.length);ob.slice(0,3).forEach(function(x,i){L.push('  '+(i+1)+'. '+x.t+' '+(x.r&&x.r.event||x.r&&x.r.kind||'')+' '+(x.r&&x.r.game||''))});
+var n=0;try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);n+=k.length+(localStorage.getItem(k)||'').length}}catch(e){}
+L.push('ફોનમાં સાચવેલું: '+Math.round(n/1024)+' KB');
+try{localStorage.setItem('sbDiagTest','x');localStorage.removeItem('sbDiagTest');L.push('સાચવી શકાય: હા')}catch(e){L.push('સાચવી શકાય: ના — '+e.name)}
+
+document.getElementById('o').textContent=L.join('\n');
+if(navigator.serviceWorker&&caches)caches.keys().then(function(k){document.getElementById('o').textContent+='\nકેશ: '+k.join(', ')});
+fetch('analytics.js',{cache:'no-store'}).then(function(r){return r.text()}).then(function(s){document.getElementById('o').textContent+='\nanalytics.js (નેટ): '+(/sbName/.test(s)?'નવું':'જૂનું')}).catch(function(){});
+caches&&caches.match('analytics.js',{ignoreSearch:true}).then(function(r){return r&&r.text()}).then(function(s){if(s!=null)document.getElementById('o').textContent+='\nanalytics.js (ફોનમાં): '+(/sbName/.test(s)?'નવું':'જૂનું')});
+document.getElementById('b').onclick=function(){
+ var ob=[];try{ob=JSON.parse(g('sbOutbox')||'[]')}catch(e){}
+ var tk=t&&t.access_token;if(!ob.length){document.getElementById('r').textContent='કતાર ખાલી છે';return}
+ if(!tk){document.getElementById('r').textContent='Login ટોકન નથી';return}
+ fetch('https://fexjcqyaopfilwixwfpn.supabase.co/rest/v1/'+ob[0].t+(ob[0].t==='game_events'?'?on_conflict=user_id,client_event_id':''),{method:'POST',headers:{apikey:'sb_publishable_RCGMIsbR27_gu6aUZ_3pUg_OajpxBhL',Authorization:'Bearer '+tk,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify([ob[0].r])})
+ .then(function(r){return r.text().then(function(x){document.getElementById('r').textContent='જવાબ: '+r.status+' '+x.slice(0,300)})})
+ .catch(function(e){document.getElementById('r').textContent='ભૂલ: '+e.message})};
+})();
+</script></body></html>
