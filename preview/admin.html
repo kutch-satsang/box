@@ -118,7 +118,7 @@ button.go{cursor:pointer}
 <script src="auth.js"></script>
 <script>
 (function(){
-var GAMES={"prashn-leela":"સત્સંગ પ્રશ્ન","dhyan-murti":"ધ્યાન દર્શન","antahshatru-vijay":"અંતઃશત્રુ વિજય","fal-ful-memory":"ફળ ફૂલ મેમરી","ekadashi":"એકાદશી"};
+var GAMES={"prashn-leela":"સત્સંગ પ્રશ્ન","dhyan-murti":"ધ્યાન દર્શન","antahshatru-vijay":"અંતઃશત્રુ વિજય","fal-ful-memory":"ફળ ફૂલ મેમરી","ekadashi":"એકાદશી","charanvidhi":"ચરણવિધિ માસ્ટર"};
 var LANGS={g:"ગુજરાતી",e:"English",r:"ABC"},THEMES={mati:"આધ્યાત્મિક",kaach:"ક્લાસિક"},UNK="નોંધાયું નથી";
 var MON=["જાન્યુ","ફેબ્રુ","માર્ચ","એપ્રિ","મે","જૂન","જુલા","ઑગ","સપ્ટે","ઑક્ટો","નવે","ડિસે"];
 function gu(n){return String(n).replace(/\d/g,function(d){return "૦૧૨૩૪૫૬૭૮૯"[d]})}
@@ -177,7 +177,7 @@ function tabMore(){var d=S.d,x=S.x||{},total=d.total_users||0,c=byCountry(x),h="
  return h}
 function tabFb(){var fb=S.fb||[],I={idea:"💡",bug:"🐞",thanks:"🙏"},pg=pager("fp",fb.length,FP),page=fb.slice(S.fp*FP,S.fp*FP+FP);
  return '<section class="card"><h2>💬 ફીડબેક <small>'+num((S.x||{}).unread_feedback)+' નવા</small></h2>'+(page.length?page.map(function(f,i){return '<div class="hd fb'+(f.is_read?" rd":"")+'" data-i="'+i+'"><span class="ic">'+(I[f.kind]||"💬")+'</span><span class="tx"><b>'+esc(f.name||f.email||"નામ નથી")+(f.game?" · "+esc(GAMES[f.game]||f.game):"")+'</b><small class="ms">'+esc(f.message)+'</small>'+(f.is_read?'':'<button class="mk">✓ વાંચ્યું</button>')+'</span><span class="tm">'+when(f.created_at)+", "+clock(f.created_at)+(country(f.time_zone)?'<small class="ct">📍 '+esc(country(f.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ફીડબેક નથી</div>')+pg+'</section>'}
-var DEPT=[["📚","જ્ઞાન-પ્રશ્ન",["prashn-leela","ekadashi"]],["🙏","ધ્યાન-ભક્તિ",["dhyan-murti"]],["🧠","યાદશક્તિ",["fal-ful-memory"]],["🎉","મજાની રમત",["antahshatru-vijay"]]];
+var DEPT=[["📚","જ્ઞાન-પ્રશ્ન",["prashn-leela","ekadashi"]],["🙏","ધ્યાન-ભક્તિ",["dhyan-murti","charanvidhi"]],["🧠","યાદશક્તિ",["fal-ful-memory"]],["🎉","મજાની રમત",["antahshatru-vijay"]]];
 function tabSw(){var l=S.sw;if(!l)return '<section class="card"><div class="sm">લાવી રહ્યા છીએ…</div></section>';
  var used={},h='';
  function rows(a){return a.map(function(g){return '<div class="swr"><span><b>'+esc(GAMES[g.game]||g.game)+'</b><small>'+(g.enabled?'બધા ભક્તો રમી શકે':'ભક્તોને "કામ ચાલુ છે" · તમે રમી શકો 🧪')+'</small></span><button class="swb'+(g.enabled?' on':'')+'" data-sw="'+l.indexOf(g)+'" aria-pressed="'+g.enabled+'">'+(g.enabled?'ON':'OFF')+'</button></div>'}).join("")}
