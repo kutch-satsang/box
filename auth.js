@@ -54,9 +54,7 @@ css.textContent=
 ".sbg{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;padding:8px 14px;border:1px solid #dadce0;border-radius:26px;background:#fff;color:#2b2b2b;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}"+
 ".sbg:active{transform:translateY(1px)}.sbg:disabled{opacity:.6;cursor:default}.sbg svg{flex:none;width:20px;height:20px}"+
 ".sbn{margin:10px 0 0;font-size:13px;line-height:1.45;color:#7b5a3a}.sbn:empty{display:none}.sbn.bad{color:#a4371c;font-weight:600}"+
-".sbl-row{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;display:inline-flex;gap:2px;padding:3px;border-radius:18px;background:rgba(255,248,236,.85);box-shadow:0 2px 6px rgba(120,80,40,.15)}"+
-".sbl-row button{min-width:46px;min-height:36px;padding:0 10px;border:0;border-radius:15px;background:none;color:inherit;font:600 13px 'Hind Vadodara',sans-serif;cursor:pointer}"+
-".sbl-row button.on{background:#e8845f;color:#fff}";
+".sbl-one{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;min-width:72px;min-height:40px;padding:0 14px;border:0;border-radius:20px;background:#e8845f;color:#fff;font:700 15px 'Hind Vadodara',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(120,80,40,.25);-webkit-tap-highlight-color:transparent}.sbl-one:active{transform:translateY(1px)}";
 (document.head||root).appendChild(css);
 
 function draw(){
@@ -70,7 +68,7 @@ function draw(){
   btn.disabled=kb.disabled=!!busy;
   var k=msgKey||(webview()?"wv":(navigator.onLine===false?"off":""));
   note.textContent=k?t[k]:"";note.classList.toggle("bad",!!k);
-  [].forEach.call(gate.querySelectorAll(".sbl-row button"),function(b){b.classList.toggle("on",b.getAttribute("data-l")===l)});
+  gate.querySelector(".sbl-one").textContent="🌐 "+LB[l];
 }
 function buildGate(){
   if(gate)return;
@@ -79,12 +77,12 @@ function buildGate(){
   gate.innerHTML='<div class="sbc"><img class="sbo" src="themes/adhyatmik/mati/om.webp" alt=""><h1 class="sbt"></h1>'+
    '<button class="sbg" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.9 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.9c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 7.1-10.3 7.1-17.7z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.5 0 20.1 0 24s1 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.7-6c-2.1 1.4-4.9 2.3-8.1 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span class="sbgt"></span></button>'+
    '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="go"></label>'+
-   '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><div class="sbl-row">'+["g","e","r"].map(function(k){return '<button type="button" data-l="'+k+'">'+LB[k]+"</button>"}).join("")+"</div>";
+   '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><button class="sbl-one" type="button" aria-label="Language"></button>';
   gate.querySelector(".sbg").addEventListener("click",login);
   gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad")});
   gate.querySelector(".sbfm").addEventListener("submit",function(e){e.preventDefault();guest()});
-  gate.querySelector(".sbl-row").addEventListener("click",function(e){
-    var k=e.target.getAttribute("data-l");if(!k)return;
+  gate.querySelector(".sbl-one").addEventListener("click",function(){
+    var o=["g","e","r"],k=o[(o.indexOf(lang())+1)%3];
     if(window.SatsangBox)SatsangBox.set("lang",k);else try{localStorage.setItem("satsangLang",k)}catch(x){}
     draw();
   });
