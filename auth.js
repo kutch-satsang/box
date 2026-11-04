@@ -19,9 +19,9 @@ if(inGame){
 }
 
 var T={
- g:{or:"અથવા",nm:"First & Last name",guest:"Login વગર આગળ વધો",need:"પૂરું નામ લખો (નામ અને અટક).",btn:"Google થી Login કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
- e:{or:"or",nm:"First & Last name",guest:"Continue without login",need:"Please write your full name (first and last).",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
- r:{or:"athva",nm:"First & Last name",guest:"Login vagar aagal vadho",need:"Puru naam lakho (naam ane atak).",btn:"Google thi Login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
+ g:{or:"અથવા",nm:"First & Last name",guest:"Login વગર આગળ વધો",need:"પૂરું નામ લખો (નામ અને અટક).",taken:"આ નામ લેવાઈ ગયું છે. પાછળ નંબર ઉમેરો, દા.ત. રમેશ પટેલ 2",btn:"Google થી Login કરો",note:"એક વાર લૉગિન કર્યા પછી નેટ વગર પણ રમી શકાશે.",busy:"લૉગિન થાય છે…",off:"પહેલી વાર લૉગિન માટે ઇન્ટરનેટ જોઈએ.",err:"લૉગિન ન થયું. ફરી પ્રયત્ન કરો.",wv:"આ પાનું Chrome કે Safari માં ખોલો, નહીંતર Google લૉગિન નહીં થાય."},
+ e:{or:"or",nm:"First & Last name",guest:"Continue without login",need:"Please write your full name (first and last).",taken:"This name is already taken. Add a number at the end, e.g. Ramesh Patel 2",btn:"Continue with Google",note:"After one login you can play without internet.",busy:"Signing in…",off:"The first login needs internet.",err:"Login failed. Please try again.",wv:"Open this page in Chrome or Safari. Google login will not work here."},
+ r:{or:"athva",nm:"First & Last name",guest:"Login vagar aagal vadho",need:"Puru naam lakho (naam ane atak).",taken:"Aa naam levai gayu chhe. Pachhal number umero, d.t. Ramesh Patel 2",btn:"Google thi Login karo",note:"Ek vaar login karya pachhi net vagar pan rami shakashe.",busy:"Login thay chhe…",off:"Paheli vaar login mate internet joie.",err:"Login na thayu. Fari prayatna karo.",wv:"Aa panu Chrome ke Safari ma kholo, nahintar Google login nahi thay."}
 };
 var NAME={g:"સત્સંગ બોક્સ",e:"Satsang Box",r:"Satsang Box"};
 var LB={g:"G",e:"E",r:"G.a"};
@@ -79,7 +79,7 @@ function buildGate(){
    '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="go"></label>'+
    '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><button class="sbl-one" type="button" aria-label="Language"></button>';
   gate.querySelector(".sbg").addEventListener("click",login);
-  gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad")});
+  gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad");if(msgKey==="taken"){msgKey="";draw()}});
   gate.querySelector(".sbfm").addEventListener("submit",function(e){e.preventDefault();guest()});
   gate.querySelector(".sbl-one").addEventListener("click",function(){
     var o=["g","e","r"],k=o[(o.indexOf(lang())+1)%3];
@@ -122,12 +122,15 @@ function login(){
 
 function okName(v){
   /* ફક્ત અક્ષરો (ગુજરાતી/English), ઓછામાં ઓછા બે શબ્દ, દરેકમાં ૨+ અક્ષર, એક જ શબ્દ બધે નહીં */
-  var w=v.split(" ");if(w.length<2)return false;
+  var w=v.split(" ");
+  /* અંતે એક નંબર ૧–૯૯ ચાલે (એક જ નામના બીજા ભક્ત માટે) */
+  if(w.length>2&&/^[1-9][0-9]?$|^[૧-૯][૦-૯]?$/.test(w[w.length-1]))w=w.slice(0,-1);
+  if(w.length<2)return false;
   var re=/^(?:[a-zA-Z]|[\u0A81-\u0AE3])+$/;
   for(var i=0;i<w.length;i++){if(!re.test(w[i])||!/[a-zA-Z\u0A85-\u0AB9]/.test(w[i]))return false;if(w[i].replace(/[\u0A81-\u0A83\u0ABC-\u0AD0]/g,"").length<2)return false}
   var low=w.map(function(x){return x.toLowerCase()});
   if(low.every(function(x){return x===low[0]}))return false;
-  if(/(.)\1\1/.test(v.toLowerCase()))return false;
+  if(/(.)\1\1/.test(w.join(" ").toLowerCase()))return false;
   return true;
 }
 function guest(){
@@ -136,9 +139,16 @@ function guest(){
   if(!okName(v)){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");gate.querySelector(".sbin").focus();return}
   if(navigator.onLine===false){msgKey="off";draw();return}
   busy="n";msgKey="";draw();
-  loadLib().then(function(c){
-    return c.auth.signInAnonymously({options:{data:{full_name:v}}});
-  }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
+  var cl;
+  loadLib().then(function(c){cl=c;return c.rpc("name_taken",{n:v})}).then(function(r){
+    if(r.error)throw r.error;
+    if(r.data===true)throw {taken:true};
+    return cl.auth.signInAnonymously({options:{data:{full_name:v}}});
+  }).then(function(r){if(r&&r.error)throw r.error}).catch(function(e){
+    var t=e&&(e.taken||/name_taken|saving new user/i.test(e.message||""));
+    busy=false;msgKey=t?"taken":"err";draw();
+    if(t){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad")}
+  });
 }
 
 window.addEventListener("online",function(){if(msgKey==="off")msgKey="";draw()});
