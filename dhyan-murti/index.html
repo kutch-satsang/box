@@ -2512,8 +2512,8 @@ if(lq){lq.placeholder='🔍 '+T('શોધો');lq.addEventListener('input',filt
 var stEl=document.createElement('div');stEl.id='savedToast';stEl.hidden=true;stEl.textContent='✓ પ્રગતિ સચવાઈ ગઈ';document.body.appendChild(stEl);
 var stT=null;
 window.dmSaved=function(){setTimeout(function(){var has=false;try{has=!!localStorage.getItem('dm_resume')}catch(e){}if(!has)return;stEl.hidden=false;clearTimeout(stT);stT=setTimeout(function(){stEl.hidden=true},2200)},250)};
-/* નામ-સિસ્ટમ કાઢી નાખી: નામ હબના Login માંથી */
-function getP(){return {n:'',e:'🙏'}}
+/* નામ હબના Login માંથી */
+function getP(){var n='';try{n=(JSON.parse(localStorage.getItem('sbProf'))||{}).name||''}catch(e){}return {n:String(n).slice(0,24),e:'🙏'}}
 /* C: share card */
 function mmss(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
 function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}

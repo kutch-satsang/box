@@ -150,6 +150,54 @@
     document.body.appendChild(w);
   }
 
+  /* ---- ભક્તનું નામ: ગેમ ખૂલે ત્યારે થોડી વાર, પૂરી થાય ત્યારે શાબાશી ---- */
+  function myName(){ try{ return (JSON.parse(localStorage.getItem('sbProf')) || {}).name || ''; }catch(e){ return ''; } }
+    /* ઉપરની પટ્ટીમાં દેખાતી વસ્તુઓ: જમણી બાજુનું બટન અને ડાબી બાજુ ક્યાં સુધી જગ્યા ભરાયેલી છે */
+  function topBand(){
+    var W = innerWidth, right = W - 10, left = 0;
+    [].forEach.call(document.querySelectorAll('body *'), function(e){
+      if(e.id === 'sbName' || e.closest('#sbName') || (e.children.length && !/^(BUTTON|A)$/.test(e.tagName))) return;
+      var r = e.getBoundingClientRect();
+      if(!r.width || !r.height || r.width > W * .8 || r.top > 70 || r.bottom < 6) return;
+      var t = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      if(!t || !(t === e || e.contains(t) || t.contains(e))) return;
+      if(r.left > W / 2 && r.width < 70 && /^(BUTTON|A)$/.test(e.tagName)){ if(r.left - 8 < right) right = r.left - 8; }
+      else if(r.right > left) left = r.right;
+    });
+    return {right:right, left:left};
+  }
+  function pill(text, ms, top){
+    if(!text || !document.body) return;
+    var old = document.getElementById('sbName'); if(old) old.remove();
+    var kaach = theme() === 'kaach', d = document.createElement('div');
+    d.id = 'sbName';
+    var ic = document.createElement('img'), tx = document.createElement('span');
+    ic.src = '../themes/adhyatmik/mati/acc.webp'; ic.alt = ''; ic.style.cssText = 'flex:none;width:30px;height:30px;border-radius:50%;object-fit:cover';
+    tx.textContent = text; tx.style.cssText = 'overflow:hidden;text-overflow:ellipsis';
+    d.appendChild(ic); d.appendChild(tx);
+    d.style.cssText = "position:fixed;z-index:2147483100;max-width:calc(100vw - 32px);box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:4px 16px 4px 4px;border-radius:99px;font:700 15px 'Noto Sans Gujarati','Hind Vadodara',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;opacity:0;transition:opacity .35s;box-shadow:0 3px 10px rgba(60,35,20,.28);" + (kaach ? 'background:rgba(255,255,255,.92);color:#2b3445' : 'background:#fdf5e8;color:#4a2c1c');
+    document.body.appendChild(d);
+    if(top){
+      var b = topBand(), W = innerWidth;
+      d.style.top = 'calc(10px + env(safe-area-inset-top))'; d.style.right = Math.max(10, W - b.right) + 'px';
+      if(d.offsetWidth > b.right - b.left - 8){ tx.remove(); d.style.padding = '3px'; }
+    }else{
+      d.style.left = '50%'; d.style.transform = 'translateX(-50%)'; d.style.bottom = 'calc(10px + env(safe-area-inset-bottom))';
+    }
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ d.style.opacity = 1; }); });
+    setTimeout(function(){ d.style.opacity = 0; setTimeout(function(){ d.remove(); }, 400); }, ms);
+  }
+  function greet(){
+    if(GAME === 'hub') return;
+    var had = myName();
+    if(had) setTimeout(function(){ pill(had, 4000, true); }, 700);
+    if(window.SatsangAuth && SatsangAuth.profile) SatsangAuth.profile().then(function(p){
+      if(!had && p && p.name) pill(p.name, 4000, true);
+    }, function(){});
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', greet); else greet();
+  var WELL = {g:'શાબાશ, {n}!', e:'Well done, {n}!', r:'Shabash, {n}!'};
+
   var T = function(name, p){ send(name, p); };
   T.start = function(p, once){
     if(once && st.on && !st.done) return;
@@ -165,7 +213,10 @@
     send('game_finish', p);
     if(first){
       record('finish', p.sec);
-      if(p.mode !== 'practice') setTimeout(askStars, 1800);
+      if(p.mode !== 'practice'){
+        if(myName()) pill((WELL[lang()] || WELL.g).replace('{n}', myName()), 1700);
+        setTimeout(askStars, 1800);
+      }
     }
   };
   T.where = function(w){ st.where = String(w || ''); };
