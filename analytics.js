@@ -1,6 +1,6 @@
 /* સત્સંગ બોક્સ — આંકડા: Google Analytics 4 (નં. 48) + Supabase (દરેક ભક્તના)
    - Google Analytics માં નામ, ફોટો, satsangPlayer ક્યારેય મોકલાતાં નથી.
-   - Supabase માં રમત શરૂ/પૂરી અને ⭐ લૉગિન થયેલા ભક્તના ખાતામાં નોંધાય.
+   - Supabase માં રમત શરૂ/પૂરી/અધૂરી અને ⭐ લૉગિન થયેલા ભક્તના ખાતામાં નોંધાય.
    - નેટ ન હોય તો ફોનમાં કતારમાં રહે (sbOutbox), નેટ આવે ત્યારે જાય.
    - ફક્ત લાઈવ સાઈટ (github.io) પરથી જ મોકલે; પ્રિવ્યુ/ફાઈલમાં ફક્ત console માં દેખાય.
    - ઇન્ટરનેટ ન હોય કે Google રોકાય તો ગેમ પર કોઈ અસર નહીં.
@@ -71,7 +71,7 @@
       return o.access_token;
     }catch(e){ return null; }
   }
-  function queue(table, row){ row.client_event_id = uuid(); var a = load(); a.push({t:table, r:row}); save(a); flush(); }
+  function queue(table, row, keep){ row.client_event_id = uuid(); var a = load(); a.push({t:table, r:row}); save(a); flush(keep); }
   function post(table, rows, tk, keep){
     /* feedback ને SELECT હક નથી: સાદું insert, ડુપ્લિકેટ હોય તો 409 */
     var q = table === 'game_events' ? '?on_conflict=user_id,client_event_id' : '';
@@ -99,11 +99,11 @@
   }
   window.sbFlush = flush;
   window.sbClearOutbox = function(){ try{ localStorage.removeItem(BOX); }catch(e){} };
-  function record(ev, sec){
+  function record(ev, sec, keep){
     if(GAME === 'hub') return;
     var r = {game:GAME, event:ev, language:lang(), theme:theme(), played_at:new Date().toISOString(), time_zone:zone()};
-    if(ev === 'finish' && sec != null) r.duration_seconds = Math.min(86400, Math.max(0, Math.round(sec)));
-    queue('game_events', r);
+    if(ev !== 'start' && sec != null) r.duration_seconds = Math.min(86400, Math.max(0, Math.round(sec)));
+    queue('game_events', r, keep);
   }
   window.addEventListener('online', function(){ flush(); });
   window.addEventListener('pagehide', function(){ flush(true); });
@@ -176,7 +176,9 @@
   function leave(){
     if(st.on && !st.done && !st.quit){
       st.quit = 1;
-      send('game_quit', {where:st.where, sec: st.t0 ? Math.round((Date.now() - st.t0) / 1000) : 0});
+      var sec = st.t0 ? Math.round((Date.now() - st.t0) / 1000) : 0;
+      send('game_quit', {where:st.where, sec:sec});
+      record('quit', sec, true);
     }
   }
   window.addEventListener('pagehide', leave);
