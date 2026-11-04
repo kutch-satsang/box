@@ -120,10 +120,20 @@ function login(){
   }).then(function(r){if(r&&r.error)throw r.error}).catch(function(){busy=false;msgKey="err";draw()});
 }
 
+function okName(v){
+  /* ફક્ત અક્ષરો (ગુજરાતી/English), ઓછામાં ઓછા બે શબ્દ, દરેકમાં ૨+ અક્ષર, એક જ શબ્દ બધે નહીં */
+  var w=v.split(" ");if(w.length<2)return false;
+  var re=/^(?:[a-zA-Z]|[\u0A81-\u0AE3])+$/;
+  for(var i=0;i<w.length;i++){if(!re.test(w[i])||!/[a-zA-Z\u0A85-\u0AB9]/.test(w[i]))return false;if(w[i].replace(/[\u0A81-\u0A83\u0ABC-\u0AD0]/g,"").length<2)return false}
+  var low=w.map(function(x){return x.toLowerCase()});
+  if(low.every(function(x){return x===low[0]}))return false;
+  if(/(.)\1\1/.test(v.toLowerCase()))return false;
+  return true;
+}
 function guest(){
   if(busy)return;
   var v=gate.querySelector(".sbin").value.replace(/\s+/g," ").trim();
-  if(v.split(" ").length<2||v.length<4){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");gate.querySelector(".sbin").focus();return}
+  if(!okName(v)){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");gate.querySelector(".sbin").focus();return}
   if(navigator.onLine===false){msgKey="off";draw();return}
   busy="n";msgKey="";draw();
   loadLib().then(function(c){
