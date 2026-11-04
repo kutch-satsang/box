@@ -193,6 +193,9 @@ html.cl .acr{background:linear-gradient(150deg,rgba(255,255,255,.72),rgba(255,25
 .setp .spriv{display:block;width:max-content;margin:6px auto 0;padding:6px 10px;font-size:12px;color:inherit;text-decoration:underline}
 html.cl .setp .spriv{margin-top:2px;padding:2px 10px}
 .setp .sver{cursor:default;-webkit-user-select:none;user-select:none;text-align:center;margin-top:2px}
+#insB{position:fixed;left:50%;bottom:max(10px,env(safe-area-inset-bottom));z-index:900;display:flex;align-items:center;gap:4px;width:min(calc(100vw - 24px),400px);padding:4px;transform:translateX(-50%);border-radius:26px;background:#fff6e6;box-shadow:0 .4rem 1.1rem rgba(60,35,20,.35)}
+#insB button{border:0;background:none;color:#4a2c1c;cursor:pointer}#insB .ig{flex:1;min-height:44px;border-radius:22px;background:#e8845f;color:#fff;font:700 15px/1.2 'Noto Sans Gujarati',sans-serif}#insB .ix{flex:none;width:44px;height:44px;font-size:18px}
+.sdc ol{margin:0 0 10px;padding-left:22px;font-size:15px;line-height:1.7}.sdc .inso{display:block;width:100%;min-height:46px;border:0;border-radius:23px;background:#e8845f;color:#fff;font:700 15px 'Noto Sans Gujarati',sans-serif;cursor:pointer}
 .sdlg{position:fixed;inset:0;z-index:2147482000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(60,35,20,.45);color:#4a2c1c}
 .sdc{width:100%;max-width:360px;max-height:100%;overflow:auto;padding:18px;border-radius:24px;background:linear-gradient(160deg,#fdf5e8,#f3e3cb);box-shadow:0 .7rem 1.6rem rgba(60,35,20,.4)}
 .sdc h3{margin:0 0 10px;font:700 20px/1.3 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif}.sdc p{margin:0 0 8px;font-size:14px;line-height:1.45}
@@ -423,7 +426,7 @@ function special(w,t,zid){
     var rs=[];if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)rs.push(navigator.serviceWorker.getRegistrations().then(function(a){return Promise.all(a.map(function(x){return x.unregister()}))}));
     if(window.caches)rs.push(caches.keys().then(function(a){return Promise.all(a.map(function(k){return caches.delete(k)}))}));
     Promise.all(rs).catch(function(){}).then(function(){location.reload()})});
-  ar.appendChild(ub);w.appendChild(ar);
+  ar.appendChild(ub);if(insCan()){var ib=el("button",null,(INS[L]||INS.g).b);ib.type="button";ib.addEventListener("click",insGo);ar.classList.add("acc2");ar.appendChild(ib)}w.appendChild(ar);
   var AC={g:{go:"Google થી Login",goE:"ન થયું, ફરી પ્રયત્ન કરો",fb:"💬 સૂચન મોકલો",lo:"🚪 લૉગઆઉટ",del:"🗑 એકાઉન્ટ કાઢી નાખો",pv:"પ્રાઇવસી પૉલિસી"},e:{go:"Login with Google",goE:"Failed, try again",fb:"💬 Send feedback",lo:"🚪 Log out",del:"🗑 Delete account",pv:"Privacy policy"},r:{go:"Google thi Login",goE:"Na thayu, fari prayatna karo",fb:"💬 Suchan moklo",lo:"🚪 Logout",del:"🗑 Account kadhi nakho",pv:"Privacy policy"}}[L];
   var a2=el("div","sset act acc2"),fb=el("button",null,AC.fb),lo=el("button",null,AC.lo);fb.type=lo.type="button";
   fb.addEventListener("click",function(){feedbackBox(L)});
@@ -523,6 +526,32 @@ window.addEventListener("message",function(e){if(!ekF||e.source!==ekF.contentWin
   else if(d.satsangBox==="close")closeEk()
   else if(d.satsangBox==="settings"){try{history.replaceState({p:1},"","#set")}catch(x){location.hash="set";return}render()}});
 var curKey=null,bgT=0;
+/* Home screen પર મૂકવું: Android માં સીધું, iPhone અને બીજે સૂચના */
+var INS={g:{b:"📲 Home screen પર મૂકો",h:"📲 Home screen પર મૂકો",c:"સમજાઈ ગયું",i:["નીચે Share (⬆️) બટન દબાવો","Add to Home Screen પસંદ કરો","ઉપર Add દબાવો"],a:["Chrome ના ઉપરના ⋮ મેનુ દબાવો","Add to Home screen અથવા Install app પસંદ કરો","Install દબાવો"],w:"આ લિંક Chrome અથવા Safari માં ખોલો, પછી આ બટન દબાવો."},
+e:{b:"📲 Add to Home screen",h:"📲 Add to Home screen",c:"Got it",i:["Tap the Share (⬆️) button below","Choose Add to Home Screen","Tap Add at the top"],a:["Tap the ⋮ menu at the top of Chrome","Choose Add to Home screen or Install app","Tap Install"],w:"Open this link in Chrome or Safari, then tap this button."},
+r:{b:"📲 Home screen par muko",h:"📲 Home screen par muko",c:"Samjai gayu",i:["Niche Share (⬆️) button dabavo","Add to Home Screen pasand karo","Upar Add dabavo"],a:["Chrome na upar na ⋮ menu dabavo","Add to Home screen athva Install app pasand karo","Install dabavo"],w:"Aa link Chrome athva Safari ma kholo, pachhi aa button dabavo."}};
+var insEv=null,insBar=null;
+function insDone(){try{return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){return false}}
+function insNo(){try{return localStorage.getItem("sbInstallNo")==="1"}catch(e){return false}}
+function insWv(){return /; wv\)|FBAN|FBAV|Instagram|WhatsApp|Line\/|MicroMessenger/.test(navigator.userAgent)}
+function insIos(){var u=navigator.userAgent;return /iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1)}
+function insCan(){return !insDone()&&(!!insEv||insWv()||navigator.maxTouchPoints>0)}
+function insGo(){
+  var c=INS[L]||INS.g;
+  if(insEv){var ev=insEv;insEv=null;ev.prompt();(ev.userChoice||Promise.resolve({})).then(function(r){if(r.outcome==="accepted")insHide()},function(){});return}
+  var lst=insWv()?null:(insIos()?c.i:c.a);
+  var o=dlg("<h3>"+c.h+"</h3>"+(lst?"<ol>"+lst.map(function(x){return "<li>"+x+"</li>"}).join("")+"</ol>":"<p>"+c.w+"</p>")+'<button type="button" class="inso">'+c.c+"</button>");
+  o.querySelector(".inso").addEventListener("click",function(){o.remove()});
+}
+function insHide(){if(insBar&&insBar.parentNode)insBar.parentNode.removeChild(insBar);insBar=null}
+function insBan(show){
+  if(!show||insNo()||!insCan()){insHide();return}
+  var c=INS[L]||INS.g;
+  if(!insBar){insBar=el("div");insBar.id="insB";var g=el("button","ig");g.type="button";g.addEventListener("click",insGo);var x=el("button","ix","✕");x.type="button";x.setAttribute("aria-label","Close");x.addEventListener("click",function(){try{localStorage.setItem("sbInstallNo","1")}catch(e){}insHide()});insBar.appendChild(g);insBar.appendChild(x);document.body.appendChild(insBar)}
+  insBar.querySelector(".ig").textContent=c.b;
+}
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();insEv=e;if(curKey==="home")insBan(true)});
+window.addEventListener("appinstalled",function(){insEv=null;insHide()});
 /* ગેમ ચાલુ/બંધ: એડમિનમાં નક્કી થાય. નેટ ન હોય તો છેલ્લી સચવાયેલી યાદી, એ પણ ન હોય તો બધી ચાલુ */
 var OFFG=[],ADMG=false,GSK="sbGameOff",gsAt=0,WIP={g:"કામ ચાલુ છે",e:"Coming back soon",r:"Kaam chalu chhe"};
 try{OFFG=JSON.parse(localStorage.getItem(GSK)||"[]")||[]}catch(e){OFFG=[]}
@@ -553,6 +582,7 @@ function render(force){
   for(i=0;i<Z.length;i++)if(Z[i].id===h)zid=h;
   if(zid){gsLoad();gsAdmin()}
   var key=zid||"home";
+  insBan(key==="home"&&!ek);
   if(!force&&key===curKey)return;
   /* Desktop site (html.fit) માં જૂનું-નવું પાનું સાથે રહે તો zoom ગડબડે અને પાનું ઝબકે, એટલે સીધું બદલે */
   var first=curKey===null,quick=first||force==="lang"||document.documentElement.classList.contains("fit");curKey=key;
