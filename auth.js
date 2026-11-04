@@ -49,7 +49,7 @@ css.textContent=
 ".sbt{margin-bottom:16px}#sbGate.cl .sbn,#sbGate.cl .sbor,#sbGate.cl .sbf{color:#5f6b7f}"+
 ".sbor{display:flex;align-items:center;gap:10px;margin:12px 0 10px;font-size:13px;color:#7b5a3a}.sbor:before,.sbor:after{content:'';flex:1;height:1px;background:rgba(120,80,40,.25)}"+
 ".sbf{display:block;text-align:left;margin:0 0 8px;font-size:13px;font-weight:600;color:#7b5a3a}.sbf i{color:#a4371c;font-style:normal}"+
-".sbf input{display:block;width:100%;min-height:46px;margin-top:3px;padding:8px 16px;border:1px solid #e3c9a4;border-radius:23px;background:#fffaf0;color:#4a2c1c;font:500 16px 'Hind Vadodara','Noto Sans Gujarati',sans-serif;outline:none}.sbf input:focus{border-color:#e8845f}"+
+".sbf input{display:block;width:100%;min-height:46px;margin-top:3px;padding:8px 16px;border:1px solid #e3c9a4;border-radius:23px;background:#fffaf0;color:#4a2c1c;font:500 16px 'Hind Vadodara','Noto Sans Gujarati',sans-serif;outline:none}.sbf input:focus{border-color:#e8845f}.sbf.bad input{border:2px solid #c0392b;background:#fff1ec}.sbf.bad{animation:sbsh .4s}@keyframes sbsh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}"+
 ".sbk{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;padding:8px 14px;border:0;border-radius:25px;background:#e8845f;color:#fff;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}.sbk:disabled{opacity:.6}"+
 ".sbg{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;padding:8px 14px;border:1px solid #dadce0;border-radius:26px;background:#fff;color:#2b2b2b;font:600 16px/1.2 'Hind Vadodara','Noto Sans Gujarati',sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(90,60,30,.2);-webkit-tap-highlight-color:transparent}"+
 ".sbg:active{transform:translateY(1px)}.sbg:disabled{opacity:.6;cursor:default}.sbg svg{flex:none;width:20px;height:20px}"+
@@ -81,6 +81,7 @@ function buildGate(){
    '<div class="sbor"></div><form class="sbfm" novalidate><label class="sbf"><span class="sbfl"></span><i>*</i><input class="sbin" type="text" autocomplete="name" maxlength="60" enterkeyhint="go"></label>'+
    '<button class="sbk" type="submit"></button></form><p class="sbn"></p></div><div class="sbl-row">'+["g","e","r"].map(function(k){return '<button type="button" data-l="'+k+'">'+LB[k]+"</button>"}).join("")+"</div>";
   gate.querySelector(".sbg").addEventListener("click",login);
+  gate.querySelector(".sbin").addEventListener("input",function(){gate.querySelector(".sbf").classList.remove("bad")});
   gate.querySelector(".sbfm").addEventListener("submit",function(e){e.preventDefault();guest()});
   gate.querySelector(".sbl-row").addEventListener("click",function(e){
     var k=e.target.getAttribute("data-l");if(!k)return;
@@ -124,7 +125,7 @@ function login(){
 function guest(){
   if(busy)return;
   var v=gate.querySelector(".sbin").value.replace(/\s+/g," ").trim();
-  if(v.split(" ").length<2||v.length<4){msgKey="need";draw();gate.querySelector(".sbin").focus();return}
+  if(v.split(" ").length<2||v.length<4){var f=gate.querySelector(".sbf");f.classList.remove("bad");void f.offsetWidth;f.classList.add("bad");gate.querySelector(".sbin").focus();return}
   if(navigator.onLine===false){msgKey="off";draw();return}
   busy="n";msgKey="";draw();
   loadLib().then(function(c){
