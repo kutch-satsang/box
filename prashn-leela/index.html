@@ -24,7 +24,7 @@ background:linear-gradient(160deg,#fdf5e8,#f3e3cb);box-shadow:0 .5rem 1.1rem rgb
 .frows{display:flex;flex-direction:column;gap:10px}
 .frow{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;border:0;border-radius:18px;padding:15px 16px;font:700 18px/1.25 inherit;font-family:inherit;color:#4a2c1c;text-align:left;cursor:pointer;
 background:linear-gradient(160deg,#fdf5e8,#f3e3cb);box-shadow:0 .4rem .9rem rgba(120,80,40,.2),inset 0 2px 3px #fff}
-.frow{justify-content:flex-start;gap:14px}.fno{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:800 17px/1 system-ui,sans-serif;color:#fff;background:linear-gradient(180deg,#f2a07f,#e8845f);box-shadow:inset 0 -2px 4px rgba(0,0,0,.15),0 2px 5px rgba(120,80,40,.3)}.frow.on .fno{background:#fff;color:#e8845f}
+.frow.fwip{opacity:.5;filter:grayscale(.7);cursor:default}.frow{justify-content:flex-start;gap:14px}.fno{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:800 17px/1 system-ui,sans-serif;color:#fff;background:linear-gradient(180deg,#f2a07f,#e8845f);box-shadow:inset 0 -2px 4px rgba(0,0,0,.15),0 2px 5px rgba(120,80,40,.3)}.frow.on .fno{background:#fff;color:#e8845f}
 .funlock{margin:18px auto 0;display:block;border:1.5px solid #e3a58a;background:transparent;color:#c4622d;border-radius:12px;padding:9px 14px;font:600 14px inherit;font-family:inherit;cursor:pointer}
 #stabs button[data-t="0"],.pane[data-p="0"]{display:none!important}
 </style>
@@ -914,6 +914,10 @@ var MIGR={ram:"ram",maha:"maha",hanu:"hanu",krishna:"krishna",ghan:"swami"};
 function migr(b){Object.keys(MIGR).forEach(function(o){var n=MIGR[o];
 if(b.add[o]){b.add[n+"#0"]=(b.add[n+"#0"]||[]).concat(b.add[o]);delete b.add[o]}
 if(b.hide[o]){if(o!=="ghan")b.hide[o].forEach(function(i){var k=i<10?0:1,j=i<10?i:i-10;(b.hide[n+"#"+k]=b.hide[n+"#"+k]||[]).push(j)});delete b.hide[o]}});return b}
+/* વિભાગની ON/OFF: એડમિનની સ્વીચ (game_status માં "prashn-leela:વિભાગ") */
+var SEC=[],SECA=false;try{SEC=JSON.parse(localStorage.getItem("sbSecOff")||"[]")||[]}catch(e){}
+try{SECA=String(((JSON.parse(localStorage.getItem("sb-fexjcqyaopfilwixwfpn-auth-token"))||{}).user||{}).email||"").toLowerCase()==="vsbhuj@gmail.com"}catch(e){}
+function secOff(id){return !SECA&&SEC.indexOf(id)>=0}
 var BASECATS=[{id:"adh",n:{g:"આધ્યાત્મિક",e:"Spiritual",r:"Adhyatmik"}},{id:"math",n:{g:"ગણિત",e:"Maths",r:"Ganit"}}];
 var MIX={id:"mix",n:{g:"બધા વિભાગ (મિશ્ર)",e:"All sections (mixed)",r:"Badha vibhag (mishra)"}};
 var PRIZES=[100,150,200,250,300,350,400,500];
@@ -954,7 +958,7 @@ function allDepts(){return DEPTS.concat(BANK.depts.map(function(d){return {id:d.
 function allCats(){return BASECATS.concat(BANK.cats)}
 function catOf(d){return d.cat||"adh"}
 function catDepts(c){return allDepts().filter(function(d){return catOf(d)===c})}
-function flatDepts(c){return catDepts(c).filter(function(d){return !d.steps})}
+function flatDepts(c){return catDepts(c).filter(function(d){return !d.steps&&!secOff(d.id)})}
 function kk(id,k){return k==null?id:id+"#"+k}
 function saveProg(){try{localStorage.setItem("naamPetiProg",JSON.stringify(PROG))}catch(e){}}
 function unlocked(id){return PROG[id]||0}
@@ -968,7 +972,7 @@ function saveBank(){try{localStorage.setItem("naamPetiBank",JSON.stringify(BANK)
 if(DB){return DB.doc("bank/custom").set(JSON.parse(JSON.stringify(BANK))).catch(function(){var m=el("qmsg");if(m)m.textContent=T[L].saveErr})}return Promise.resolve()}
 var N=25,set=[],prize=[],st=[],cur=-1;
 if(!allCats().some(function(c){return c.id===CAT}))CAT="adh";
-function fixDep(){if(DEP==="mix"&&flatDepts(CAT).length>=2)return;var d=findDept(DEP);if(!d||catOf(d)!==CAT){var cd=catDepts(CAT);DEP=cd.length?cd[0].id:null}}
+function fixDep(){if(DEP==="mix"&&flatDepts(CAT).length>=2)return;var d=findDept(DEP);if(!d||catOf(d)!==CAT||secOff(DEP)){var cd=catDepts(CAT).filter(function(x){return !secOff(x.id)});DEP=cd.length?cd[0].id:null}}
 fixDep();
 function srcList(){
 var src=[];if(DEP==="mix"){flatDepts(CAT).forEach(function(d){pool(d.id).forEach(function(x){src.push(x)})})}else if(isStep()){if(STEP>unlocked(DEP))STEP=unlocked(DEP);src=pool(DEP,STEP)}else if(DEP)src=pool(DEP);
@@ -1189,7 +1193,7 @@ var del=document.createElement("button");del.type="button";del.textContent=t.del
 var cs=el("cats");cs.innerHTML="";allCats().forEach(function(c){var b=document.createElement("button");b.type="button";b.textContent=c.n[L];b.setAttribute("aria-pressed",c.id===CAT?"true":"false");
 b.addEventListener("click",function(){CAT=c.id;fixDep();STEP=0;QD=null;paintSettings()});cs.appendChild(b)});
 var ul=el("unlock");ul.hidden=!isStep();if(isStep()){var full=unlocked(DEP)>=findDept(DEP).steps.length-1;ul.textContent=full?t.relock:t.unlock;ul.onclick=function(){PROG[DEP]=full?0:findDept(DEP).steps.length-1;if(full)STEP=0;saveProg();paintSettings()}}
-var dlist=catDepts(CAT).slice();if(flatDepts(CAT).length>=2)dlist.push(MIX);
+var dlist=catDepts(CAT).filter(function(x){return !secOff(x.id)});if(flatDepts(CAT).length>=2)dlist.push(MIX);
 var dp=el("dep");dp.innerHTML="";if(!dlist.length){var pe=document.createElement("p");pe.className="small";pe.textContent=t.nodep;dp.appendChild(pe)}
 dlist.forEach(function(d){var b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",d.id===DEP?"true":"false");
 var cntq=d.id==="mix"?flatDepts(CAT).reduce(function(a,x){return a+pool(x.id).length},0):pool(d.id).length;
@@ -1326,12 +1330,14 @@ r:{back:"← Pachha",pick:"Shu ramvu chhe?",sp:"Satsang Prashn",sps:"Ramayan, Ma
 function fLang(id){var lg=el(id);lg.innerHTML="";var N={g:"🌐 ગુ",e:"🌐 En",r:"🌐 G.a"},O=["g","e","r"],b=document.createElement("button");b.type="button";b.className="lgb";b.textContent=N[L];b.setAttribute("aria-label","Language");b.addEventListener("click",function(){L=O[(O.indexOf(L)+1)%3];try{localStorage.setItem("naamPetiLang",L)}catch(e){}paintAll()});lg.appendChild(b)}
 function fShow(id){["pick","vib","gp"].forEach(function(k){el(k).hidden=k!==id});if(id){paintFlow();el(id).scrollTop=0}}
 function fStart(id){DEP=id;var d=id!=="mix"&&findDept(id);STEP=(d&&d.steps)?unlocked(id):0;persistDep();newGame(false);S0=snap();fShow(null);el("home").hidden=true;paintAll();window.scrollTo(0,0)}
+function secLoad(){if(!window.fetch)return;fetch("https://fexjcqyaopfilwixwfpn.supabase.co/rest/v1/game_status?select=game&enabled=eq.false&game=like.prashn-leela:*",{headers:{apikey:"sb_publishable_RCGMIsbR27_gu6aUZ_3pUg_OajpxBhL"}}).then(function(r){return r.ok?r.json():null}).then(function(a){if(!a)return;var o=a.map(function(x){return x.game.split(":")[1]}).sort();if(o.join()===SEC.slice().sort().join())return;SEC=o;try{localStorage.setItem("sbSecOff",JSON.stringify(o))}catch(e){}fixDep();persistDep();paintFlow()}).catch(function(){})}
+setTimeout(secLoad,0);document.addEventListener("visibilitychange",function(){if(!document.hidden)secLoad()});
 function paintFlow(){var v=FT[L]||FT.g;
 el("pkback").textContent=v.back;el("vbback").textContent=v.back;el("pkh").textContent=v.pick;el("pkspn").textContent=v.sp;el("pksps").textContent=v.sps;el("pkvan").textContent=v.va;el("pkvas").textContent=v.vas;el("pkvaz").textContent=v.soon;
 el("pkteam").textContent=el("vbteam").textContent=v.team;el("pkrule").textContent=el("vbrule").textContent=v.rule;el("pkset").textContent=el("vbset").textContent=v.set;el("vbh").textContent=v.vh;el("vbs").textContent=v.vs;el("vbunlock").textContent=v.un;fLang("pklang");fLang("vblang");
 var cs=allCats(),cb=el("vbcats");cb.innerHTML="";cb.hidden=cs.length<2;cs.forEach(function(c){var b=document.createElement("button");b.type="button";b.textContent=dn(c);b.setAttribute("aria-pressed",c.id===CAT?"true":"false");b.addEventListener("click",function(){CAT=c.id;fixDep();persistDep();paintFlow()});cb.appendChild(b)});
 var rw=el("vbrows"),ri=0;rw.innerHTML="";function row(name,sub,on,fn){var b=document.createElement("button");b.type="button";b.className="frow"+(on?" on":"");var k=document.createElement("span");k.className="fno";k.textContent=num(++ri);var n=document.createElement("span");n.textContent=name;b.appendChild(k);b.appendChild(n);b.addEventListener("click",fn);rw.appendChild(b)}
-function swFirst(d){return /સ્વામિનારાયણ/.test((d.n&&d.n.g)||"")?0:1}catDepts(CAT).map(function(d,i){return [d,i]}).sort(function(a,b){return (swFirst(a[0])-swFirst(b[0]))||(a[1]-b[1])}).map(function(x){return x[0]}).forEach(function(d){var cnt=pool(d.id).length;if(!cnt&&!d.custom)return;var sub=num(cnt)+" "+v.q;if(d.steps){var u=unlocked(d.id),n=d.steps.length;sub=v.st+" "+num(Math.min(u+1,n))+"/"+num(n)+" · "+sub}row(dn(d),sub,d.id===DEP,function(){fStart(d.id)})});
+function swFirst(d){return /સ્વામિનારાયણ/.test((d.n&&d.n.g)||"")?0:1}catDepts(CAT).map(function(d,i){return [d,i]}).sort(function(a,b){return (swFirst(a[0])-swFirst(b[0]))||(a[1]-b[1])}).map(function(x){return x[0]}).forEach(function(d){var cnt=pool(d.id).length;if(!cnt&&!d.custom)return;if(secOff(d.id)){row(dn(d)+" · "+({g:"કામ ચાલુ છે",e:"Coming back soon",r:"Kaam chalu chhe"}[L]||"કામ ચાલુ છે"),"",false,function(){});rw.lastChild.classList.add("fwip");rw.lastChild.disabled=true;return}var sub=num(cnt)+" "+v.q;if(d.steps){var u=unlocked(d.id),n=d.steps.length;sub=v.st+" "+num(Math.min(u+1,n))+"/"+num(n)+" · "+sub}row((SEC.indexOf(d.id)>=0?"🧪 ":"")+dn(d),sub,d.id===DEP,function(){fStart(d.id)})});
 if(flatDepts(CAT).length>=2)row(v.mix,"",DEP==="mix",function(){fStart("mix")});
 var stp=isStep();el("vbunlock").hidden=!stp;
 var GT={g:["❓ સત્સંગ પ્રશ્ન","રમો","વિભાગ પસંદ કરો","ટીમ","નિયમ","સેટિંગ્સ"],e:["❓ Satsang Prashn","Play","Choose a section","Teams","Rules","Settings"],r:["❓ Satsang Prashn","Ramo","Vibhag pasand karo","Team","Niyam","Settings"]}[L];
@@ -1343,7 +1349,7 @@ function paintSetup(){var h=HH[L],t=T[L];el("sut").textContent=h.sut;el("sl1").t
 schips(el("stm"),[1,2,3,4,5,6].map(function(n){return [n,num(n)]}),TEAMS.length,function(n){while(TEAMS.length<n)TEAMS.push(mk(""));while(TEAMS.length>n)TEAMS.pop();if(TURN>=TEAMS.length)TURN=0;saveTeams();paintTeams()});
 var sn=el("snames");sn.innerHTML="";TEAMS.forEach(function(x,i){var inp=document.createElement("input");inp.value=x.name;inp.placeholder=h.ph+" "+num(i+1);inp.setAttribute("aria-label",h.ph+" "+num(i+1));inp.addEventListener("input",function(){x.name=inp.value;saveTeams();paintTeams()});sn.appendChild(inp)});
 var cs=allCats();el("scat2").hidden=cs.length<2;schips(el("scat2"),cs.map(function(c){return [c.id,dn(c)]}),CAT,function(v){CAT=v;fixDep();STEP=0;persistDep()});
-schips(el("sdp"),catDepts(CAT).map(function(d){return [d.id,dn(d)]}),DEP,function(v){DEP=v;STEP=0;persistDep()});
+schips(el("sdp"),catDepts(CAT).filter(function(d){return !secOff(d.id)}).map(function(d){return [d.id,dn(d)]}),DEP,function(v){DEP=v;STEP=0;persistDep()});
 var stp=isStep();el("sstb").hidden=!stp;if(stp){var d=findDept(DEP),u=unlocked(DEP),it=[];d.steps.forEach(function(_,k){if(pool(DEP,k).length===0)return;it.push([k,(k>u?"🔒":"")+num(k+1)+" · "+num(pool(DEP,k).length),k>u])});schips(el("sst"),it,STEP,function(v){STEP=v})}
 schips(el("stmr"),[[0,t.off],[10,num(10)],[15,num(15)],[20,num(20)],[30,num(30)],[60,num(60)]],TIME,function(v){TIME=v;saveTimer()});
 schips(el("swr"),[[true,X2[L].wrOn],[false,X2[L].wrOff]],WRITE,function(v){WRITE=v;saveTimer()})}
