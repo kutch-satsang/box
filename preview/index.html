@@ -112,8 +112,7 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 .mbx::before{content:"";position:absolute;left:-15%;right:-15%;top:-8%;bottom:-8%;background:url(themes/adhyatmik/mati/mandir-full.webp) center/100% 100% no-repeat;pointer-events:none}
 .mhit{position:absolute;border:0;padding:0;margin:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s}
 .mhit:active{background:rgba(255,255,255,.22)}
-.mback{left:4.4%;top:5.75%;width:11.6%;height:6.25%;border-radius:22%}
-.mglobe{left:83.6%;top:5.75%;width:12%;height:6.75%;border-radius:50%}
+.mfull{--u:min(1vw,5.6px)}.mfull>.lng3d{position:absolute;z-index:5;top:calc(var(--u)*3.4);width:calc(var(--u)*11.5);height:calc(var(--u)*11.5)}.mfull>.mtb{left:calc(var(--u)*3);font:800 calc(var(--u)*6.4)/1 system-ui,sans-serif}.mfull>.mtg{right:calc(var(--u)*3)}.mfull>.mtg .le{font-size:calc(var(--u)*5.4)}.mfull>.mtg .ll{font-size:calc(var(--u)*2.5)}
 .mplay2{left:21.8%;top:82%;width:56.4%;height:12.5%;border-radius:99px}
 .mlang{position:absolute;left:50%;top:100%;transform:translate(-50%,-30%);font:800 2.9cqw/1.2 system-ui,sans-serif;color:#5a3524;background:#f6d98b;border-radius:99px;padding:.4cqw 1.6cqw;box-shadow:0 1px 3px rgba(90,53,36,.3)}
 /* V70: સ્ક્રીન બદલાય ત્યારે સરળ ફેડ, ઝબકારો નહીં */
@@ -493,8 +492,8 @@ function inner(t,zid){
 }
 function mandir(t){
   var w=el("div","mand mfull"),bx=el("div","mbx");w.appendChild(bx);
-  var b=el("button","mhit mback");b.type="button";b.setAttribute("aria-label",t.back);b.addEventListener("click",function(){go("")});bx.appendChild(b);
-  var lg=el("button","mhit mglobe");lg.type="button";lg.setAttribute("aria-label","Language");lg.appendChild(el("small","mlang",LAB[L]));lg.addEventListener("click",function(){setLang(O[(O.indexOf(L)+1)%3])});bx.appendChild(lg);
+  var b=el("button","lng3d mtb","←");b.type="button";b.setAttribute("aria-label",t.back);b.addEventListener("click",function(){go("")});w.appendChild(b);
+  w.appendChild(mkLang("mtg"));
   var pb=el("button","mhit mplay2");pb.type="button";pb.id="mgo";pb.setAttribute("aria-label","▶");pb.addEventListener("click",function(){go("z1")});bx.appendChild(pb);
   return w}
 function go(h){
