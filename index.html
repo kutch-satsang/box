@@ -133,6 +133,7 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 </style>
 
 <script src="analytics.js" defer></script>
+<script src="oldcss.js"></script>
 <script src="box.js"></script>
 <script src="auth.js"></script>
 <style>/* V48 ક્લે 3D મંદિર (હોમપેજ → જ્ઞાન-પ્રશ્ન વચ્ચે) */
@@ -295,7 +296,7 @@ for(var xk in X)for(var xj in X[xk])D[xk][xj]=X[xk][xj];
 var L="g";try{var s0=localStorage.getItem(K);if(D[s0])L=s0}catch(e){}
 var app=document.getElementById("app");
 function el(tag,cls,txt){var n=document.createElement(tag);if(cls)n.className=cls;if(txt!=null)n.textContent=txt;return n}
-function px(v){return(v/853*100).toFixed(3)+"cqw"}
+function px(v){var s=(v/853*100).toFixed(3)+"cqw";return window.sbOld?sbOld(s):s}
 function box(n,b){n.style.left=px(b[0]);n.style.top=px(b[1]);n.style.width=px(b[2]);n.style.height=px(b[3])}
 function setLang(l){L=l;try{localStorage.setItem(K,l)}catch(e){}render("lang");ekReload()}
 var LAB={g:"ગુ",e:"EN",r:"ABC"},FLASH=false;
