@@ -99,10 +99,16 @@
   }
   window.sbFlush = flush;
   window.sbClearOutbox = function(){ try{ localStorage.removeItem(BOX); }catch(e){} };
-  function record(ev, sec, keep){
+  function record(ev, sec, keep, x){
     if(GAME === 'hub') return;
     var r = {game:GAME, event:ev, language:lang(), theme:theme(), played_at:new Date().toISOString(), time_zone:zone()};
     if(ev !== 'start' && sec != null) r.duration_seconds = Math.min(86400, Math.max(0, Math.round(sec)));
+    if(x){
+      if(x.stars >= 1 && x.stars <= 5) r.stars = Math.round(x.stars);
+      var d = {}, n = 0;
+      ['mode','correct','mistakes','count','punya','hints'].forEach(function(k){ if(x[k] != null){ d[k] = x[k]; n++; } });
+      if(n) r.detail = d;
+    }
     queue('game_events', r, keep);
   }
   window.addEventListener('online', function(){ flush(); });
@@ -213,7 +219,7 @@
     st.done = 1;
     send('game_finish', p);
     if(first){
-      record('finish', p.sec);
+      record('finish', p.sec, false, p);
       if(p.mode !== 'practice'){
         if(myName()) pill((WELL[lang()] || WELL.g).replace('{n}', myName()), 1700);
         setTimeout(askStars, 1800);

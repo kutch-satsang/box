@@ -443,7 +443,31 @@ function special(w,t,zid){
   w.appendChild(vr);
   return w}
 /* Settings ની પેટીઓ: ફીડબેક, એકાઉન્ટ કાઢવું */
-function dlg(html){var o=el("div","sdlg");o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.innerHTML='<div class="sdc">'+html+"</div>";o.addEventListener("click",function(e){if(e.target===o)o.remove()});document.body.appendChild(o);return o}
+/* 💌 એડમિનનો સંદેશ: હબ ખોલતાં કાર્ડ, ભક્ત જવાબ લખી શકે */
+var MSGT={g:{h:"🙏 અભિનંદન",m:"તમે {g} ખૂબ સરસ રમ્યા.",ok:"જય સ્વામિનારાયણ",r:"✍️ જવાબ લખો",s:"મોકલો",ph:"તમારો જવાબ લખો…",th:"🙏 આભાર!",e:"અત્યારે મોકલી ન શકાયું."},e:{h:"🙏 Congratulations",m:"You played {g} very well.",ok:"Jay Swaminarayan",r:"✍️ Write a reply",s:"Send",ph:"Write your reply…",th:"🙏 Thank you!",e:"Could not send right now."},r:{h:"🙏 Abhinandan",m:"Tame {g} khub saras ramya.",ok:"Jay Swaminarayan",r:"✍️ Javab lakho",s:"Moklo",ph:"Tamaro javab lakho…",th:"🙏 Aabhar!",e:"Atyare mokli na shakayu."}};
+var msgOpen=false,msgAt=0;
+function msgCheck(){
+  if(msgOpen||!window.SatsangAuth||curKey!=="home"||Date.now()-msgAt<15000||document.documentElement.classList.contains("sbl"))return;
+  msgAt=Date.now();
+  SatsangAuth.ready().then(function(c){return c.auth.getSession().then(function(s){if(!s.data.session)return;
+    return c.from("messages").select("id,game,body").is("seen_at",null).order("created_at").limit(1).then(function(r){if(!r.error&&r.data&&r.data[0]&&!msgOpen)msgShow(c,r.data[0])})})}).catch(function(){});
+}
+function msgShow(c,m){
+  msgOpen=true;var T=MSGT[L]||MSGT.g,t=D[L],gg=G[m.game];
+  var o=dlg('<h3 class="msh"></h3><p class="msb2"></p><div class="msf" hidden><textarea rows="3" maxlength="300"></textarea><p class="msm"></p></div><button type="button" class="inso msok"></button><button type="button" class="inso msre" style="margin-top:8px;background:#fffaf0;color:#a4371c;border:1px solid #e3c9a4"></button>',true);
+  var ok=o.querySelector(".msok"),re=o.querySelector(".msre"),ta=o.querySelector("textarea"),f=o.querySelector(".msf"),mm=o.querySelector(".msm"),h=o.querySelector(".msh");
+  h.textContent=T.h;ok.textContent=T.ok;re.textContent=T.r;ta.placeholder=T.ph;
+  o.querySelector(".msb2").textContent=m.body||T.m.replace("{g}",gg?t[gg.n]:"");
+  SatsangAuth.profile().then(function(p){if(p&&p.name)h.textContent=T.h+", "+p.name+"!"}).catch(function(){});
+  function close(){o.remove();msgOpen=false;msgAt=0;setTimeout(msgCheck,400)}
+  ok.addEventListener("click",function(){ok.disabled=true;c.rpc("message_seen",{mid:m.id}).then(function(){close()},function(){ok.disabled=false})});
+  re.addEventListener("click",function(){
+    if(f.hidden){f.hidden=false;ok.style.display="none";re.textContent=T.s;re.style.cssText="margin-top:8px";ta.focus();return}
+    var v=ta.value.trim();if(!v)return;re.disabled=true;
+    c.rpc("message_reply",{mid:m.id,txt:v}).then(function(r){if(r.error||r.data!==true){re.disabled=false;mm.textContent=T.e;return}mm.textContent=T.th;setTimeout(close,900)},function(){re.disabled=false;mm.textContent=T.e});
+  });
+}
+function dlg(html,keep){var o=el("div","sdlg");o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.innerHTML='<div class="sdc">'+html+"</div>";if(!keep)o.addEventListener("click",function(e){if(e.target===o)o.remove()});document.body.appendChild(o);return o}
 function feedbackBox(L){
   var T={g:{h:"💬 સૂચન મોકલો",k:[["idea","💡 સૂચન"],["bug","🐞 ભૂલ"],["thanks","🙏 આભાર"]],g:"બધી ગેમ",p:"તમારી વાત અહીં લખો…",c:"બંધ",s:"મોકલો",ok:"🙏 આભાર! તમારો સંદેશો મળી ગયો.",lim:"આજના ૫ સંદેશા પૂરા થયા. કાલે ફરી મોકલજો.",er:"મોકલી ન શકાયું. નેટ ચકાસીને ફરી પ્રયત્ન કરો."},
    e:{h:"💬 Send feedback",k:[["idea","💡 Idea"],["bug","🐞 Bug"],["thanks","🙏 Thanks"]],g:"All games",p:"Write your message here…",c:"Close",s:"Send",ok:"🙏 Thank you! Your message was received.",lim:"You have sent 5 messages today. Please try tomorrow.",er:"Could not send. Check your internet and try again."},
@@ -570,7 +594,7 @@ function gsAdmin(){
   if(!window.SatsangAuth)return;
   SatsangAuth.user().then(function(u){var a=!!(u&&String(u.email||"").toLowerCase()==="vsbhuj@gmail.com");if(a!==ADMG){ADMG=a;if(OFFG.length)gsRedraw()}}).catch(function(){});
 }
-document.addEventListener("visibilitychange",function(){if(!document.hidden){gsLoad();gsAdmin()}});
+document.addEventListener("visibilitychange",function(){if(!document.hidden){gsLoad();gsAdmin();msgCheck()}});
 function render(force){
   var h=(location.hash||"").slice(1),zid=null,i,ek=(h==="ek");
   if(ek)h="z1";
@@ -583,6 +607,7 @@ function render(force){
   if(zid){gsLoad();gsAdmin()}
   var key=zid||"home";
   insBan(key==="home"&&!ek);
+  if(key==="home"&&!ek)setTimeout(msgCheck,900);
   if(!force&&key===curKey)return;
   /* Desktop site (html.fit) માં જૂનું-નવું પાનું સાથે રહે તો zoom ગડબડે અને પાનું ઝબકે, એટલે સીધું બદલે */
   var first=curKey===null,quick=true;curKey=key;
