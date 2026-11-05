@@ -116,7 +116,7 @@
     'antahshatru-vijay':{g:'અંતઃશત્રુ વિજય',e:'Antahshatru Vijay',r:'Antahshatru Vijay'},
     'fal-ful-memory':{g:'ફળ ફૂલ મેમરી',e:'Fruit & Flower Memory',r:'Fal Ful Memory'},
     'ekadashi':{g:'એકાદશી',e:'Ekadashi',r:'Ekadashi'},
-    'charanvidhi':{g:'ચરણવિધિ માસ્ટર',e:'Charanvidhi Master',r:'Charanvidhi Master'}
+    'charanvidhi':{g:'ચરણ ચિન્હ માસ્ટર',e:'Charan Chihna Master',r:'Charan Chihna Master'}
   };
   var ST = {
     g:{h:'🙏 ગેમ પૂરી થઈ!',q:'{g} કેવી લાગી?',l:'પછી',s:'મોકલો',t:'🙏 આભાર!'},
