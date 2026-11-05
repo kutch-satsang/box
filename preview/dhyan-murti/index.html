@@ -475,7 +475,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset
         <button type="button" class="sessgo" id="sess1">રમો</button>
       </div>
       <div class="sesscard">
-        <div class="sesstx"><b>સેશન ૨</b><span>તિલ ચિન્હ ગોઠવો</span></div>
+        <div class="sesstx"><b>સેશન ૨</b><span>તિલ ચિન્હ ગોઠવો</span><span id="s2note" hidden></span></div>
         <button type="button" class="sessgo" id="sess2">રમો</button>
       </div>
     </div>
@@ -1682,7 +1682,26 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   }
   $('#dhyanBtn').addEventListener('click', function(){ showPage('sess'); var c = $('#sheet .card'); if(c) c.scrollTop = 0; });
   $('#sess1').addEventListener('click', function(){ showPage(null); dhyanKaro(); });
-  $('#sess2').addEventListener('click', function(){ location.href = 'session2.html'; });
+  /* સેશન ૨ તાળું: સેશન ૧ વીસ વખત પૂરું થાય પછી આપોઆપ ખૂલે. ખાતામાં ગણાય, નેટ ન હોય તો છેલ્લી જાણ મુજબ */
+  var S2 = {open:true, count:0, need:20}, S2K = 'sbS2', s2Txt = null;
+  try{ var s0 = JSON.parse(localStorage.getItem(S2K) || 'null'); if(s0) S2 = s0; }catch(e){}
+  function s2Lang(){ var l = 'g'; try{ l = localStorage.getItem('satsangLang') || 'g'; }catch(e){} return l; }
+  function s2Paint(){
+    var b = $('#sess2'), n = $('#s2note'), l = s2Lang();
+    if(s2Txt === null) s2Txt = b.textContent;
+    if(S2.open){ b.textContent = s2Txt; b.style.opacity = ''; n.hidden = true; return; }
+    b.textContent = '🔒 ' + S2.count + '/' + S2.need; b.style.opacity = '.75'; n.hidden = false;
+    n.textContent = l === 'e' ? 'Finish Session 1 twenty times, then this opens.' : l === 'r' ? 'Session 1 vees vakhat puru karo, pachhi aa khulshe.' : 'સેશન ૧ વીસ વખત પૂરું કરો, પછી આ ખૂલશે.';
+  }
+  function s2Load(){
+    var tk = ''; try{ tk = (JSON.parse(localStorage.getItem('sb-fexjcqyaopfilwixwfpn-auth-token')) || {}).access_token || ''; }catch(e){}
+    if(!tk || !window.fetch) return;
+    fetch('https://fexjcqyaopfilwixwfpn.supabase.co/rest/v1/rpc/session2_status', {method:'POST', headers:{apikey:'sb_publishable_RCGMIsbR27_gu6aUZ_3pUg_OajpxBhL', Authorization:'Bearer ' + tk, 'Content-Type':'application/json'}, body:'{}'})
+      .then(function(r){ return r.ok ? r.json() : null; }).then(function(d){ if(!d) return; S2 = d; try{ localStorage.setItem(S2K, JSON.stringify(d)); }catch(e){} s2Paint(); }).catch(function(){});
+  }
+  $('#sess2').addEventListener('click', function(){ if(!S2.open) return; location.href = 'session2.html'; });
+  new MutationObserver(function(){ if(!$('#pg-sess').hidden){ s2Paint(); s2Load(); } }).observe($('#pg-sess'), {attributes:true, attributeFilter:['hidden']});
+  s2Load();
   window.dmShowPage = function(p){ $('#sheet').hidden = false; showPage(p); var c = $('#sheet .card'); if(c) c.scrollTop = 0; };
   /* dmSessHash: back from Session 2 → open directly on the session choice, no opening film */
   function dmSessHash(){ if(location.hash !== '#sess' && location.hash !== '#game') return; var ow = document.getElementById('opw'), of = document.getElementById('opf');
