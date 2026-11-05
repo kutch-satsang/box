@@ -195,7 +195,7 @@ var TODO=[["👤 તમારે ચેક કરવાનું",["સત્સ
 ["💡 પછી",["બધા ભક્તોને એક સાથે સંદેશ","નવી ગેમ: ચિહ્ન મેમરી કાર્ડ, મોક્ષપટ","ધ્યાન દર્શન: દેશ → મંદિર → મૂર્તિ"]]];
 function tabTodo(){return TODO.map(function(g){return '<section class="card"><h2>'+g[0]+' <small>'+gu(g[1].length)+'</small></h2>'+g[1].map(function(x,i){return '<div class="tdr"><b>'+gu(i+1)+'</b><span>'+esc(x)+'</span></div>'}).join("")+'</section>'}).join("")}
 function draw(){var el=document.getElementById("pg"),h;
- if(!S.d)h='<div class="sm">લાવી રહ્યા છીએ…</div>';
+ if(!S.d&&S.tab!=="todo")h='<div class="sm">લાવી રહ્યા છીએ…</div>';
  else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb,sw:tabSw,todo:tabTodo}[S.tab]();
  el.innerHTML=h;el.scrollTop=0;el.className="";if(DIR){void el.offsetWidth;el.className=DIR>0?"inr":"inl";DIR=0}
  var isum=S.tab==="sum",nv=document.getElementById("nav");nv.className=isum?"":"sub";document.getElementById("nu").textContent="ભક્તો"+(S.users?" ("+num(S.users.length)+")":"");
