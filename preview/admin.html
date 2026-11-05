@@ -89,8 +89,8 @@ button.go{cursor:pointer}
 #fbb{display:none;position:absolute;right:3px;top:0;min-width:18px;height:18px;border-radius:9px;background:#c0392b;color:#fff;font:700 11px/18px sans-serif;text-align:center;padding:0 4px;pointer-events:none}
 @media(max-width:350px){.two{grid-template-columns:1fr}}
 .fdh{display:flex;width:100%;min-height:52px;align-items:center;justify-content:space-between;gap:8px;padding:0;border:0;background:none;color:inherit;font:700 16px 'Noto Sans Gujarati',sans-serif;cursor:pointer;text-align:left}.fdh small{flex:none;color:var(--muted);font-size:13px;font-weight:600}.fd .swr:first-of-type{border-top:1px solid var(--line)}
-.sech{min-height:44px;border-top:1px solid var(--line);padding-left:12px;font-size:15px}.swr.sec{padding-left:12px}.swr{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;padding:6px 0;border-top:1px solid var(--line)}.swr:first-of-type{border-top:0}.swr b{display:block;font-size:16px}.swr small{color:var(--muted);font-size:13px}.swb{flex:none;min-width:84px;min-height:44px;border:0;border-radius:22px;background:var(--track);color:var(--muted);font:700 15px "Noto Sans Gujarati",sans-serif;cursor:pointer}.swb.on{background:#2e8b57;color:#fff}.swb:disabled{opacity:.5}
-#nav{grid-template-columns:1fr 1fr 1fr}#nav button{min-height:44px;flex-direction:row;gap:6px;font-size:14px}#nback{display:none!important}#nav.sub button{display:none!important}#nav.sub #nback{display:flex!important;grid-column:1/-1}#nav.sub #fbb{display:none!important}
+.tdr{display:flex;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.35}.tdr:first-of-type{border-top:0}.tdr b{flex:none;width:18px;color:var(--muted)}.sech{min-height:44px;border-top:1px solid var(--line);padding-left:12px;font-size:15px}.swr.sec{padding-left:12px}.swr{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;padding:6px 0;border-top:1px solid var(--line)}.swr:first-of-type{border-top:0}.swr b{display:block;font-size:16px}.swr small{color:var(--muted);font-size:13px}.swb{flex:none;min-width:84px;min-height:44px;border:0;border-radius:22px;background:var(--track);color:var(--muted);font:700 15px "Noto Sans Gujarati",sans-serif;cursor:pointer}.swb.on{background:#2e8b57;color:#fff}.swb:disabled{opacity:.5}
+#nav{grid-template-columns:repeat(4,minmax(0,1fr))}#nav button{min-height:44px;flex-direction:column;gap:1px;font-size:12px}#nback{display:none!important}#nav.sub button{display:none!important}#nav.sub #nback{display:flex!important;grid-column:1/-1}#nav.sub #fbb{display:none!important}
 #pg{overflow:hidden}#pg:has(.srch),#pg:has(.fb){overflow:auto}
 #pg .card.one{padding:7px 10px;margin-bottom:6px;border-radius:16px}#pg .one h2{font-size:14px;margin:0 0 3px}#pg .one h2 small{font-size:12px;margin-left:4px}
 .kp{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;text-align:center}.kp b{display:block;font:800 20px/1.1 'Baloo Bhai 2','Noto Sans Gujarati',sans-serif}.kp small{font-size:10.5px;color:var(--muted);line-height:1.1;display:block}
@@ -112,7 +112,7 @@ button.go{cursor:pointer}
 <section class="card" id="err"></section>
 <main id="pg"></main>
 <p class="sm" id="upd"></p>
-<nav id="nav"><button data-t="sw"><i>🎮</i>ગેમ</button><button data-t="user"><i>👥</i><span id="nu">ભક્તો</span></button><button data-t="fb"><i>💬</i>ફીડબેક</button><button data-t="sum" id="nback"><i>←</i>પાછા</button><span id="fbb"></span></nav>
+<nav id="nav"><button data-t="sw"><i>🎮</i>ગેમ</button><button data-t="user"><i>👥</i><span id="nu">ભક્તો</span></button><button data-t="fb"><i>💬</i>ફીડબેક</button><button data-t="todo"><i>📋</i>બાકી</button><button data-t="sum" id="nback"><i>←</i>પાછા</button><span id="fbb"></span></nav>
 </div>
 <script src="box.js"></script>
 <script src="auth.js"></script>
@@ -128,7 +128,7 @@ function dur(s){if(!s)return "—";var t=Math.floor(s/3600),m=Math.floor(s%3600/
 function day(s){var p=s.split("-");return gu(+p[2])+" "+MON[+p[1]-1]}
 function rows(o,names,sum,lim){var a=Object.keys(o).map(function(k){return [names[k]||(k==="unknown"?UNK:k),o[k]]}).sort(function(x,y){return y[1]-x[1]}).slice(0,lim||99);
  return a.map(function(r){var p=sum?Math.round(r[1]*100/sum):0;return '<div class="row"><div><span>'+esc(r[0])+'</span><b>'+gu(p)+'%</b></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join("")}
-var ORD=["sum","game","user","more","fb","sw"],DIR=0;
+var ORD=["sum","game","user","more","fb","sw","todo"],DIR=0;
 function go(t){var a=ORD.indexOf(S.tab),b=ORD.indexOf(t);if(a===b)return;DIR=b>a?1:-1;S.tab=t;draw()}
 var S={swo:0,tab:"sum",d:null,users:null,x:null,fb:null,q:"",up:0,fp:0},UP=4,FP=3;
 function pct(n,sum){return sum?Math.round(n*100/sum):0}
@@ -188,9 +188,15 @@ function tabSw(){var l=S.sw;if(!l)return '<section class="card"><div class="sm">
  DEPT.forEach(function(d,i){var a=l.filter(function(g){return d[2].indexOf(g.game)>=0});a.forEach(function(g){used[g.game]=1});h+=folder(i,d[0],d[1],a)});
  var rest=l.filter(function(g){return !used[g.game]&&g.game.indexOf(":")<0});if(rest.length)h+=folder(9,"🆕","બીજી",rest);
  return h}
+/* બાકી કામની યાદી: કામ પૂરું થાય ત્યારે અહીંથી કાઢવું */
+var TODO=[["👤 તમારે ચેક કરવાનું",["સત્સંગ પ્રશ્ન OFF છે: જાણીને ન હોય તો ON કરો","ચરણ ચિહ્ન માસ્ટર 🧪 રમીને જુઓ","Android: Home screen પર Chrome Install પૂછે છે?","મહેમાન → Google હિસ્ટ્રી ચેક (Incognito)"]],
+["🛠️ હબનું કામ (ક્રમમાં)",["૪ ગેમમાં ✕ અને ← સીધા વિભાગમાં, હબની ભાષા પણ","💌 ભક્તને સંદેશ અને ભક્તનો જવાબ","⭐ ૫ સ્ટાર, પુષ્પવૃષ્ટિ, ફીડબેકમાં 😊","મોટી સ્ક્રીન: લેપટોપ, પ્રોજેક્ટર, દીવાલ","જૂના ફોન: દરેક ગેમ અંદર રમીને ચકાસવી","ઝડપના પોઇન્ટ","Google Login પર supabase.co નું નામ"]],
+["📱 Play Store",["ખાતાનો પ્રકાર અને બાળકો/બધા માટે નક્કી કરવું","captcha, પૂરી privacy policy, diag.html કાઢવું"]],
+["💡 પછી",["બધા ભક્તોને એક સાથે સંદેશ","નવી ગેમ: ચિહ્ન મેમરી કાર્ડ, મોક્ષપટ","ધ્યાન દર્શન: દેશ → મંદિર → મૂર્તિ"]]];
+function tabTodo(){return TODO.map(function(g){return '<section class="card"><h2>'+g[0]+' <small>'+gu(g[1].length)+'</small></h2>'+g[1].map(function(x,i){return '<div class="tdr"><b>'+gu(i+1)+'</b><span>'+esc(x)+'</span></div>'}).join("")+'</section>'}).join("")}
 function draw(){var el=document.getElementById("pg"),h;
  if(!S.d)h='<div class="sm">લાવી રહ્યા છીએ…</div>';
- else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb,sw:tabSw}[S.tab]();
+ else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb,sw:tabSw,todo:tabTodo}[S.tab]();
  el.innerHTML=h;el.scrollTop=0;el.className="";if(DIR){void el.offsetWidth;el.className=DIR>0?"inr":"inl";DIR=0}
  var isum=S.tab==="sum",nv=document.getElementById("nav");nv.className=isum?"":"sub";document.getElementById("nu").textContent="ભક્તો"+(S.users?" ("+num(S.users.length)+")":"");
  var bd=document.getElementById("fbb"),un=(S.x||{}).unread_feedback||0;bd.textContent=un?gu(un):"";bd.style.display=un?"block":"none";
