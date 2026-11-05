@@ -1,5 +1,5 @@
 <!doctype html><html><head>
-<script src="../auth.js"></script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../analytics.js" defer></script>
+<script src="../auth.js"></script><script src="../box.js"></script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../analytics.js" defer></script>
 </head><body>
 <title>ફળ ફૂલ મેમરી ગેમ</title>
 <link rel="stylesheet" href="../fonts/fonts.css">
@@ -189,6 +189,32 @@ button:focus-visible{outline:3px solid #e8845f}
     {id:'chilli',e:'🌶️',n:'મરચું',c:'શાકભાજી'},{id:'cucumber',e:'🥒',n:'કાકડી',c:'શાકભાજી'}
   ];
 
+  /* ભાષા: હબની ભાષા (g ગુજરાતી / e English / r ABC) મુજબ ગેમના બધા શબ્દ */
+  var LG = (function(){ try{ return window.SatsangBox ? SatsangBox.lang() : (localStorage.getItem('satsangLang')||'g'); }catch(e){ return 'g'; } })();
+  if(LG!=='e' && LG!=='r') LG='g';
+  var NM = {
+    e:{apple:'Apple',banana:'Banana',grape:'Grapes',orange:'Orange',straw:'Strawberry',melon:'Watermelon',mango:'Mango',pine:'Pineapple',rose:'Rose',sun:'Sunflower',tulip:'Tulip',hibis:'Hibiscus',pink:'Pink flower',yellow:'Yellow flower',carrot:'Carrot',tomato:'Tomato',potato:'Potato',corn:'Corn',brinjal:'Brinjal',broccoli:'Broccoli',chilli:'Chilli',cucumber:'Cucumber'},
+    r:{apple:'Safarjan',banana:'Kelu',grape:'Draksh',orange:'Santaru',straw:'Strawberry',melon:'Tarbooch',mango:'Keri',pine:'Ananas',rose:'Gulab',sun:'Suraj mukhi',tulip:'Tulip',hibis:'Jasud',pink:'Gulabi phool',yellow:'Pilu phool',carrot:'Gajar',tomato:'Tameta',potato:'Bataka',corn:'Makai',brinjal:'Ringan',broccoli:'Broccoli',chilli:'Marchu',cucumber:'Kakdi'}
+  };
+  if(LG!=='g') POOL.forEach(function(p){ p.n = NM[LG][p.id] || p.n; });
+  var TR = {
+    e:{'ફળ ફૂલ મેમરી ગેમ':'Fruit & Flower Memory Game','કાગળ પર જોયેલી વસ્તુઓ યાદ રાખો, પછી દરેકને તેની જગ્યાએ પાછી મૂકો.':'Remember the things you saw on the paper, then put each one back in its place.','કાગળ કેટલી સેકન્ડ દેખાશે':'How many seconds the paper is shown','15 સેકન્ડ':'15 seconds','20 સેકન્ડ':'20 seconds','25 સેકન્ડ':'25 seconds','કેટલી વસ્તુઓ':'How many items','સરળ · 6':'Easy · 6','મધ્યમ · 9':'Medium · 9','અઘરું · 12':'Hard · 12','ગેમ શરૂ કરો':'Start game','નવી ગેમ':'New game','શાબાશ!':'Well done!','સરસ!':'Good!','ફરી રમો':'Play again','સેટિંગ બદલો':'Change settings','સમય':'Time','વસ્તુઓ':'Items','સાચું!':'Correct!','આ જગ્યા નથી, ફરી યાદ કરો':'Not this spot, try to remember again','એક પણ ભૂલ વગર બધી વસ્તુઓ સાચી જગ્યાએ મૂકી.':'You put every item in the right place without a single mistake.','બધી વસ્તુઓ સાચી જગ્યાએ મૂકાઈ. ભૂલ: ':'All items are in the right place. Mistakes: ','. ફરી રમીને વધુ સારું કરો.':'. Play again to do better.'},
+    r:{'ફળ ફૂલ મેમરી ગેમ':'Fal Ful Memory Game','કાગળ પર જોયેલી વસ્તુઓ યાદ રાખો, પછી દરેકને તેની જગ્યાએ પાછી મૂકો.':'Kagal par joyeli vastuo yaad rakho, pachhi darekne teni jagya e pachhi mukho.','કાગળ કેટલી સેકન્ડ દેખાશે':'Kagal ketli second dekhashe','15 સેકન્ડ':'15 second','20 સેકન્ડ':'20 second','25 સેકન્ડ':'25 second','કેટલી વસ્તુઓ':'Ketli vastuo','સરળ · 6':'Saral · 6','મધ્યમ · 9':'Madhyam · 9','અઘરું · 12':'Agharu · 12','ગેમ શરૂ કરો':'Game sharu karo','નવી ગેમ':'Navi game','શાબાશ!':'Shabash!','સરસ!':'Saras!','ફરી રમો':'Fari ramo','સેટિંગ બદલો':'Setting badlo','સમય':'Samay','વસ્તુઓ':'Vastuo','સાચું!':'Sachu!','આ જગ્યા નથી, ફરી યાદ કરો':'Aa jagya nathi, fari yaad karo','એક પણ ભૂલ વગર બધી વસ્તુઓ સાચી જગ્યાએ મૂકી.':'Ek pan bhool vagar badhi vastuo sachi jagya e mukhi.','બધી વસ્તુઓ સાચી જગ્યાએ મૂકાઈ. ભૂલ: ':'Badhi vastuo sachi jagya e mukai. Bhool: ','. ફરી રમીને વધુ સારું કરો.':'. Fari ramine vadhu saru karo.'}
+  };
+  function tx(g){ return LG==='g' ? g : ((TR[LG]||{})[g] || g); }
+  function trNode(n){
+    if(n.nodeType===3){ var v=n.nodeValue, k=v.trim(); if(k && TR[LG] && TR[LG][k]!==undefined){ var o=TR[LG][k]; if(o!==k) n.nodeValue=v.replace(k,o); } return; }
+    if(n.nodeType!==1 || /^(SCRIPT|STYLE)$/.test(n.tagName)) return;
+    ['aria-label','title'].forEach(function(a){ var v=n.getAttribute(a); if(v && TR[LG][v] && TR[LG][v]!==v) n.setAttribute(a, TR[LG][v]); });
+    for(var c=n.firstChild;c;c=c.nextSibling) trNode(c);
+  }
+  if(LG!=='g'){
+    document.documentElement.lang = 'en'; document.title = tx('ફળ ફૂલ મેમરી ગેમ');
+    trNode(document.body);
+    new MutationObserver(function(ms){ ms.forEach(function(m){ m.addedNodes.forEach(trNode); if(m.type==='attributes') trNode(m.target); }); })
+      .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-label','title']});
+  }
+
   var state = {time:20, count:6, phase:'setup', mist:0, placed:0, slots:[], cols:0, rows:0, tc:1, timer:null};
 
   function shuffle(a){
@@ -372,12 +398,12 @@ button:focus-visible{outline:3px solid #e8845f}
       hit.el.classList.add('ok');
       t.classList.add('done');
       state.placed++;
-      say('સાચું! ' + hit.it.n, 'good');
+      say(tx('સાચું!') + ' ' + hit.it.n, 'good');
       ui();
       if(state.placed === state.count){ state.phase = 'done'; ui(); setTimeout(win, 700); }
     } else if(hit){
       state.mist++;
-      say('આ જગ્યા નથી, ફરી યાદ કરો', 'bad');
+      say(tx('આ જગ્યા નથી, ફરી યાદ કરો'), 'bad');
       ui();
       t.classList.remove('shake'); void t.offsetWidth; t.classList.add('shake');
     }
@@ -390,10 +416,10 @@ button:focus-visible{outline:3px solid #e8845f}
     window.sbTrack&&sbTrack.finish({mistakes:m, count:state.count});
     var stars = m === 0 ? 3 : (m <= 3 ? 2 : 1);
     $('#stars').textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
-    $('#wintitle').textContent = m === 0 ? 'શાબાશ!' : 'સરસ!';
+    $('#wintitle').textContent = tx(m === 0 ? 'શાબાશ!' : 'સરસ!');
     $('#wintext').textContent = m === 0
-      ? 'એક પણ ભૂલ વગર બધી વસ્તુઓ સાચી જગ્યાએ મૂકી.'
-      : 'બધી વસ્તુઓ સાચી જગ્યાએ મૂકાઈ. ભૂલ: ' + m + '. ફરી રમીને વધુ સારું કરો.';
+      ? tx('એક પણ ભૂલ વગર બધી વસ્તુઓ સાચી જગ્યાએ મૂકી.')
+      : tx('બધી વસ્તુઓ સાચી જગ્યાએ મૂકાઈ. ભૂલ: ') + m + tx('. ફરી રમીને વધુ સારું કરો.');
     $('#win').hidden = false;
   }
 
@@ -409,7 +435,7 @@ button:focus-visible{outline:3px solid #e8845f}
 <script>/* back system: Chrome/Android back = game's own back; top level -> hub */
 (function(){var $=function(i){return document.getElementById(i)},vis=function(e){return !!e&&!e.hidden&&e.getClientRects().length>0};
 try{history.replaceState({g:1},'');history.pushState({g:2},'')}catch(e){}
-function leave(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.back();else location.replace('../')}
+function leave(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.back();else location.replace('../#z3')}
 function back(){if(vis($('win'))){$('back').click();return true}
 if(vis($('hud'))){$('quit').click();return true}
 return false}
@@ -419,7 +445,7 @@ addEventListener('popstate',function(){if(back()===false){leave();return}history
 var x=document.createElement('button');x.type='button';x.id='exitHub';x.setAttribute('aria-label',gu?'હોમપેજ પર જાઓ':'Back to home page');
 x.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 function running(){var h=document.getElementById('hud');return !!h&&!h.hidden}
-function goHub(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.go(-2);else location.replace('../')}
+function goHub(){if(document.referrer&&document.referrer.indexOf(location.origin)==0)history.go(-2);else location.replace('../#z3')}
 function askLeave(){if(document.getElementById('exitAsk'))return;var lg='g';try{lg=localStorage.getItem('satsangLang')||'g'}catch(e){}
 var T={g:['ગેમ બંધ કરીને હોમપેજ પર જવું છે?','હા, 🏠 હોમપેજ','ના, રમતા રહો'],e:['Close the game and go to the home page?','Yes, 🏠 Home page','No, keep playing'],r:['Game band karine homepage par javu chhe?','Ha, 🏠 Homepage','Na, ramta raho']}[lg]||['Close the game and go to the home page?','Yes, 🏠 Home page','No, keep playing'];
 var o=document.createElement('div');o.id='exitAsk';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');
