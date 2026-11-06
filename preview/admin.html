@@ -114,6 +114,14 @@ header h1{flex:1;min-width:0}.x.bell{position:relative;cursor:pointer;padding:0}
 @media(min-height:760px){.st4{font-size:13px}#pg .card.st4{padding:7px 12px}.tp{font-size:13px;line-height:1.6}.kp b{font-size:24px}.kp small{font-size:12px}.gl{font-size:12.5px;line-height:2}.chart.s3{height:48px}#pg .one .row{font-size:13px;margin-bottom:5px}#pg .card.one{padding:10px 12px;margin-bottom:8px}#pg .one h2{font-size:15px;margin:0 0 6px}}
 .dk{cursor:pointer}.dk:active{transform:scale(.98)}.dr{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr auto;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}.dr:first-child{border-top:0}.dr .dl b{display:block;font-weight:700;font-size:15px}.dr .dl small{display:block;font-size:12.5px;color:var(--muted)}.dr .gb{display:block;height:8px;border-radius:4px;background:var(--track);overflow:hidden}.dr .gb i{display:block;height:100%;border-radius:4px;background:var(--bar)}.dr .dv{white-space:nowrap}.gl2{justify-content:flex-start;font-size:13px}
 .game.bu{cursor:pointer}.gar{color:var(--muted);font-size:12px}.ggh{margin-top:6px;padding:4px 10px;border-radius:12px;background:rgba(0,0,0,.035)}.ggr{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:13.5px}.ggr:first-child{border-top:0}.ggr span:last-child{color:var(--muted);text-align:right}
+/* એકસરખું ફોર્મેટ: ભક્તોની યાદી અને ભક્તનું પાનું */
+.u{padding:2px 0;border-top:1px solid var(--line)}.u:first-child{border-top:0}
+.ub .ur{align-items:baseline;font-size:16px}.ub .ur span:last-child{font-size:14px;color:var(--muted);font-weight:700}
+.chs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chs span{display:inline-flex;align-items:baseline;gap:5px;padding:3px 9px;border-radius:9px;background:rgba(0,0,0,.05);font-size:13px;line-height:1.3;white-space:nowrap;color:var(--ink)}.chs span small{font-size:11px;color:var(--muted)}.chs span.lst{background:none;padding-left:0;color:var(--muted)}
+html.cl .chs span{background:rgba(43,52,69,.07)}
+.ov .tiles{grid-template-columns:.8fr .8fr 1.5fr;gap:6px}.ov .tile b{font-size:21px;white-space:nowrap}.ov .tile small{display:block;font-size:13px}
+.ov .game .gs{justify-content:flex-start;flex-wrap:wrap;gap:6px;margin-top:6px}.ov .game .gs span{padding:3px 9px;border-radius:9px;background:rgba(0,0,0,.05);color:var(--ink);font-size:13px;white-space:nowrap}html.cl .ov .game .gs span{background:rgba(43,52,69,.07)}
+.ov .game .gs.gl2{margin-top:4px}.ov .game .gs.gl2 span{background:none;padding:0}.ov .game .gh{font-size:16px}
 </style>
 </head>
 <body>
@@ -175,7 +183,7 @@ function tabUsers(){var n=(S.users||[]).length;return '<section class="card"><h2
 function fillUsers(){var box=document.getElementById("ulist");if(!box)return;var q=(S.q||"").trim().toLowerCase();
  var a=(S.users||[]).filter(function(u){return !q||String(u.name||"").toLowerCase().indexOf(q)>=0||String(u.email||"").toLowerCase().indexOf(q)>=0});
  var pg=pager("up",a.length,UP),page=a.slice(S.up*UP,S.up*UP+UP);
- box.innerHTML=page.length?page.map(function(u,i){return '<div class="u"><button class="ub" data-i="'+i+'"><div class="ur"><span>'+esc(u.name||u.email||"નામ નથી")+'</span><span>'+num(u.plays)+' વાર ›</span></div><div class="um">'+esc(u.email||"👤 મહેમાન")+'</div><div class="um">✓ '+num(u.finishes)+' પૂરી · ✗ '+num(u.quits||0)+' અધૂરી · ⏱ '+dur(u.total_seconds)+' · છેલ્લે '+when(u.last_played)+'</div></button></div>'}).join(""):'<div class="sm">કોઈ મળ્યું નહીં</div>';
+ box.innerHTML=page.length?page.map(function(u,i){return '<div class="u"><button class="ub" data-i="'+i+'"><div class="ur"><span>'+esc(u.name||u.email||"નામ નથી")+'</span><span>'+num(u.plays)+' વાર ›</span></div><div class="um">'+esc(u.email||"👤 મહેમાન")+'</div><div class="chs"><span>✓ <b>'+num(u.finishes)+'</b><small>પૂરી</small></span><span>✗ <b>'+num(u.quits||0)+'</b><small>અધૂરી</small></span><span>⏱ <b>'+dur(u.total_seconds)+'</b></span><span class="lst">છેલ્લે '+when(u.last_played)+'</span></div></button></div>'}).join(""):'<div class="sm">કોઈ મળ્યું નહીં</div>';
  box.querySelectorAll(".ub").forEach(function(b){b.addEventListener("click",function(){openUser(page[+b.dataset.i])})});
  var w=document.getElementById("upg");w.innerHTML=pg;bindPg(w)}
 function tabMore(){var d=S.d,x=S.x||{},total=d.total_users||0,c=byCountry(x),h="";
