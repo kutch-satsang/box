@@ -281,8 +281,9 @@ function openDet(kind,arg){
  else if(kind==="new"&&arg==null){t="📈 નવા ભક્તો <small>૩૦ દિવસ</small>";var nu=(d.new_users_by_day||[]).slice().reverse(),mn=1;nu.forEach(function(r){if(r.count>mn)mn=r.count});
   items=nu.map(function(r){return ["new",r.day]});b=nu.map(function(r,i){return barRow(dayName(r.day),r.count,mn,"",i)}).join("")||'<div class="sm">—</div>'}
  else if(kind==="new"){t="📈 "+dayName(arg)+" એ જોડાયા";ulist=us.filter(function(u){return u.joined&&adlDay(u.joined)===arg});b=userRows(ulist,function(u){return clock(u.joined)+" એ જોડાયા · "+num(u.plays)+" વાર · "+(u.email?"🔵 Google":"👤 મહેમાન")})}
- else if(kind==="hour"){t="🕘 સમય";var hr=x.by_hour||[],mh=1;hr.forEach(function(r){if(r.plays>mh)mh=r.plays});b=hr.map(function(r,i){return {i:i,p:r.plays}}).filter(function(r){return r.p}).map(function(r){return barRow(hour(r.i),r.p,mh,"")}).join("")||'<div class="sm">—</div>'}
- else if(kind==="week"){t="📅 વાર";var WN=["રવિવાર","સોમવાર","મંગળવાર","બુધવાર","ગુરુવાર","શુક્રવાર","શનિવાર"],wd=x.by_weekday||[],mw=1;wd.forEach(function(r){if(r.plays>mw)mw=r.plays});b=wd.map(function(r){return barRow(WN[r.weekday],r.plays,mw,"")}).join("")}
+ else if((kind==="hour"||kind==="week")&&arg!=null){var WN2=["રવિવાર","સોમવાર","મંગળવાર","બુધવાર","ગુરુવાર","શુક્રવાર","શનિવાર"];t=kind==="hour"?"🕘 "+hour(arg):"📅 "+WN2[arg];b='<div class="sm">લાવી રહ્યા છીએ…</div>';var slot=1}
+ else if(kind==="hour"){t="🕘 સમય";var hr=x.by_hour||[],mh=1;hr.forEach(function(r){if(r.plays>mh)mh=r.plays});b=hr.map(function(r,i){return {i:i,p:r.plays}}).filter(function(r){return r.p}).map(function(r){items.push(["hour",r.i]);return barRow(hour(r.i),r.p,mh,"",items.length-1)}).join("")||'<div class="sm">—</div>'}
+ else if(kind==="week"){t="📅 વાર";var WN=["રવિવાર","સોમવાર","મંગળવાર","બુધવાર","ગુરુવાર","શુક્રવાર","શનિવાર"],wd=x.by_weekday||[],mw=1;wd.forEach(function(r){if(r.plays>mw)mw=r.plays});b=wd.map(function(r){if(!r.plays)return barRow(WN[r.weekday],0,mw,"");items.push(["week",r.weekday]);return barRow(WN[r.weekday],r.plays,mw,"",items.length-1)}).join("")}
  else if(kind==="lang"&&arg==null){t="🗣 ભાષા";var lg=d.languages||{},lk=Object.keys(lg).sort(function(a,e){return lg[e]-lg[a]}),ml=lk.length?lg[lk[0]]:1,th=d.themes||{};
   items=lk.map(function(k){return ["lang",k]});b=lk.map(function(k,i){return barRow(esc(LANGS[k]||(k==="unknown"?UNK:k)),lg[k],ml,"ભક્ત",i)}).join("")+(Object.keys(th).length?'<h2 style="margin-top:14px">🎨 થીમ</h2>'+Object.keys(th).map(function(k){return barRow(esc(THEMES[k]||k),th[k],ml,"ભક્ત")}).join(""):"")}
  else if(kind==="lang"){t="🗣 "+esc(LANGS[arg]||arg);ulist=us.filter(function(u){return (u.language||"unknown")===arg});b=userRows(ulist,function(u){return num(u.plays)+" વાર · છેલ્લે "+last(u.last_played)})}
@@ -290,16 +291,21 @@ function openDet(kind,arg){
  o.querySelector(".x").addEventListener("click",function(){o.remove()});
  [].forEach.call(o.querySelectorAll("[data-di]"),function(e){e.addEventListener("click",function(){var it=items[+e.dataset.di];openDet(it[0],it[1])})});
  [].forEach.call(o.querySelectorAll("[data-du]"),function(e){e.addEventListener("click",function(){openUser(ulist[+e.dataset.du])})});
- document.body.appendChild(o)}
+ document.body.appendChild(o);
+ if(slot)window.AdminPage.slot(kind,arg,function(l){var sec=o.querySelector("section.card");if(!l){sec.innerHTML='<div class="sm">લાવી ન શકાયું. નેટ ચકાસો.</div>';return}
+  var m={};us.forEach(function(u){m[u.id]=u});var rs=l.filter(function(r){return m[r.user_id]});ulist=rs.map(function(r){return m[r.user_id]});
+  sec.innerHTML='<h2>'+num(ulist.length)+' ભક્ત <small>એ સમયે રમ્યા</small></h2>'+userRows(ulist,function(u){var r=rs[ulist.indexOf(u)];return num(r.plays)+" વાર · છેલ્લે "+last(r.last)});
+  [].forEach.call(sec.querySelectorAll("[data-du]"),function(e){e.addEventListener("click",function(){openUser(ulist[+e.dataset.du])})})})}
 function hour(i){var n=i%12||12;return (i<4?"રાત્રે ":i<12?"સવારે ":i<16?"બપોરે ":i<20?"સાંજે ":"રાત્રે ")+gu(n)+" વાગ્યે"}
 function applyTheme(t){document.documentElement.classList.toggle("cl",t==="kaach")}
-window.AdminPage={history:function(u,cb){cb([])},markRead:function(f,cb){cb(false)},render:render,renderUsers:renderUsers,renderExtra:renderExtra,applyTheme:applyTheme};
+window.AdminPage={slot:function(k,v,cb){cb([])},history:function(u,cb){cb([])},markRead:function(f,cb){cb(false)},render:render,renderUsers:renderUsers,renderExtra:renderExtra,applyTheme:applyTheme};
 applyTheme(window.SatsangBox?SatsangBox.theme():"mati");
 /* સાચો ડેટા: સુરક્ષા Supabase માં છે, ફક્ત vsbhuj@gmail.com ને જ જવાબ મળે */
 function alertErr(){fail("બદલી ન શકાયું. નેટ ચકાસીને ફરી પ્રયત્ન કરો.");setTimeout(function(){document.getElementById("err").style.display="none"},4000)}
 function fail(t){var e=document.getElementById("err");e.textContent=t;e.style.display="block"}
 function load(c){
  function call(n,a){return c.rpc(n,a).then(function(r){if(r.error)throw r.error;return r.data})}
+ window.AdminPage.slot=function(k,v,cb){call("admin_slot_users",{kind:k,slot:v}).then(function(d){cb(d||[])},function(){cb(null)})};
  window.AdminPage.history=function(u,cb){call("admin_user_history",{target:u.id}).then(function(d){cb(d||[])},function(){cb([])})};
  window.AdminPage.markRead=function(f,cb){call("admin_mark_feedback_read",{target:f.id}).then(function(){cb(true)},function(){cb(false)})};
  window.AdminPage.send=function(t,g,x,cb){call("admin_send_message",{target:t,g:g,txt:x}).then(function(){cb(true)},function(){cb(false)})};
