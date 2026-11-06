@@ -1,5 +1,5 @@
 <!doctype html><html lang="gu"><head>
-<script src="../auth.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>સત્સંગ પ્રશ્ન</title><link rel="icon" type="image/png" href="../icon-192.png"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><meta name="theme-color" content="#f08a24"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="સત્સંગ પ્રશ્ન"><script src="../analytics.js" defer></script>
+<script src="../auth.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>સત્સંગ પ્રશ્ન</title><link rel="icon" type="image/png" href="../icon-192.png"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><meta name="theme-color" content="#f08a24"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="સત્સંગ પ્રશ્ન"><script src="../analytics.js" defer></script><script src="../guide.js" defer></script>
 <style>/* V45 ક્રમ: મંદિર → પસંદ → વિભાગ (ક્લે) */
 .fl{z-index:7;background:linear-gradient(rgba(248,235,214,.86),rgba(240,218,186,.9)),#f4e3cc url(../themes/adhyatmik/mati/bg.webp) center top/cover;color:#4a2c1c}
 .fl[hidden]{display:none!important}
@@ -661,7 +661,7 @@ body{--bg:#f4e3cc;--surface:#fbf1e2;--ink:#4a2c1c;--muted:#8a6a52;--line:#e3c9a4
     <div class="trow" style="display:none"><input id="nng" type="number" inputmode="numeric" min="5" step="5"><button type="button" id="nnadd"></button></div>
     <p class="small" id="lfu"></p>
     </div>
-    <div class="pane" data-p="4" id="rules"></div>
+    <div class="pane" data-p="4" id="rules"></div><button type="button" class="addt" id="guideAgain" style="display:none"></button>
     <button type="button" class="sgame" id="sgame"></button><div id="gprep" hidden>
   <div class="sb"><h3 id="sl1"></h3><div class="cats" id="stm"></div><div id="snames" style="display:flex;flex-direction:column;gap:8px"></div></div>
   <div class="sb"><h3 id="sl2"></h3><div class="cats" id="scat2"></div><div class="cats" id="sdp"></div></div>
@@ -1063,7 +1063,7 @@ function stopTimer(){if(TIV){clearInterval(TIV);TIV=null}el("tmr").classList.rem
 function startTimer(){stopTimer();var b=el("tmr");TUP=false;if(!TIME){b.hidden=true;return}b.hidden=false;
 var opts=["num","ring","sand","bomb","dial"];TSTY=STYLE==="rand"?opts[Math.floor(Math.random()*opts.length)]:(opts.indexOf(STYLE)>=0?STYLE:"num");
 buildTimer();TT0=Date.now();TLAST=TIME;drawTimer(1,TIME);TIV=setInterval(tickTimer,100)}
-function tickTimer(){var rem=TIME-(Date.now()-TT0)/1000*(window.NP_SPEED||1),fr=Math.max(0,rem/TIME),secs=Math.max(0,Math.ceil(rem));
+function tickTimer(){if(window.sbGuide&&sbGuide.active()){TT0+=100;return}var rem=TIME-(Date.now()-TT0)/1000*(window.NP_SPEED||1),fr=Math.max(0,rem/TIME),secs=Math.max(0,Math.ceil(rem));
 drawTimer(fr,secs);if(secs!==TLAST){TLAST=secs;if(secs>0)snd(secs<=5?990:700,0.06,"square",secs<=5?0.07:0.04)}
 if(rem<=0){stopTimer();TUP=true;timeUpFx();paintCard(false)}}
 function timeUpFx(){var b=el("tmr"),u=el("tUp");if(TSTY==="bomb"){var svg=b.querySelector("svg");if(svg)svg.style.display="none";var bm=document.createElement("div");bm.className="boom";bm.textContent="💥";b.insertBefore(bm,b.firstChild);snd(70,0.6,"sawtooth",0.2);snd(45,0.8,"square",0.12)}
@@ -1119,7 +1119,7 @@ function pickOpt(i){var O=OPTS[cur];if(!O||PH!=="ask"||O.pick!=null)return;O.pic
 var ok=i===O.ans;if(ok){snd(660,0.12,"sine",0.1)}else snd(200,0.25,"sawtooth",0.06);
 setTimeout(function(){if(PH!=="ask")return;el(ok?"jr":"jw").click()},ok?700:1100)}
 /* ---------- card ---------- */
-function openBox(i){if(window.sbTrack){sbTrack.start({mode:isStep()?"step":"round",section:String(DEP),step:isStep()?STEP+1:RNDIX+1,teams:TEAMS.length},true);sbTrack.where(String(DEP)+" "+(isStep()?STEP+1:RNDIX+1))}cur=i;REOPEN=!!RES[i];WR=false;el("wans").value="";var c=el("card");c.className="card c"+col(i);el("ov").hidden=false;
+function openBox(i){window.sbGuide&&sbGuide.event("open");if(window.sbTrack){sbTrack.start({mode:isStep()?"step":"round",section:String(DEP),step:isStep()?STEP+1:RNDIX+1,teams:TEAMS.length},true);sbTrack.where(String(DEP)+" "+(isStep()?STEP+1:RNDIX+1))}cur=i;REOPEN=!!RES[i];WR=false;el("wans").value="";var c=el("card");c.className="card c"+col(i);el("ov").hidden=false;
 if(RES[i]){PH=RES[i].ph;AT=Math.min(RES[i].at,TEAMS.length-1);TO=RES[i].to==null||RES[i].to>=TEAMS.length?null:RES[i].to;PEEK=false;el("tmr").hidden=true;stopTimer()}
 else{st[i]=1;TO=null;PH="ask";AT=TURN;STT=TURN;PC=0;PEEK=false;startTimer()}
 paintCard(true);paintBoxes();c.focus()}
@@ -1153,8 +1153,8 @@ st[cur]=2;RES[cur]=e;setPH("prize");paintTeams();
 snd(784,0.12,"sine",0.1);setTimeout(function(){snd(1047,0.12,"sine",0.1)},110);setTimeout(function(){snd(1319,0.25,"sine",0.1)},220)}
 function setPH(ph,anim){if(ph==="ask"&&OPTS[cur])OPTS[cur].pick=null;if(ph==="ask"||ph==="right"){WR=false;el("wans").value=""}PH=ph;paintCard(anim!==false);paintBoxes()}
 el("peek").addEventListener("click",function(){PEEK=!PEEK;paintCard(false)});
-el("jr").addEventListener("click",function(){SP=PRESP||speedOf();PRESP=null;stopTimer();setPH("right");snd(660,0.12,"sine",0.1);setTimeout(function(){snd(990,0.18,"sine",0.1)},120)});
-el("jw").addEventListener("click",function(){stopTimer();var pv=TEAMS[AT].streak;TEAMS[AT].streak=0;st[cur]=3;RES[cur]={ph:"wrong",at:AT,lp:[AT,pv]};paintTeams();setPH("wrong");snd(200,0.3,"sawtooth",0.07)});
+el("jr").addEventListener("click",function(){window.sbGuide&&sbGuide.event("answer");SP=PRESP||speedOf();PRESP=null;stopTimer();setPH("right");snd(660,0.12,"sine",0.1);setTimeout(function(){snd(990,0.18,"sine",0.1)},120)});
+el("jw").addEventListener("click",function(){window.sbGuide&&sbGuide.event("answer");stopTimer();var pv=TEAMS[AT].streak;TEAMS[AT].streak=0;st[cur]=3;RES[cur]={ph:"wrong",at:AT,lp:[AT,pv]};paintTeams();setPH("wrong");snd(200,0.3,"sawtooth",0.07)});
 el("jp").addEventListener("click",function(){var pv=TEAMS[AT].streak;TEAMS[AT].streak=0;paintTeams();PC++;if(PC>=TEAMS.length){stopTimer();st[cur]=3;RES[cur]={ph:"allpass",at:AT,lp:[AT,pv]};setPH("allpass");return}
 AT=(AT+1)%TEAMS.length;PEEK=false;startTimer();paintCard(true)});
 el("gift").addEventListener("click",function(){if(PH==="right")give(AT)});
@@ -1166,7 +1166,7 @@ TO=null;st[cur]=1;RES[cur]=null;paintTeams();setPH("right",false);return}
 var lp=RES[cur]&&RES[cur].lp;if(lp&&TEAMS[lp[0]]){TEAMS[lp[0]].streak=lp[1];paintTeams()}
 if(PH==="allpass"){PC=TEAMS.length-1}
 st[cur]=1;RES[cur]=null;PEEK=false;setPH("ask",false);startTimer()});
-function closeCard(advanceTurn){stopTimer();el("ov").hidden=true;var b=boxes[cur];
+function closeCard(advanceTurn){window.sbGuide&&sbGuide.event("close");stopTimer();el("ov").hidden=true;var b=boxes[cur];
 if(advanceTurn){TURN=(STT+1)%TEAMS.length}cur=-1;paintBoxes();paintTeams();if(b)b.focus();checkStep()}
 el("nextb").addEventListener("click",function(){closeCard(!REOPEN)});
 el("wans").addEventListener("input",function(){WR=this.value.trim().length>0;el("nextb").hidden=!WR});
@@ -1331,7 +1331,9 @@ e:{back:"← Back",pick:"What do you want to play?",sp:"Satsang Prashn",sps:"Ram
 r:{back:"← Pachha",pick:"Shu ramvu chhe?",sp:"Satsang Prashn",sps:"Ramayan, Mahabharat, Krishna Leela…",va:"Vachanamrut",vas:"Gadhada Pratham, Sarangpur…",soon:"Tunk samay ma",team:"👥 Team",rule:"📘 Niyam",set:"⚙️ Settings",vh:"❓ Satsang Prashn",vs:"Vibhag dabavo etle ramat sharu",q:"prashn",st:"Step",mix:"🔀 Badha bhega",un:"🔓 Badha step kholo (shikshak mate)"}};
 function fLang(id){var lg=el(id);lg.innerHTML="";var N={g:"🌐 ગુ",e:"🌐 En",r:"🌐 G.a"},O=["g","e","r"],b=document.createElement("button");b.type="button";b.className="lgb";b.textContent=N[L];b.setAttribute("aria-label","Language");b.addEventListener("click",function(){L=O[(O.indexOf(L)+1)%3];try{localStorage.setItem("naamPetiLang",L)}catch(e){}paintAll()});lg.appendChild(b)}
 function fShow(id){["pick","vib","gp"].forEach(function(k){el(k).hidden=k!==id});if(id){paintFlow();el(id).scrollTop=0}}
-function fStart(id){DEP=id;var d=id!=="mix"&&findDept(id);STEP=(d&&d.steps)?unlocked(id):0;persistDep();newGame(false);S0=snap();fShow(null);el("home").hidden=true;paintAll();window.scrollTo(0,0)}
+function fStart(id){DEP=id;var d=id!=="mix"&&findDept(id);STEP=(d&&d.steps)?unlocked(id):0;persistDep();newGame(false);S0=snap();fShow(null);el("home").hidden=true;paintAll();window.scrollTo(0,0);plGuide()}
+/* 🧭 પહેલી વાર ગાઈડ (guide.js) */
+function plGuide(){if(!window.sbGuide||!sbGuide.needed("prashn-leela"))return;function T(g,e,r){return {g:g,e:e,r:r}}function vis(id){var x=el(id);return x&&!x.hidden&&x.offsetParent?x:null}sbGuide.run("prashn-leela",[{mode:"hole",wait:"open",target:function(){return document.querySelector("#list .bxd")},t:T("👆 આ બોક્સ દબાવો — અંદર પ્રશ્ન છુપાયેલો છે","👆 Tap this box — a question is hidden inside","👆 Aa box dabavo — andar prashn chhupayelo chhe")},{mode:"block",wait:"button",target:function(){return vis("tmr")},skipIf:function(){return !vis("tmr")},t:T("⏱ ઘડિયાળ પૂરી થાય એ પહેલાં જવાબ આપો","⏱ Answer before the clock runs out","⏱ Ghadiyal puri thay e pahela javab aapo")},{mode:"hole",wait:"answer",target:function(){return vis("opts")||vis("judge")},t:T("સાચો જવાબ દબાવો","Tap the right answer","Sacho javab dabavo")},{mode:"hole",wait:"close",target:function(){return vis("gift")||vis("nextb")||vis("wans")||vis("back")},t:T("આગળ વધવા આ બટન દબાવો","Tap this button to go on","Aagal vadhva aa button dabavo")},{mode:"block",wait:"button",target:function(){return vis("teams")},skipIf:function(){return !vis("teams")},t:T("👥 દરેક ટીમનો વારો અને ગુણ અહીં દેખાય","👥 Each team's turn and points show here","👥 Darek team no varo ane gun ahin dekhay")},{mode:"block",wait:"button",target:function(){return document.getElementById("exitHub")},btn:T("🙏 શરૂ કરો","🙏 Start","🙏 Sharu karo"),t:T("✕ બહાર નીકળવા અહીં દબાવો","✕ Tap here to exit","✕ Bahar nikalva ahin dabavo")}],{alive:function(){return el("home").hidden}})}
 function secLoad(){if(!window.fetch)return;fetch("https://fexjcqyaopfilwixwfpn.supabase.co/rest/v1/game_status?select=game&enabled=eq.false&game=like.prashn-leela:*",{headers:{apikey:"sb_publishable_RCGMIsbR27_gu6aUZ_3pUg_OajpxBhL"}}).then(function(r){return r.ok?r.json():null}).then(function(a){if(!a)return;var o=a.map(function(x){return x.game.split(":")[1]}).sort();if(o.join()===SEC.slice().sort().join())return;SEC=o;try{localStorage.setItem("sbSecOff",JSON.stringify(o))}catch(e){}fixDep();persistDep();paintFlow()}).catch(function(){})}
 setTimeout(secLoad,0);document.addEventListener("visibilitychange",function(){if(!document.hidden)secLoad()});
 function paintFlow(){var v=FT[L]||FT.g;
@@ -1357,7 +1359,7 @@ schips(el("stmr"),[[0,t.off],[10,num(10)],[15,num(15)],[20,num(20)],[30,num(30)]
 schips(el("swr"),[[true,X2[L].wrOn],[false,X2[L].wrOff]],WRITE,function(v){WRITE=v;saveTimer()})}
 function persistDep(){try{localStorage.setItem("naamPetiCat",CAT);if(DEP)localStorage.setItem("naamPetiDept",DEP)}catch(e){}}
 el("hgo").addEventListener("click",function(){fShow("pick")});
-el("pkback").addEventListener("click",function(){fShow(null)});el("vbback").addEventListener("click",function(){fShow("gp")});el("gpback").addEventListener("click",function(){location.replace("../#z1")});el("gpplay").addEventListener("click",function(){fShow("vib")});el("gpteam").addEventListener("click",function(){fTab(2)});el("gprule").addEventListener("click",function(){fTab(4)});el("gpset").addEventListener("click",function(){fTab(3)});
+el("pkback").addEventListener("click",function(){fShow(null)});el("vbback").addEventListener("click",function(){fShow("gp")});el("gpback").addEventListener("click",function(){location.replace("../#z1")});el("gpplay").addEventListener("click",function(){fShow("vib")});el("gpteam").addEventListener("click",function(){fTab(2)});el("gprule").addEventListener("click",function(){fTab(4)});(function(){var b=el("guideAgain"),G={g:["🧭 ગાઈડ ફરી જુઓ","✓ આગલી રમતમાં ગાઈડ આવશે"],e:["🧭 Watch the guide again","✓ The guide will show next game"],r:["🧭 Guide fari juo","✓ Aagli ramat ma guide aavshe"]};var dn=0;function lb(){var r=el("rules");b.style.display=r&&!r.hidden&&r.offsetParent?"":"none";b.textContent=(G[L]||G.g)[dn]}setInterval(function(){if(el("sov").hidden)dn=0;else lb()},500);b.addEventListener("click",function(){window.sbGuide&&sbGuide.reset("prashn-leela");dn=1;lb()})})();el("gpset").addEventListener("click",function(){fTab(3)});
 el("pksp").addEventListener("click",function(){fShow("vib")});
 el("pkteam").addEventListener("click",function(){fTab(2)});el("vbteam").addEventListener("click",function(){fTab(2)});el("vbrule").addEventListener("click",function(){fTab(4)});el("vbset").addEventListener("click",function(){fTab(3)});el("pkrule").addEventListener("click",function(){fTab(4)});el("pkset").addEventListener("click",function(){fTab(3)});
 el("vbunlock").addEventListener("click",function(){var u=el("unlock");if(u){u.click();paintFlow()}});
