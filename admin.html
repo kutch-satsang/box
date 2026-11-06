@@ -200,7 +200,7 @@ function bellPaint(){var c=document.getElementById("bellc"),n=bellNew();if(c){c.
 function det(n){var d=n.detail||{},a=[];if(n.stars)a.push("⭐".repeat(n.stars));if(d.correct!=null)a.push(gu(d.correct)+" સાચા");if(d.mistakes!=null)a.push(gu(d.mistakes)+" ભૂલ");if(d.count!=null)a.push(gu(d.count)+" વસ્તુ");return a.join(" · ")}
 function tabBell(){var l=S.bell;if(!l)return '<section class="card"><div class="sm">લાવી રહ્યા છીએ…</div></section>';
  return '<section class="card"><h2>🔔 નોટિફિકેશન <small>છેલ્લા ૭ દિવસ</small></h2>'+(l.length?l.map(function(n,i){var u=n.kind==="unlock",nw=!S.bseen||n.played_at>S.bseen;return '<div class="hd bn'+(nw?" nw":"")+'"><span class="ic">'+(u?"🔓":"✓")+'</span><span class="tx bu" data-bu="'+i+'"><b>'+esc(n.name||n.email||"મહેમાન")+'</b><small>'+esc(GAMES[n.game]||n.game)+(u?" · સેશન ૨ આપોઆપ ખૂલ્યું":" પૂરી કરી")+(det(n)?" · "+det(n):"")+'</small></span><span class="tm">'+when(n.played_at)+", "+clock(n.played_at)+'</span><button class="msb'+(n.sent?" sent":"")+'" data-bm="'+i+'" aria-label="સંદેશ મોકલો"'+(n.sent?" disabled":"")+'>'+(n.sent?"✓":"💌")+'</button></div>'}).join(""):'<div class="sm">હજી કોઈ નોટિફિકેશન નથી</div>')+'</section>'}
-function draw(){var el=document.getElementById("pg"),h;
+function draw(){var el=document.getElementById("pg"),h;el.style.overflow=/^(fb|user|sw|bell)$/.test(S.tab)?"auto":"";
  if(!S.d)h='<div class="sm">લાવી રહ્યા છીએ…</div>';
  else h={sum:tabSum,game:tabGame,user:tabUsers,more:tabMore,fb:tabFb,sw:tabSw,bell:tabBell}[S.tab]();
  el.innerHTML=h;el.scrollTop=0;el.className="";if(DIR){void el.offsetWidth;el.className=DIR>0?"inr":"inl";DIR=0}
