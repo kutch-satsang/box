@@ -439,7 +439,7 @@ function special(w,t,zid){
   var pv=el("a","spriv",AC.pv);pv.href="privacy.html";w.appendChild(pv);
   var vr=el("div","sver",t.ver+" · "+SB.version),tp=0,tt=0;
   vr.addEventListener("click",function(){clearTimeout(tt);tt=setTimeout(function(){tp=0},2500);if(++tp<7)return;tp=0;
-    SatsangAuth.user().then(function(u){if(u&&String(u.email).toLowerCase()==="vsbhuj@gmail.com")location.href="admin.html"})});
+    SatsangAuth.user().then(function(u){if(u&&String(u.email).toLowerCase()==="vsbhuj@gmail.com")location.href="admin.html?v="+Date.now()})});
   w.appendChild(vr);
   return w}
 /* Settings ની પેટીઓ: ફીડબેક, એકાઉન્ટ કાઢવું */
