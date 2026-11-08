@@ -1,5 +1,5 @@
 <!doctype html><html><head>
-<script src="../auth.js"></script><script src="../box.js"></script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../analytics.js" defer></script>
+<script src="../auth.js"></script><script src="../box.js"></script><script src="../guide.js" defer></script><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="../analytics.js" defer></script>
 </head><body>
 <title>ફળ ફૂલ મેમરી ગેમ</title>
 <link rel="stylesheet" href="../fonts/fonts.css">
@@ -326,11 +326,33 @@ button:focus-visible{outline:3px solid #e8845f}
     var fill = $('#barfill'), clock = $('#clock');
     fill.style.width = '100%'; clock.textContent = total;
     state.timer = setInterval(function(){
+      if(window.sbGuide&&sbGuide.active()){ t0 += 100; return; }
       var rem = Math.max(0, total - (performance.now() - t0)/1000);
       fill.style.width = (rem/total*100) + '%';
       clock.textContent = Math.ceil(rem);
       if(rem <= 0){ clearInterval(state.timer); vanish(); }
     }, 100);
+    if(window.sbGuide && sbGuide.needed('fal-ful-memory')) setTimeout(guide, 500);
+  }
+
+  /* 🧭 પહેલી વાર ગાઈડ (guide.js): ગાઈડ દરમ્યાન કાગળનો સમય અટકેલો રહે છે */
+  function guide(){
+    if(!window.sbGuide || !sbGuide.needed('fal-ful-memory') || state.phase !== 'show') return;
+    var T = function(g,e,r){ return {g:g,e:e,r:r}; };
+    sbGuide.run('fal-ful-memory', [
+      {t:T('કાગળ પર ફળ, ફૂલ અને શાકભાજી છે. દરેક કઈ જગ્યાએ છે તે યાદ રાખો.','The paper has fruits, flowers and vegetables. Remember where each one is.','Kagal par fal, ful ane shakbhaji chhe. Darek kai jagyae chhe te yaad rakho.'),
+       target:function(){ return paper; }, mode:'block', wait:'button'},
+      {t:T('ઉપરનો સમય પૂરો થાય એટલે વસ્તુઓ કાગળ પરથી ગાયબ થઈ નીચે આવશે.','When the time runs out, the items leave the paper and come down here.','Upar no samay pura thay etle vastuo kagal parthi gayab thai niche aavshe.'),
+       target:function(){ return $('#hud'); }, mode:'block', wait:'button'},
+      /* skipIf એક જ વાર ચાલે: અહીં સમય પૂરો કરી વસ્તુઓ નીચે લાવે છે */
+      {t:T('વસ્તુને ખેંચીને કાગળ પરની તેની સાચી જગ્યાએ (ગોળ) મૂકો.','Drag an item to its right place (circle) on the paper.','Vastune khenchine kagal parni teni sachi jagyae (gol) mukho.'),
+       retry:T('આ જગ્યા નથી. યાદ કરીને બીજી જગ્યાએ મૂકો.','Not this place. Remember and try another.','Aa jagya nathi. Yaad karine biji jagyae mukho.'),
+       skipIf:function(){ if(state.phase === 'show'){ clearInterval(state.timer); vanish(); } return false; },
+       target:function(){ return state.phase === 'play' ? tray.querySelector('.t:not(.done)') : null; },
+       quiet:function(){ return state.phase !== 'play'; }, at:'bottom', mode:'ring', wait:'drop'},
+      {t:T('✓ સાચી અને ✗ ભૂલ ગણાય છે. ↺ થી નવી ગેમ શરૂ થાય. હવે બાકી વસ્તુઓ મૂકો!','✓ counts right and ✗ counts mistakes. ↺ starts a new game. Now place the rest!','✓ sachi ane ✗ bhool ganay chhe. ↺ thi navi game sharu thay. Have baki vastuo mukho!'),
+       target:function(){ return $('#hud'); }, mode:'block', wait:'button', btn:T('🙏 શરૂ કરો','🙏 Start','🙏 Sharu karo')}
+    ], {alive:function(){ return state.phase !== 'setup' && state.phase !== 'done'; }});
   }
 
   function vanish(){
@@ -398,11 +420,13 @@ button:focus-visible{outline:3px solid #e8845f}
       hit.el.classList.add('ok');
       t.classList.add('done');
       state.placed++;
+      window.sbGuide&&sbGuide.event('drop');
       say(tx('સાચું!') + ' ' + hit.it.n, 'good');
       ui();
       if(state.placed === state.count){ state.phase = 'done'; ui(); setTimeout(win, 700); }
     } else if(hit){
       state.mist++;
+      window.sbGuide&&sbGuide.event('retry');
       say(tx('આ જગ્યા નથી, ફરી યાદ કરો'), 'bad');
       ui();
       t.classList.remove('shake'); void t.offsetWidth; t.classList.add('shake');

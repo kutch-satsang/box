@@ -2,7 +2,7 @@
    ગેમમાં વાપરવું (હંમેશાં window.sbGuide && થી):
      if(window.sbGuide && sbGuide.needed('game-name')) sbGuide.run('game-name', steps, {onEnd:fn, alive:fn});
    steps = [{t:{g,e,r}, target:fn→element, mode:'hole'|'block'|'ring', wait:'button'|'<event>',
-             btn:{g,e,r}, retry:{g,e,r}, quiet:fn, skipIf:fn}]
+             btn:{g,e,r}, retry:{g,e,r}, quiet:fn, skipIf:fn, at:'bottom'}]
      hole  = બાકી સ્ક્રીન ઝાંખી, ફક્ત ચમકતી વસ્તુ દબાવી શકાય
      block = બાકી ઝાંખી, કંઈ દબાતું નથી, "સમજ્યો" દબાવવું પડે
      ring  = ઝાંખું નહીં, ફક્ત રિંગ + લખાણ (ખેંચવા માટે)
@@ -96,6 +96,7 @@
       else by = Math.max(10, (vh - bh) / 2);
       bx = Math.max(10, Math.min(vw - bw - 10, x + w / 2 - bw / 2));
     } else { bx = (vw - bw) / 2; by = (vh - bh) / 2; }
+    if(s.at === 'bottom') by = Math.max(10, vh - bh - 14);   /* લખાણ સ્ક્રીનના તળિયે: ઉપરની વસ્તુઓ ઢંકાય નહીં */
     u.bub.style.left = bx + 'px'; u.bub.style.top = by + 'px';
   }
 
