@@ -197,9 +197,9 @@
   function greet(){
     if(GAME === 'hub') return;
     var had = myName();
-    if(had) setTimeout(function(){ pill(had, 4000, true); }, 700);
+    if(had) setTimeout(function(){ pill(had, 4000, false); }, 700);
     if(window.SatsangAuth && SatsangAuth.profile) SatsangAuth.profile().then(function(p){
-      if(!had && p && p.name) pill(p.name, 4000, true);
+      if(!had && p && p.name) pill(p.name, 4000, false);
     }, function(){});
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', greet); else greet();
