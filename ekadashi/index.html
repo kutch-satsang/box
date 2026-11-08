@@ -190,6 +190,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
 </main>
 <script src="../analytics.js"></script>
 <script src="../box.js"></script>
+<script src="../guide.js" defer></script>
 <script>/* હબ સાથે જોડાણ: ⚙ = હબ Settings, ✕ = સીધું હબ */
 function boxInFrame(){try{return window.parent!==window}catch(x){return false}}
 function boxGear(){if(boxInFrame()){try{parent.postMessage({satsangBox:'settings'},'*');return}catch(x){}}location.href='../index.html#set'}
@@ -217,16 +218,29 @@ function routeClick(button){const route=button.dataset.route;if(route==='coming'
 function pickOptions(q){const bad=q.options.filter(o=>o!==q.correct);if(bad.length!==7)throw Error('Source must have 7 wrong answers');const prev=lastWrong[q.id]||[];let unused=bad.filter(v=>!prev.includes(v));if(unused.length<3)unused=bad;const wrong=shuffle(unused).slice(0,3);lastWrong[q.id]=wrong;const four=shuffle([q.correct,...wrong]);const old=lastCorrectPosition[q.id];let pos=four.indexOf(q.correct);if(old!==undefined&&pos===old){let swap=(pos+1+randomInt(3))%4;[four[pos],four[swap]]=[four[swap],four[pos]];pos=swap;}lastCorrectPosition[q.id]=pos;return {...q,shown:four};}
 function restoreRoundHistory(){try{const v=JSON.parse(localStorage.getItem('satsang-ekadashi-52-round-history')||'null');if(v&&typeof v==='object'){prevQuestionOrder=v.order||'';lastWrong=v.wrong||{};lastCorrectPosition=v.positions||{};}}catch(e){}}
 function saveRoundHistory(){try{localStorage.setItem('satsang-ekadashi-52-round-history',JSON.stringify({order:prevQuestionOrder,wrong:lastWrong,positions:lastCorrectPosition}));}catch(e){}}
-function begin(){window.sbTrack&&sbTrack.start();cancelTimers();totalPoints=0;questionIndex=0;answers=[];let list=shuffle(Q);if(list.map(q=>q.id).join(',')===prevQuestionOrder)list=list.slice(1).concat(list[0]);prevQuestionOrder=list.map(q=>q.id).join(',');round=list.map(pickOptions);saveRoundHistory();show('quiz');openQuestion();}
+function begin(){window.sbTrack&&sbTrack.start();cancelTimers();totalPoints=0;questionIndex=0;answers=[];let list=shuffle(Q);if(list.map(q=>q.id).join(',')===prevQuestionOrder)list=list.slice(1).concat(list[0]);prevQuestionOrder=list.map(q=>q.id).join(',');round=list.map(pickOptions);saveRoundHistory();show('quiz');openQuestion();if(window.sbGuide&&sbGuide.needed('ekadashi'))setTimeout(guide,400);}
+/* 🧭 પહેલી વાર ગાઈડ (guide.js): ગાઈડ દરમ્યાન ઘડિયાળ ઊભી રહે છે */
+function guide(){
+ if(!window.sbGuide||!sbGuide.needed('ekadashi')||screen!=='quiz'||answered)return;
+ const T=(g,e,r)=>({g,e,r});
+ sbGuide.run('ekadashi',[
+  {t:T('અહીં પ્રશ્ન આવશે. વાંચીને જવાબ આપો.','The question comes here. Read it and answer.','Ahin prashn aavshe. Vanchine javab apo.'),target:()=>$('questionText'),mode:'block',wait:'button'},
+  {t:T('દરેક પ્રશ્નના ૩૦ સેકન્ડ. જલદી જવાબ આપશો તો વધુ પોઇન્ટ મળશે.','30 seconds for each question. Faster answers give more points.','Darek prashn na 30 second. Jaldi javab apsho to vadhu point malshe.'),target:()=>$('timerCircle'),mode:'block',wait:'button'},
+  {t:T('૪ માંથી સાચો જવાબ દબાવો.','Tap the right answer out of 4.','4 mathi sacho javab dabavo.'),target:()=>$('choices'),mode:'hole',wait:'answer'},
+  {t:T('સાચો જવાબ અને પોઇન્ટ અહીં દેખાય છે. પછી "આગળ" દબાવવું.','The right answer and points show here. Then tap "Next".','Sacho javab ane point ahin dekhay chhe. Pachhi "Aagal" dabavvu.'),target:()=>$('feedback'),mode:'block',wait:'button',btn:T('🙏 શરૂ કરો','🙏 Start','🙏 Sharu karo')}
+ ],{alive:()=>screen==='quiz'});
+}
 function openQuestion(){
  answered=false;selection=null;phase='normal';secondsRemaining=30;
  questionDeadline=Date.now()+30000;revealDeadline=questionDeadline+10000;
  $('feedback').hidden=true;$('skipQuestion').hidden=false;
  renderQuestion();updateTimer();timerId=setInterval(updateTimer,100);
 }
+let guideLast=0;
 function updateTimer(){
  if(screen!=='quiz'||answered)return;
  const now=Date.now();let ms;
+ if(window.sbGuide&&sbGuide.active()&&guideLast){const d=now-guideLast;questionDeadline+=d;revealDeadline+=d;}guideLast=now;
  if(now<questionDeadline){
   phase='normal';ms=questionDeadline-now;secondsRemaining=ms/1000;
   $('timerCircle').style.background=`conic-gradient(#e59b77 ${secondsRemaining/30*360}deg,#e5d1b8 0)`;
@@ -261,6 +275,7 @@ function renderQuestion(){
 }
 function finishAnswer(val,reason){
  if(answered||screen!=='quiz')return;
+ window.sbGuide&&sbGuide.event('answer');
  const now=Date.now();
  if(reason==='clicked'&&now>=revealDeadline){reason='reveal';val=null;}
  const q=round[questionIndex];
