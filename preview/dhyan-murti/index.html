@@ -376,7 +376,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset
   <div class="card set">
     <div class="shead">
       <button type="button" class="sbtn" id="sback" hidden>← પાછા</button>
-      <button type="button" class="sbtn" id="sHub">🏠 હોમપેજ</button>
+      <button type="button" class="sbtn" id="sHub" aria-label="હોમપેજ" title="હોમપેજ">🏠 હોમપેજ</button>
       <h2 id="stitle">ધ્યાન દર્શન</h2>
       <button type="button" class="sbtn ok" id="sheetOk" aria-label="રમો" title="રમો">▶ ધ્યાન</button>
     </div>
@@ -2809,5 +2809,9 @@ if(sb)sb.addEventListener('click',function(){
 #sheet #pg-info .ghost{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;height:84px!important;min-height:0!important;gap:16px!important;padding:0 22px!important;margin:0!important;font-size:20px!important;text-align:left!important;justify-self:stretch!important}
 #sheet #pg-info .ghost b{font-size:34px!important;line-height:1!important;flex:none}
 #sheet #dhyanBtn{display:none!important}
+/* 🏡 હોમ બટન: લખાણ વગર, ફક્ત ગોળ નિશાન (ભાષા બદલાય તો પણ લખાણ દેખાય નહીં) */
+#sheet #sHub{position:relative;flex:none!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;border-radius:50%!important;font-size:0!important;line-height:0!important;color:transparent!important;display:grid!important;place-items:center;background:var(--cl-card,#fbf1e2)!important;border:0!important;box-shadow:var(--cl-sh-s,0 3px 8px rgba(90,53,36,.3))!important}
+#sheet #sHub::before{content:"🏡";font-size:24px;line-height:1;color:#5a3524}
+#sheet #sHub[hidden]{display:none!important}
 </style>
 </body></html>
