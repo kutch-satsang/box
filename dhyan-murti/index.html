@@ -376,7 +376,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset
   <div class="card set">
     <div class="shead">
       <button type="button" class="sbtn" id="sback" hidden>← પાછા</button>
-      <button type="button" class="sbtn" id="sHub">🏠 હોમપેજ</button>
+      <button type="button" class="sbtn" id="sBk" aria-label="પાછા" title="પાછા">←</button>
+      <button type="button" class="sbtn" id="sHub" aria-label="હોમપેજ" title="હોમપેજ">🏠 હોમપેજ</button>
       <h2 id="stitle">ધ્યાન દર્શન</h2>
       <button type="button" class="sbtn ok" id="sheetOk" aria-label="રમો" title="રમો">▶ ધ્યાન</button>
     </div>
@@ -1692,7 +1693,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
     $('#tiles').hidden = !!p;
     Object.keys(PAGES).forEach(function(x){ $('#pg-' + x).hidden = x !== p; });
     $('#sback').hidden = !p;
-    $('#sHub').hidden = !!p;
+    $('#sHub').hidden = !!p; var sbk = $('#sBk'); if(sbk) sbk.hidden = !!p;
     $('#stitle').textContent = p ? PAGES[p] : 'ધ્યાન દર્શન';
   }
   document.querySelectorAll('.tile').forEach(function(b){ b.addEventListener('click', function(){ showPage(b.dataset.p); }); });
@@ -1752,6 +1753,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   window.addEventListener('load', function(){ setTimeout(dmSessHash, 30); });
   $('#tileGo').addEventListener('click', dhyanKaro);
   $('#sHub').addEventListener('click', function(){ if(window.dmGoHub) window.dmGoHub(); });
+  $('#sBk').addEventListener('click', function(){ history.back(); });
 
   /* colour themes (only colours change, never the murti) */
   var THEMES = [['green','લીલો',['#134b47','#d9b25a','#f59e0b']],['kesari','કેસરી',['#6b3410','#ffd27a','#ff9f1c']],['bhuro','ભૂરો રાત',['#12295a','#e5c36a','#f59e0b']],['jambli','જાંબલી',['#3b1c63','#f0c870','#f5a524']],['halko','હળવો',['#fffaf0','#a8761a','#e58a00']],['gulabi','ગુલાબી',['#6e1c47','#ffc2dc','#ff5fa2']],['lal','લાલ',['#6d1414','#ffd27a','#ff6b4a']],['dhanush','મેઘધનુષ',['#ff4d4d','#ffd84d','#4dd2ff']],['mor','મોરપીંછ',['#1b8a8f','#e9c46a','#2fd6b0']],['varsad','વરસાદ',['#5b7f9f','#9fd8ff','#4db8ff']],['savar','સવાર',['#fff1e0','#c9731a','#ff8a3d']],['sandhya','સંધ્યા',['#c2527a','#ffb86b','#ff7a59']],['barf','બરફ',['#e8f4fb','#2b7ea8','#2f9bd6']],['vasant','વસંત',['#eef8e6','#4a8a1f','#7cc83b']],['chandni','ચાંદની રાત',['#3b4668','#dfe6ff','#aab8ff']],['sonu','સોનેરી',['#8a6a1a','#ffd45a','#ffc107']],['aasmani','આસમાની',['#4aa3dc','#ffe08a','#ffb703']],['kamal','કમળ',['#fff0f5','#c2487a','#ec5f98']],['jangal','જંગલ',['#2f8a4a','#c9e28a','#8fd14f']],['ret','રણ',['#f3e3c3','#a8761a','#e0922b']]];
@@ -2804,5 +2806,17 @@ if(sb)sb.addEventListener('click',function(){
 #sheet #tiles .tile .ic .face{width:52px!important;height:52px!important;margin:0!important}
 #sheet #tiles .tile.go{justify-content:center!important;background:var(--cl-terra,#c8603a)!important;color:#fff!important;font-size:24px!important;font-weight:800!important;box-shadow:var(--cl-btn-sh,0 4px 0 #8a3f22,0 8px 14px rgba(90,53,36,.4))!important}
 #sheet #tiles #tileGo{display:none!important}
+/* મહિમા પાનું: યાદી, મહિમા, વચનામૃત, નિયમ = ચાર આડી લાંબી લાઇન, 🙏 કાઢ્યું (▶ ધ્યાન મુખ્ય પાને છે) */
+#sheet #pg-info:not([hidden]){display:flex!important;flex-direction:column!important;gap:14px!important;padding-top:12px!important}
+#sheet #pg-info .ghost{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;height:84px!important;min-height:0!important;gap:16px!important;padding:0 22px!important;margin:0!important;font-size:20px!important;text-align:left!important;justify-self:stretch!important}
+#sheet #pg-info .ghost b{font-size:34px!important;line-height:1!important;flex:none}
+#sheet #dhyanBtn{display:none!important}
+/* 🏡 હોમ બટન: લખાણ વગર, ફક્ત ગોળ નિશાન (ભાષા બદલાય તો પણ લખાણ દેખાય નહીં) */
+#sheet #sHub{position:relative;flex:none!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;border-radius:50%!important;font-size:0!important;line-height:0!important;color:transparent!important;display:grid!important;place-items:center;background:var(--cl-card,#fbf1e2)!important;border:0!important;box-shadow:var(--cl-sh-s,0 3px 8px rgba(90,53,36,.3))!important}
+#sheet #sHub::before{content:none}
+#sheet #sHub{background:#fbf1e2 url(../themes/adhyatmik/mati/acc.webp) center/cover no-repeat!important;border:2px solid #fff6e8!important}
+#sheet #sBk{flex:none!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;border-radius:50%!important;border:0!important;display:grid!important;place-items:center;font-size:24px!important;font-weight:800;line-height:1!important;color:#5a3524!important;background:var(--cl-card,#fbf1e2)!important;box-shadow:var(--cl-sh-s,0 3px 8px rgba(90,53,36,.3))!important}
+#sheet #sBk[hidden]{display:none!important}
+#sheet #sHub[hidden]{display:none!important}
 </style>
 </body></html>
