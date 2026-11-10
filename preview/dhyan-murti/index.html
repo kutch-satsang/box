@@ -1777,6 +1777,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   setTheme(THEMES.some(function(x){ return x[0] === savedTheme; }) ? savedTheme : 'green', false);
 
   /* full list with front / back tags */
+  function ordC(){ var a = ALL.C.slice().sort(function(x,y){ return (+x.id.slice(1)) - (+y.id.slice(1)); }); var i = a.findIndex(function(t){ return t.id === 'C16'; }); return a.slice(i).concat(a.slice(0,i)); }
   function openList(){
     var sum = $('#listsum'), body = $('#listbody');
     sum.innerHTML = ''; body.innerHTML = '';
@@ -1786,10 +1787,11 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
     [['C','ચિહ્ન'],['T','તિલ']].forEach(function(kk){
       var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800';
       body.appendChild(h);
-      GROUPS.forEach(function(g){
-        var rows = ALL[kk[0]].filter(function(t){ return t.reg === g[0]; });
+      var seq = (kk[0] === 'C') ? [['', ordC()]] : GROUPS.map(function(g){ return [g[1], ALL[kk[0]].filter(function(t){ return t.reg === g[0]; })]; });
+      seq.forEach(function(g){
+        var rows = g[1];
         if(!rows.length) return;
-        var gh = document.createElement('div'); gh.className = 'grp'; gh.textContent = g[1] + ' · ' + rows.length; body.appendChild(gh);
+        if(g[0]){ var gh = document.createElement('div'); gh.className = 'grp'; gh.textContent = g[0] + ' · ' + rows.length; body.appendChild(gh); }
         rows.forEach(function(t){
           var r = document.createElement('div');
           r.className = 'li' + (t.side === 'back' ? ' back' : '') + (state.mastered[t.id] ? ' ok' : '');
