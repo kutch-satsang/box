@@ -1777,17 +1777,18 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   setTheme(THEMES.some(function(x){ return x[0] === savedTheme; }) ? savedTheme : 'green', false);
 
   /* full list with front / back tags */
-  function ordC(){ var a = ALL.C.slice().sort(function(x,y){ return (+x.id.slice(1)) - (+y.id.slice(1)); }); var i = a.findIndex(function(t){ return t.id === 'C16'; }); return a.slice(i).concat(a.slice(0,i)); }
+  var VSEQ = ['C9', 'C19', 'C1', 'C2', 'C3', 'C8', 'C4', 'C5', 'C7', 'C6', 'C20', 'T1', 'T2', 'T3', 'C11', 'C12', 'C10', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C43', 'C44', 'C45', 'C46', 'C47', 'C48', 'C49', 'C50', 'C51', 'C52', 'C21', 'C22', 'T4', 'C23', 'T5', 'T6', 'C25', 'C26', 'C27', 'C28', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12', 'T13', 'T14', 'T15', 'T16', 'T17', 'T18', 'T19', 'T20', 'T21', 'T22', 'T23', 'T24', 'T25', 'C29', 'C30', 'T26', 'T27', 'T28', 'C31', 'C32', 'T29', 'T30', 'T31', 'T32', 'C33', 'T33', 'T34', 'T35', 'T36', 'T37', 'T38', 'T39', 'C34', 'T40', 'T41', 'T42', 'T43', 'C35', 'C36', 'T44', 'T45', 'T46', 'T47', 'T48', 'T49', 'T50', 'T51', 'T52', 'T53', 'T54', 'T55', 'T56', 'T57', 'C42', 'C39', 'C40', 'C41', 'C37', 'C38', 'T58', 'T59', 'T60', 'T61', 'T62', 'T63', 'T64'];
+  function ordK(k){ var m = {}; ALL[k].forEach(function(t){ m[t.id] = t; }); var out = []; VSEQ.forEach(function(id){ if(m[id]){ out.push(m[id]); delete m[id]; } }); ALL[k].forEach(function(t){ if(m[t.id]) out.push(t); }); return out; }
   function openList(){
     var sum = $('#listsum'), body = $('#listbody');
     sum.innerHTML = ''; body.innerHTML = '';
-    function box(title){ var d = document.createElement('div'); d.textContent = title; sum.appendChild(d); }
+    function box(title, k){ var d = document.createElement('div'); d.textContent = title; d.style.cursor = 'pointer'; d.addEventListener('click', function(){ var h = document.getElementById('lh' + k); if(h) body.scrollTop = h.offsetTop - body.offsetTop - 4; }); sum.appendChild(d); }
     var backC = ALL.C.filter(function(t){ return t.side === 'back'; }).length, backT = ALL.T.filter(function(t){ return t.side === 'back'; }).length;
-    ['C','T'].forEach(function(k){ box(k === 'C' ? 'ચિહ્ન' : 'તિલ'); });
+    ['C','T'].forEach(function(k){ box(k === 'C' ? 'ચિહ્ન' : 'તિલ', k); });
     [['C','ચિહ્ન'],['T','તિલ']].forEach(function(kk){
-      var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800';
+      var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800'; h.id = 'lh' + kk[0];
       body.appendChild(h);
-      var seq = (kk[0] === 'C') ? [['', ordC()]] : GROUPS.map(function(g){ return [g[1], ALL[kk[0]].filter(function(t){ return t.reg === g[0]; })]; });
+      var seq = [['', ordK(kk[0])]];
       seq.forEach(function(g){
         var rows = g[1];
         if(!rows.length) return;
