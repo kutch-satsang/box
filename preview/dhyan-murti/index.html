@@ -320,7 +320,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset
 </style>
 <script src="../analytics.js" defer></script>
 <script src="../guide.js" defer></script>
-<style id="lsum2">#listsum div{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;min-height:0!important;padding:14px 8px!important}</style></head><body>
+<style id="lsum2">#listsum div{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;min-height:0!important;padding:14px 8px!important}</style><style id="lsum3">.tabOff{display:none!important} #listbody h3{display:none!important} #listsum div.on{background:linear-gradient(#f3cfa6,#e9b985)!important;color:#7a3010!important;box-shadow:inset 0 3px 6px rgba(120,60,20,.25)!important}</style></head><body>
 
 
 <main class="app">
@@ -1782,11 +1782,12 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   function openList(){
     var sum = $('#listsum'), body = $('#listbody');
     sum.innerHTML = ''; body.innerHTML = '';
-    function box(title, k){ var d = document.createElement('div'); d.textContent = title; d.style.cursor = 'pointer'; d.addEventListener('click', function(){ var h = document.getElementById('lh' + k); if(h) body.scrollTop = h.offsetTop - body.offsetTop - 4; }); sum.appendChild(d); }
+    function box(title, k){ var d = document.createElement('div'); d.textContent = title; d.style.cursor = 'pointer'; d.dataset.k = k; d.addEventListener('click', function(){ setTab(k); body.scrollTop = 0; }); sum.appendChild(d); }
+    function setTab(k){ [].forEach.call(sum.children, function(d){ d.classList.toggle('on', d.dataset.k === k); }); [].forEach.call(body.children, function(e){ e.classList.toggle('tabOff', e.dataset.k !== k); }); }
     var backC = ALL.C.filter(function(t){ return t.side === 'back'; }).length, backT = ALL.T.filter(function(t){ return t.side === 'back'; }).length;
     ['C','T'].forEach(function(k){ box(k === 'C' ? 'ચિહ્ન' : 'તિલ', k); });
     [['C','ચિહ્ન'],['T','તિલ']].forEach(function(kk){
-      var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800'; h.id = 'lh' + kk[0];
+      var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800'; h.id = 'lh' + kk[0]; h.dataset.k = kk[0];
       body.appendChild(h);
       var seq = [['', ordK(kk[0])]];
       seq.forEach(function(g){
@@ -1800,10 +1801,11 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
           var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = t.n.replace('(જમણું તળું)','(જમણા ચરણનું તળું)').replace('(ડાબું તળું)','(ડાબા ચરણનું તળું)');
           var tg = document.createElement('span'); tg.className = 'tg';
           tg.textContent = t.side === 'back' ? 'પાછળ' : (t.side === 'sole' ? 'ચરણ' : (t.pend ? 'સ્થાન બાકી' : (t.approx ? 'અંદાજિત' : 'આગળ')));
-          /* નંબર હમણાં નથી બતાવતા (પછી વચનામૃતના ક્રમ પ્રમાણે લખાશે) */ r.appendChild(nm); r.appendChild(tg); body.appendChild(r);
+          /* નંબર હમણાં નથી બતાવતા (પછી વચનામૃતના ક્રમ પ્રમાણે લખાશે) */ r.dataset.k = kk[0]; r.appendChild(nm); r.appendChild(tg); body.appendChild(r);
         });
       });
     });
+    setTab('C');
     $('#listov').hidden = false;
     $('#listov .card').scrollTop = 0; $('#listbody').scrollTop = 0;
   }
