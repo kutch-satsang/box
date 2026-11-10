@@ -1797,7 +1797,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
           var r = document.createElement('div');
           r.className = 'li' + (t.side === 'back' ? ' back' : '') + (state.mastered[t.id] ? ' ok' : '');
           var no = document.createElement('span'); no.className = 'no'; no.textContent = t.id;
-          var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = t.n;
+          var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = t.n.replace('(જમણું તળું)','(જમણા ચરણનું તળું)').replace('(ડાબું તળું)','(ડાબા ચરણનું તળું)');
           var tg = document.createElement('span'); tg.className = 'tg';
           tg.textContent = t.side === 'back' ? 'પાછળ' : (t.side === 'sole' ? 'ચરણ' : (t.pend ? 'સ્થાન બાકી' : (t.approx ? 'અંદાજિત' : 'આગળ')));
           /* નંબર હમણાં નથી બતાવતા (પછી વચનામૃતના ક્રમ પ્રમાણે લખાશે) */ r.appendChild(nm); r.appendChild(tg); body.appendChild(r);
