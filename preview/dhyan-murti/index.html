@@ -320,7 +320,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #fff;outline-offset
 </style>
 <script src="../analytics.js" defer></script>
 <script src="../guide.js" defer></script>
-</head><body>
+<style id="lsum2">#listsum div{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;min-height:0!important;padding:14px 8px!important}</style></head><body>
 
 
 <main class="app">
@@ -1780,9 +1780,9 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   function openList(){
     var sum = $('#listsum'), body = $('#listbody');
     sum.innerHTML = ''; body.innerHTML = '';
-    function box(title, value){ var d = document.createElement('div'); var b = document.createElement('b'); b.textContent = value; d.appendChild(b); d.appendChild(document.createTextNode(title)); sum.appendChild(d); }
+    function box(title){ var d = document.createElement('div'); d.textContent = title; sum.appendChild(d); }
     var backC = ALL.C.filter(function(t){ return t.side === 'back'; }).length, backT = ALL.T.filter(function(t){ return t.side === 'back'; }).length;
-    ['C','T'].forEach(function(k){ var pl = ALL[k].filter(function(x){ return x.playable; }); box(k === 'C' ? 'બાકી: ચિહ્ન' : 'બાકી: તિલ', pl.filter(function(x){ return !state.mastered[x.id]; }).length); });
+    ['C','T'].forEach(function(k){ box(k === 'C' ? 'ચિહ્ન' : 'તિલ'); });
     [['C','ચિહ્ન'],['T','તિલ']].forEach(function(kk){
       var h = document.createElement('h3'); h.textContent = kk[1]; h.style.cssText = 'margin:16px 0 0;font-size:17px;font-weight:800';
       body.appendChild(h);
