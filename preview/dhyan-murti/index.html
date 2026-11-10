@@ -1797,12 +1797,12 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
           var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = t.n;
           var tg = document.createElement('span'); tg.className = 'tg';
           tg.textContent = t.side === 'back' ? 'પાછળ' : (t.side === 'sole' ? 'ચરણ' : (t.pend ? 'સ્થાન બાકી' : (t.approx ? 'અંદાજિત' : 'આગળ')));
-          r.appendChild(no); r.appendChild(nm); r.appendChild(tg); body.appendChild(r);
+          /* નંબર હમણાં નથી બતાવતા (પછી વચનામૃતના ક્રમ પ્રમાણે લખાશે) */ r.appendChild(nm); r.appendChild(tg); body.appendChild(r);
         });
       });
     });
     $('#listov').hidden = false;
-    $('#listov .card').scrollTop = 0;
+    $('#listov .card').scrollTop = 0; $('#listbody').scrollTop = 0;
   }
   $('#openList').addEventListener('click', openList);
   $('#listX').addEventListener('click', function(){ $('#listov').hidden = true; });
@@ -2824,5 +2824,11 @@ if(sb)sb.addEventListener('click',function(){
 #sheet #sBk{flex:none!important;width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;border-radius:50%!important;border:0!important;display:grid!important;place-items:center;font-size:24px!important;font-weight:800;line-height:1!important;color:#5a3524!important;background:var(--cl-card,#fbf1e2)!important;box-shadow:var(--cl-sh-s,0 3px 8px rgba(90,53,36,.3))!important}
 #sheet #sBk[hidden]{display:none!important}
 #sheet #sHub[hidden]{display:none!important}
+/* બધી યાદી: ઉપરની પટ્ટી, બે ખાનાં (બાકી ચિહ્ન/તિલ) અને શોધ સ્થિર; ફક્ત નીચેની યાદી ખસે */
+#listov .card{display:flex!important;flex-direction:column;padding:0!important;overflow:hidden!important;height:min(86vh,720px);max-height:90vh}
+#listov .rhead{position:static!important;margin:0!important;flex:0 0 auto;padding:14px 20px 10px!important}
+#listov .sum{flex:0 0 auto;padding:12px 20px 0}
+#listov .lq{flex:0 0 auto;width:auto!important;margin:12px 20px 6px!important}
+#listov #listbody{flex:1 1 auto;min-height:0;overflow-y:auto;padding:0 20px 20px;-webkit-overflow-scrolling:touch}
 </style>
 </body></html>
