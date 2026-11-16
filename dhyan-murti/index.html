@@ -1111,6 +1111,24 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
       return out;
     }catch(e){ return shuffle(list); }
   }
+  /* 📜 ક્રમ (dm_order): saath = પરથારા પ્રમાણે ચિહ્ન-તિલ ભેગાં, alag = પરથારા પ્રમાણે અલગ, mix = મિશ્ર. બંને સેશન માટે એક જ સેટિંગ */
+  function dmOrd(){ var v = 'saath'; try{ v = localStorage.getItem('dm_order') || 'saath'; }catch(e){} return v; }
+  function dmRk(c){ var P = window.DM_PARTHARO; if(!P || !c) return 999; var i = P.o.indexOf(c.t.id); return i < 0 ? 999 : i; }
+  function dmQ(list){ if(dmOrd() === 'mix' || !window.DM_PARTHARO) return mixRegion(list); return list.slice().sort(function(a, b){ return dmRk(a) - dmRk(b); }); }
+  function dmAct(){ if(dmOrd() !== 'saath' || state.phase !== 'play') return null; var a = state.cur.C, b = state.cur.T; if(a && b) return dmRk(a) < dmRk(b) ? a : b; return a || b || null; }
+  function dmTurn(){
+    var act = dmAct(), lg = 'gu'; try{ lg = localStorage.getItem('dm_lang') || 'gu'; }catch(e){}
+    ['C','T'].forEach(function(k){ var L = lane[k] && lane[k].parentElement; if(!L) return; var w = !!(act && state.cur[k] && state.cur[k] !== act);
+      L.classList.toggle('dmWait', w); L.classList.toggle('dmTurn', !!(act && state.cur[k] === act)); L.setAttribute('data-wt', lg === 'en' ? 'Wait…' : (lg === 'gl' ? 'Raah juo…' : 'રાહ જુઓ…')); });
+    var v = document.getElementById('dmVline');
+    if(!v){ if(typeof stage === 'undefined' || !stage) return; v = document.createElement('div'); v.id = 'dmVline'; v.hidden = true; stage.appendChild(v); }
+    var P = window.DM_PARTHARO, show = true; try{ show = false; }catch(e){}
+    var c = act; if(!c){ ['C','T'].forEach(function(k){ var x = state.cur[k]; if(x && x.held) c = x; }); }
+    var t = '';
+    if(state.phase === 'play' && show && P && c){ var i = P.o.indexOf(c.t.id), li = i < 0 ? -1 : P.li[i]; if(li >= 0) t = '📜 “…' + P.l[li] + '…”'; }
+    if(v.textContent !== t) v.textContent = t; v.hidden = !t;
+  }
+  setInterval(dmTurn, 300);
   function trackStart(){
     if(window.sbTrack){ sbTrack.start({mode:state.pracRun?'practice':'play', teams:state.teams||1}); sbTrack.where(state.pracRun?'practice':'play'); }
   }
@@ -1161,7 +1179,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
     }
     ['C','T'].forEach(function(k){
       var list = state.items.filter(function(c){ return c.t.k === k; });
-      state.q[k] = mixRegion(list);
+      state.q[k] = dmQ(list);
     });
     applyResume();
     state.idle = true;
@@ -1172,7 +1190,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   (function(){ var zb = document.createElement('button'); zb.type = 'button'; zb.className = 'zall1'; zb.setAttribute('aria-label','આખી મૂર્તિ'); zb.textContent = '⤢'; stage.appendChild(zb);
     zb.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
     zb.addEventListener('click', function(e){ e.stopPropagation(); if(state.phase !== 'play') return;
-      if(state.viewReg !== 'all'){ state.idle = true; applyView('all'); } else { state.idle = false; var c = state.cur.C || state.cur.T; if(c) zoomTo(c, true); } }); })();
+      if(state.viewReg !== 'all'){ state.idle = true; applyView('all'); } else { state.idle = false; var c = (dmAct() || state.cur.C || state.cur.T); if(c) zoomTo(c, true); } }); })();
   function zoomTo(c, force){
     if(!c || (state.hold && !force)) return;
     if(state.idle && !force) return;
@@ -1196,7 +1214,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
     c.y = (laneH(k) - CHH())/2;
     setText(c, false); place(c);
     state.cur[k] = c;
-    zoomTo(c);
+    dmTurn(); zoomTo(dmAct() || c);
   }
   function afterChange(){
     if(!(state.done.C === state.tot.C && state.done.T === state.tot.T)) snap();
@@ -1372,7 +1390,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   }
   function holdView(ms){
     state.hold = true; clearTimeout(state.holdT);
-    state.holdT = setTimeout(function(){ state.hold = false; var c = state.cur.C || state.cur.T; if(c) zoomTo(c); }, ms);
+    state.holdT = setTimeout(function(){ state.hold = false; var c = (dmAct() || state.cur.C || state.cur.T); if(c) zoomTo(c); }, ms);
   }
   function flashDot(c, ms){
     var el = c.dot; el.classList.add('hl'); clearTimeout(c._ht);
@@ -1860,7 +1878,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
   function handDemo(){
     try{ if(localStorage.getItem('dm_hand')) return; }catch(e){ return; }
     if(handOn || state.phase !== 'play') return;
-    var c = state.cur.C || state.cur.T; if(!c || !c.el || !c.dot) return;
+    var c = (dmAct() || state.cur.C || state.cur.T); if(!c || !c.el || !c.dot) return;
     var a = c.el.getBoundingClientRect(), b = c.dot.getBoundingClientRect();
     if(!a.width || !b.width) return;
     handOn = true;
@@ -2700,6 +2718,15 @@ if(sb)sb.addEventListener('click',function(){
 })();
 </script>
 <style>.th i.skth{display:grid;place-items:center;width:100%;aspect-ratio:16/10;border-radius:10px;background:#1b1240 center/cover no-repeat;font-size:26px;font-style:normal;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35)}</style>
+<script>/* 📜 પરથારાનો ક્રમ અને લાઇન (વચનામૃત પરથારો, લખાણ જેમ છે તેમ) */window.DM_PARTHARO={o:["C9", "C19", "C1", "C2", "C3", "C8", "C4", "C5", "C7", "C6", "C20", "T1", "T2", "T3", "C11", "C12", "C10", "C13", "C14", "C15", "C16", "C17", "C18", "C43", "C44", "C45", "C46", "C47", "C48", "C49", "C50", "C51", "C52", "C21", "C21L", "C22", "T4", "C23", "T5", "T6", "C25", "C26", "C27", "C28", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23", "T24", "T25", "C29", "C30", "T26", "T27", "T28", "C31", "C32", "T29", "T30", "T31", "T32", "C33", "T33", "T34", "T35", "T36", "T37", "T38", "T39", "C34", "T40", "T41", "T42", "T43", "C35", "C36", "T44", "T45", "T46", "T47", "T48", "T49", "T50", "T51", "T52", "T53", "T54", "T55", "T56", "T57", "C42", "C39", "C40", "C41", "C37", "C38", "T58", "T59", "T60", "T61", "T62", "T63", "T64"],o2:["C9", "C19", "C1", "C2", "C3", "C8", "C4", "C5", "C7", "C6", "FR_N", "T1", "T2", "T3", "C11", "C12", "C10", "C13", "C14", "C15", "C16", "C17", "C18", "FR_S1", "FR_S2", "FR_S3", "FR_S4", "FR_S5", "FL_S1", "FL_S2", "FL_S3", "FL_S4", "FL_S5", "FR_P", "FL_P", "C22", "T4", "B13", "T5", "T6", "B14", "B11", "B12", "C28", "T7", "T8", "T9", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19", "T20", "T21", "T22", "T23", "T24", "T25", "B07", "B08", "T26", "T27", "T28", "B05", "B06", "T29", "T30", "T31", "T32", "B03", "T33", "T34", "T35", "T36", "T37", "T38", "T39", "B04", "T40", "T41", "T42", "T43", "B09", "B10", "T44", "T45", "T46", "T47", "T48", "T49", "T50", "T51", "T52", "T53", "T54", "T55", "T56", "T57", "C42", "C39", "C40", "B02", "C37", "B01", "T58", "T59", "T60", "T61", "T62", "T63", "T64"],l:["શ્રીજીમહારાજનાં બે ચરણાર્વિન્દના તળામાં ઉર્ધ્વરેખા છે તે કેવી છે તો અંગૂઠાની પાસેની જે આંગળીઓ તેની બેય કોરા નીકળી છે ને પાનીને બેય કોરા નીકળી છે", "જમણા પગના અંગૂઠાના થડમાં ઉર્ધ્વરેખાને મળતું જવનું ચિહ્ન છે.", "તે જમણા પગના તળામાં ઉર્ધ્વરેખાની બેય કોરે કમળ, અંકુશ, ધ્વજ, અષ્ટકોણ, વજ્ર, સ્વસ્તિક, જંબૂફળ એમનાં ચિહ્ન છે.", "જમણા પગના અંગૂઠાના નખમાં એક ઉભી રાતી રેખાનું ચિહ્ન છે.", "એજ અંગૂઠાને બાહેરલે પડખે એક તિલ છે.", "એ અંગૂઠાની પાસેની જે આંગળી તેનું જે અંગૂઠાની કોરનું પડખું તેમાં એક તિલ છે.", "જમણા પગની છેલ્લી આંગળીના બાહેરના પડખામાં નખની પાસે એક તિલ છે.", "ડાબા પગની ઉર્ધ્વરેખાની ડાબી કોરે શ્યામ એવાં બે ચિહ્ન પાસે પાસે છે.", "વળી એ ઉર્ધ્વરેખાને મળતું જ ફણાના થડમાં એક વ્યોમનું ચિહ્ન છે.", "ડાબા પગના તળામાં ઉર્ધ્વરેખાને બે કોરે ધનુષ, કળશ, મત્સ્ય, ત્રિકોણ, ગોપદ, અર્ધચંદ્ર એમનાં ચિહ્ન છે.", "બે પગના અંગૂઠા ને આંગળીઓની ઉપર ઝીણાં ઝીણાં ને કોમળ એવાં રોમનાં ચિહ્ન છે.", "બે પગના અંગૂઠા ને તેની પાસેની બે આંગળીઓ તે ઉપર ચાખડીના ઘસારાનાં ચિહ્ન છે.", "બે પગની જે બાહેરની ઘુંટીઓ તેની હેઠે આસનના ઘસારાનાં ચિહ્ન છે.", "જમણા પગની ઘુંટીથી પાંચ તસુ ઉંચો નળીને ઉપર એક નાનો તિલ છે.", "એ પગના સાથળને બહારલી કોરે એક મોટું ચિહ્ન છે", "ડાબા પગની ઘુંટીથી પાંચ તસુ ઊંચો નળીને ઉપર એક મોટો તિલ છે ને તેથી ઉપર પાસે જ એક નાનો તિલ છે.", "એ પગના ઢીંચણને બાહેરલે પડખે એક ચિહ્ન છે.", "કટિભાગને વિષે બે કોરે ધોતિયું પહેર્યાનાં ઘસારાનાં શ્યામ ચિહ્ન છે.", "સદા શીતળ એવું જે ઉદર તે ઉપર ત્રિવડી પડે છે", "ઊંડી ને ગોળ એવી જે નાભી તેની બે કોરે તિલ છે તેમાં જમણી કોરે તો નાભિના કાંઠા ઉપર છે ને ડાબી કોરે તે નાભિથી જરાક છેટે છે.", "જમણી કુખમાં એક મોટો તિલ છે.", "તેની પાસે બીજો નાનો તિલ છે.", "નાભિથી ઉપર બે તસુને છેટે ત્રણ તિલ છે તેમાં બે નળીની ઉપર એક એક છે.", "તે વચલા તિલથી બે તસુ ઉપર એક તિલ છે", "ડાબે પડખે કુખથી ઉંચે ને બગલથી હેઠે મોટા ચાર તિલની એક ઉભી હાર છે", "તેની પાસે બાહેરલી કોરે એક બીજી નાના ચાર તિલની ઉભી હાર છે.", "તેજ બગલ નીચે ત્રણ તિલની એક ઉભી હાર છે.", "હૃદયને વિષે રોમનું શ્રીવત્સનું ચિહ્ન છે.", "છાતીની વચ્ચે અર્ધચંદ્રને આકારે પાંચ તસુ પહોળું અને જરાક રાતું એવું એક મોટું ચિહ્ન છે તે જમણી કોરે કાંઇક વિશેષ ચઢતું છે.", "એ ચિહ્નને વચ્ચે જરાક ડાબી કોરે એક મોટો તિલ છે.", "એ તિલથી ડાબી કોરે બે આંગળને છેટે એક તિલ છે", "તેથી ડાબી કોરે બે તસુને છેટે ડાબા સ્તનથી ઉપર એક તિલ છે.", "બે સ્તનથી ઉપર બે છાપનાં ચિહ્ન છે.", "જમણી ભુજાની પાસે માંહેલી કોરે ઉભી ઓળ્યે ચાર તિલ છે.", "જમણી ભુજામાં મૂળથી ત્રણ તસુ હેઠું એક છાપનું ચિહ્ન છે.", "તે છાપના ચિહ્નને પડખે બાહેરલી કોરે નાના ચાર તિલ છે.", "જમણી કૂણીથી હેઠા ને કાંડાથી ઉંચા બે તિલ છે.", "જમણા હાથની ટચલી આંગળીના મૂળથી ઉપર અર્ધા આંગળને છેટે એક નાનો તિલ છે.", "ડાબી ભુજાના મૂળથી ત્રણ તસુ હેઠું એક છાપનું ચિહ્ન છે.", "ડાબી કૂણીથી બે તસુ હેઠો હાથને ઉપલે ભાગે એક તિલ છે.", "ડાબા હાથના અંગૂઠા પાસેની જે આંગળી તથા વચલી આંગળી એ બેની વચ્ચે એક તિલ છે.", "એ અંગૂઠા પાસેની આંગળીના નખની પાસે માંહેલી કોરે એક નાનો તિલ છે.", "ડાબા હાથના પોંચા ઉપર એક તિલ છે.", "બે હથેળીના મૂળથી ઉપર આઠ તસુ ઉંચાં બે છાપનાં ચિહ્ન છે.", "કંઠના ખાડાની વચ્ચે એક તિલ છે", "એ તિલથી જરાક છેટે એક નાનો તિલ છે", "દાઢીથી હેઠો એક તિલ છે.", "ડાબા ખભાથી બે આંગળ હેઠો વાંસામાં એક રોમે સહિત એક મોટો તિલ છે.", "એ તિલથી હેઠો એક તિલ છે, ને વળી તેથી હેઠો બીજો તિલ છે.", "કરોડની ડાબી કોરે ડોકથી બે તસુ હેઠો એક તિલ છે.", "જમણી ખરપડી ઉપર એક નાનો તિલ છે", "કરોડથી જમણી કોરે વાંસાની મધ્યે ચાર તિલ છે", "નાસિકાની પાસે જમણી કોરે એક મોટો તિલ છે", "એ તિલથી ઉંચો ને આંખના ખુણાથી હેઠો પાસે જ એક નાનો તિલ છે.", "નાસિકાને ઉપર શીળીનાં ચાઠાનાં ઝીણાં ઝીણાં ચિહ્ન છે.", "મુખમાં જમણી કોરે હેઠલી જે પ્રથમની દાઢ્ય તેમાં શ્યામ ચિહ્ન છે", "જિહ્વા તે કમળના પત્ર સરખી રક્ત છે અને તે જીભની ઉપર શ્યામ ચિહ્ન છે.", "ડાબા કાનને માંહેલી કોરે શ્યામ બિંદુનું ચિહ્ન છે", "વિશાળ ને ઉપડતું એવું જે લલાટ તેને વિષે તિલકને આકારે ઉભી બે રેખા છે", "વળી લલાટને વિષે જમણી કોરે કેશથી હેઠું એક ચિહ્ન છે.", "જમણા કાનની બૂટી ઉપર એક નાનો તિલ છે.", "તાળવાની ઉપર એક મોટો તિલ છે.", "શિખાથી આગળ સમીપે એક તિલ છે.", "શિખાથી પછવાડે જમણી કોરે ત્રણ તિલ છે."],li:[0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 7, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 12, 13, 14, 15, 15, 16, 17, 17, 18, 19, 19, 20, 21, 22, 22, 22, 23, 24, 24, 24, 24, 25, 25, 25, 25, 26, 26, 26, 27, 28, 29, 30, 31, 32, 32, 33, 33, 33, 33, 34, 35, 35, 35, 35, 36, 36, 37, 38, 39, 40, 41, 42, 43, 43, 44, 45, 46, 47, 48, 48, 49, 50, 51, 51, 51, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 63, 63, -1]};</script>
+<style id="dmOrd">
+.tray.dmWait{opacity:.42;filter:grayscale(.55);pointer-events:none}
+.tray.dmWait .chip{opacity:0}
+.tray.dmWait::after{content:attr(data-wt);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:800 11px/1 var(--font-body,sans-serif);color:#6a4a2a;background:#fff4dc;border-radius:8px;padding:3px 7px}
+.tray.dmTurn{box-shadow:0 0 0 3px #f5b82e,0 0 14px rgba(245,184,46,.85)}
+#dmVline{position:absolute;left:10px;right:58px;top:46px;z-index:6;pointer-events:none;background:rgba(30,15,8,.8);color:#ffe7b0;border-radius:12px;padding:6px 10px;font:700 12.5px/1.45 var(--font-body,sans-serif);max-height:4.5em;overflow:hidden;text-align:left}
+#dmVline[hidden]{display:none}
+</style>
 <style id="dmSetUI">
 #pg-set.nu{display:block!important}
 #pg-set.nu[hidden]{display:none!important}
@@ -2786,6 +2813,14 @@ if(sb)sb.addEventListener('click',function(){
   var lay=pg.querySelector('.seg[data-key="layout"]'), fs=document.getElementById('fsBtn2'), fsub=document.createElement('div'); fsub.className='nusub';
   if(fs){ fs.textContent='⛶ પૂર્ણ સ્ક્રીન'; fsub.appendChild(fs); }
   if(lay){ var lr=lay.closest('.srow'); dd('📺 સ્ક્રીન', function(){ return Array.prototype.map.call(lay.querySelectorAll('button'), function(b){ return {el:b,on:b.getAttribute('aria-pressed')==='true',label:b.textContent.trim()}; }); }, fsub); if(lr) lr.style.display='none'; }
+  /* 📜 ક્રમ + 📖 પરથારાની લાઇન (બંને સેશન માટે) */
+  function gs(k,d){ try{ return localStorage.getItem(k)||d; }catch(e){ return d; } }
+  function ss(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  TR['📜 ક્રમ']=['📜 Order','📜 Kram']; TR['📖 પરથારાની લાઇન']=['📖 Partharo line','📖 Partharo ni line'];
+  TR['📜 પરથારા પ્રમાણે — ભેગાં']=['📜 Partharo order — together','📜 Partharo pramane — bhega']; TR['📑 પરથારા પ્રમાણે — અલગ']=['📑 Partharo order — separate','📑 Partharo pramane — alag'];
+  TR['🔀 મિશ્ર (પડકાર)']=['🔀 Mixed (challenge)','🔀 Mishra (padkar)']; TR['💬 હા, બતાવો']=['💬 Yes, show','💬 Ha, batavo']; TR['🚫 ના']=['🚫 No','🚫 Na'];
+  function opts(key,def,list){ return function(){ var c=gs(key,def); return list.map(function(o){ return {el:{click:function(){ ss(key,o[0]); }}, on:c===o[0], label:o[1]}; }); }; }
+  dd('📜 ક્રમ', opts('dm_order','saath',[['saath','📜 પરથારા પ્રમાણે — ભેગાં'],['alag','📑 પરથારા પ્રમાણે — અલગ'],['mix','🔀 મિશ્ર (પડકાર)']]));
   /* bottom rows */
   var bot=document.createElement('div'); grid.after(bot);
   [['vol','🔉 જોર'],['mvol','🎶 સંગીતનો અવાજ'],['txt','🔠 અક્ષર']].forEach(function(k){ var r=pg.querySelector('.seg[data-key="'+k[0]+'"]'); if(r){ var holder=r.closest('.srow')||r; bot.appendChild(lab(k[1])); bot.appendChild(holder===r?r:holder); } });
