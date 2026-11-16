@@ -1122,7 +1122,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
       L.classList.toggle('dmWait', w); L.classList.toggle('dmTurn', !!(act && state.cur[k] === act)); L.setAttribute('data-wt', lg === 'en' ? 'Wait…' : (lg === 'gl' ? 'Raah juo…' : 'રાહ જુઓ…')); });
     var v = document.getElementById('dmVline');
     if(!v){ if(typeof stage === 'undefined' || !stage) return; v = document.createElement('div'); v.id = 'dmVline'; v.hidden = true; stage.appendChild(v); }
-    var P = window.DM_PARTHARO, show = true; try{ show = (localStorage.getItem('dm_vline') || '1') === '1'; }catch(e){}
+    var P = window.DM_PARTHARO, show = true; try{ show = false; }catch(e){}
     var c = act; if(!c){ ['C','T'].forEach(function(k){ var x = state.cur[k]; if(x && x.held) c = x; }); }
     var t = '';
     if(state.phase === 'play' && show && P && c){ var i = P.o.indexOf(c.t.id), li = i < 0 ? -1 : P.li[i]; if(li >= 0) t = '📜 “…' + P.l[li] + '…”'; }
@@ -2821,7 +2821,6 @@ if(sb)sb.addEventListener('click',function(){
   TR['🔀 મિશ્ર (પડકાર)']=['🔀 Mixed (challenge)','🔀 Mishra (padkar)']; TR['💬 હા, બતાવો']=['💬 Yes, show','💬 Ha, batavo']; TR['🚫 ના']=['🚫 No','🚫 Na'];
   function opts(key,def,list){ return function(){ var c=gs(key,def); return list.map(function(o){ return {el:{click:function(){ ss(key,o[0]); }}, on:c===o[0], label:o[1]}; }); }; }
   dd('📜 ક્રમ', opts('dm_order','saath',[['saath','📜 પરથારા પ્રમાણે — ભેગાં'],['alag','📑 પરથારા પ્રમાણે — અલગ'],['mix','🔀 મિશ્ર (પડકાર)']]));
-  dd('📖 પરથારાની લાઇન', opts('dm_vline','1',[['1','💬 હા, બતાવો'],['0','🚫 ના']]));
   /* bottom rows */
   var bot=document.createElement('div'); grid.after(bot);
   [['vol','🔉 જોર'],['mvol','🎶 સંગીતનો અવાજ'],['txt','🔠 અક્ષર']].forEach(function(k){ var r=pg.querySelector('.seg[data-key="'+k[0]+'"]'); if(r){ var holder=r.closest('.srow')||r; bot.appendChild(lab(k[1])); bot.appendChild(holder===r?r:holder); } });
