@@ -105,7 +105,7 @@ body.noanim .slot.hl,body.noanim .tp.hint{animation:none}
 @keyframes rglow{0%,100%{filter:drop-shadow(0 0 8px #ffd54a)}50%{filter:drop-shadow(0 0 26px #fff3a0) brightness(1.12)}}
 @keyframes rpop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
 .rbs>*{animation:rpop .5s both,rglow 1.8s .5s infinite}
-/* નવી ફ્રેમ: Record, નિયમો, ઝોન યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
+/* નવી ફ્રેમ: Record, Rules, Zone યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
 #nov{position:absolute;inset:0;z-index:62;background:#1a0526cc;display:none}
 .nw{position:absolute;left:84px;top:0;width:390px;height:844px;transform:scale(1.98);transform-origin:0 0;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
 .nc{position:absolute;background:url(p/mn/panel.webp) center/100% 100% no-repeat;filter:drop-shadow(0 8px 18px #000a)}
@@ -173,7 +173,7 @@ const $=id=>document.getElementById(id);
 const qs=new URLSearchParams(location.search);const TEST=(()=>{try{return new URLSearchParams(location.search).has('test')&&String((JSON.parse(localStorage.getItem('sbProf')||'{}')||{}).email||'').toLowerCase()==='vsbhuj@gmail.com'}catch(e){return false}})();const HOME='map.html'+(TEST?'?test=1':'');
 const NAMES={swastik:'સ્વસ્તિક',ashtakon:'અષ્ટકોણ',ankush:'અંકુશ',kamal:'કમળ',ketu:'ધ્વજ','urdhva-rekha':'ઊર્ધ્વરેખા',vajra:'વજ્ર',jambu:'જાંબુ',java:'જવ',matsya:'મત્સ્ય',trikon:'ત્રિકોણ',gaupad:'ગોપદ',dhanush:'ધનુષ',vyom:'વ્યોમ','ardha-chandra':'અર્ધચંદ્ર',kalash:'કળશ'};
 const CID=NAMES[qs.get('c')]?qs.get('c'):'swastik';
-// 11 સ્ટેજ: ટુકડા, આકાર — sq ચોરસ, ro ગોળ, di હીરો, lo કમળ, hx ષટ્કોણ
+// 11 Stage: ટુકડા, આકાર — sq ચોરસ, ro ગોળ, di હીરો, lo કમળ, hx ષટ્કોણ
 const LADDER=[[4,'sq'],[6,'ro'],[4,'di'],[8,'lo'],[6,'hx'],[8,'sq'],[9,'ro'],[9,'di'],[13,'lo'],[12,'hx'],[16,'sq']];
 // સ્ટોરેજ
 let mem={prog:{},stars:{},pts:0};
@@ -183,7 +183,7 @@ const getProg=()=>{try{return JSON.parse(lg('chihnaProg')||'null')||mem.prog}cat
 const getStars=()=>{try{return JSON.parse(lg('chihnaStars')||'null')||mem.stars}catch(e){return mem.stars}};
 const getChal=()=>{try{return JSON.parse(lg('chihnaChal')||'null')||{}}catch(e){return {}}};
 const getMega=()=>{try{return JSON.parse(lg('chihnaMega')||'null')||{}}catch(e){return {}}};
-const CHF=[.85,.72,.61]; // ચેલેન્જ: સમય ગુણક (અંતિમ સ્ટેજના સમયની સરખામણીમાં)
+const CHF=[.85,.72,.61]; // Challenge: સમય ગુણક (અંતિમ સ્ટેજના સમયની સરખામણીમાં)
 const soundOn=()=>lg('satsangSound')!=='0',animOn=()=>lg('chihnaAnim')!=='0';
 let AC;function tone(f,d,t=0,v=.18,ty='sine'){if(!soundOn())return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.value=f;const T=AC.currentTime+t;g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.001,T+d);o.connect(g);g.connect(AC.destination);o.start(T);o.stop(T+d)}catch(e){}}
 const sGood=()=>{tone(660,.12);tone(880,.18,.08)},sBad=()=>{tone(160,.3,0,.2,'square');try{navigator.vibrate&&navigator.vibrate([60,40,90])}catch(e){}},sBell=()=>{tone(880,1.6,0,.22);tone(1320,1.2,0,.1);tone(1760,.8,0,.05)},sWin=()=>[523,659,784,1046].forEach((f,i)=>tone(f,.35,i*.13));
@@ -245,9 +245,9 @@ function roundPieces(N){if(ML){const[c,S]=MGP.ro[N],R=CIRC.r,o=Math.random()*360
   if(N===6)ring(0,R,6,off);else if(N===9){P.push(arcPts(c,c,R*.36,0,2*Math.PI,40));ring(R*.36,R,8,off)}else{P.push(arcPts(c,c,R*.3,0,2*Math.PI,36));ring(R*.3,R*.64,6,off);ring(R*.64,R,8,off+.3)}return P}
 // ===== કાપા: દર વખતે અલગ — '#' જાળી (સીધા) કે વાંકા કાપા. V = બોર્ડની કિનાર (local), N = ટુકડા =====
 function pinPoly(x,y,V){let c=false;for(let a=0,b=V.length-1;a<V.length;b=a++){const[xi,yi]=V[a],[xj,yj]=V[b];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
-// ઘાટ = જાળીનો પ્રકાર + કાપો (s સીધો / w વાંકો). 12 ઘાટ: એક ચિહ્નમાં સ્ટેજ પ્રમાણે ક્રમ, એકેય સળંગ ફરી નહીં.
+// ઘાટ = જાળીનો પ્રકાર + કાપો (s સીધો / w વાંકો). 12 ઘાટ: એક ચિહ્નમાં Stage પ્રમાણે ક્રમ, એકેય સળંગ ફરી નહીં.
 const CUTS=['sq-s','hx-w','dg-s','rn-w','tl-s','wd-w','rn-s','sq-w','hx-s','dg-w','wd-s','tl-w'];
-// સ્ટેજ 2–10 ના 8 ઘાટ જુદા; મહાચેમ્પમાં પહેલાં બાકીના 4 નવા ઘાટ, પછી બધા 12 વારાફરતી (કાપાની જગ્યા દર વખતે નવી)
+// Stage 2–10 ના 8 ઘાટ જુદા; મહાચેમ્પમાં પહેલાં બાકીના 4 નવા ઘાટ, પછી બધા 12 વારાફરતી (કાપાની જગ્યા દર વખતે નવી)
 const MSEQ=[0,5,6,7,10,3,8,1,11,4,9,2];
 function cutFor(){const ci=Math.max(0,Object.keys(NAMES).indexOf(CID))*7;if(ML){const k=ML-Math.ceil(ML/5);return CUTS[(MSEQ[(Math.max(1,k)-1)%12]+ci)%12]}return CUTS[(stage*5+ci)%12]}
 function cutPieces(V,N,form){
@@ -280,7 +280,7 @@ const SQ13=['jig'].concat(CUTS);
 function cutForSq(){if(!ML&&!chal&&stage===1)return 'jig';const ci=Math.max(0,Object.keys(NAMES).indexOf(CID))*3,p=ML?14+ML:(chal?11+chal:stage);let f=SQ13[(p*5+ci)%13];if(/^(tl|wd)/.test(f))f=f[3]==='s'?'hx-s':'hx-w';return f}
 function rrPoly(W,H,R){const o=[],C=[[R,R,Math.PI],[W-R,R,1.5*Math.PI],[W-R,H-R,0],[R,H-R,.5*Math.PI]];C.forEach(([cx,cy,a0])=>{for(let k=0;k<=10;k++){const a=a0+Math.PI/2*k/10;o.push([cx+R*Math.cos(a),cy+R*Math.sin(a)])}});return o}
 function circlePoly(R){const C=[];for(let i=0;i<160;i++){const t=i*2*Math.PI/160;C.push([R+R*Math.cos(t),R+R*Math.sin(t)])}return C}
-// ===== મહાચેમ્પ (અનંત ચેલેન્જ) =====
+// ===== MahaChamp (અનંત Challenge) =====
 let ML=0;
 const FULLS=['swastik','ashtakon','kamal','jambu','matsya','trikon','gaupad','vyom','ardha-chandra'];
 const ROT=['sq','ro','di','lo','hx'];
@@ -297,7 +297,7 @@ function ringPieces(c0,S,g,bp,poly){const P=[],r=S.length,f=i=>c0+(1-c0)*i/r,pt=
   S.forEach((sn,i)=>{const n=poly?1:Math.max(4,Math.ceil(360/sn/1.5));for(let j=0;j<sn;j++){const o=[];for(let q=0;q<=n;q++)o.push(pt((j+q/n)/sn,f(i+1)));for(let q=n;q>=0;q--)o.push(pt((j+q/n)/sn,f(i)));P.push(o)}});return P}
 const polyBp=V=>u=>{const n=V.length,x=(((u%1)+1)%1)*n,e=Math.min(n-1,Math.floor(x+1e-9)),t=x-e,a=V[e],b=V[(e+1)%n];return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]};
 // ===== પ્રયત્નની નોંધ (admin માટે) =====
-// જીત / ⏱ સમય પૂરો / 🚪 અધૂરું છોડ્યું (≥5 સે). રેકોર્ડ window.CHIHNA_SAVE(r) ને જાય છે;
+// જીત / ⏱ સમય પૂરો / 🚪 અધૂરું છોડ્યું (≥5 સે). Record window.CHIHNA_SAVE(r) ને જાય છે;
 // હબનું hook સફળ સેવ પર true (કે true નું Promise) પાછું આપે, નહિતર false. ફોનમાં ફક્ત ન મોકલાયેલા ≤50 રહે છે.
 const LOGMAX=50,LEFTMIN=5;let att=null,flushing=false;
 function attStart(){att={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),ts:Date.now(),closed:false}}
@@ -315,7 +315,7 @@ async function flushLog(){
   try{for(;;){const a=getLog();if(!a.length)break;let ok=false;try{ok=(await window.CHIHNA_SAVE(a[0]))===true}catch(e){}if(!ok)break;a.shift();setLog(a)}}finally{flushing=false}}
 addEventListener('online',flushLog);addEventListener('pagehide',attLeft);
 setTimeout(flushLog,1500);
-// ===== સ્ટેજ =====
+// ===== Stage =====
 let chal=0,stage,cfg,G,T,left,timer,placed,streak,mist,pts,hintsLeft,peeksLeft,boss,done,over,finishedAt,startedAt,bonusLog,pausedAt=null;
 const AREA={x:73,y:440,w:796,h:888};
 function startStage(n,c){try{window.sbTrack&&sbTrack.start({stage:n,chal:c||0,chihna:CID})}catch(e){}
@@ -362,7 +362,7 @@ function startStage(n,c){try{window.sbTrack&&sbTrack.start({stage:n,chal:c||0,ch
   if(TEST){const t=$('tst');t.style.display='flex';t.innerHTML=Array.from({length:11},(_,i)=>`<b class="${i+1===stage&&!chal?'on':''}" data-s="${i+1}">${i+1}</b>`).join('');t.innerHTML+=[1,2,3].map(i=>`<b class="${chal===i?'on':''}" data-c="${i}">🏆${i}</b>`).join('')+[1,2,3,4,5].map(i=>`<b class="${ML===i?'on':''}" data-c="${i+3}">🏅${i}</b>`).join('');t.querySelectorAll('b').forEach(x=>x.onclick=()=>x.dataset.c?startStage(11,+x.dataset.c):startStage(+x.dataset.s))}
   hud();startedAt=Date.now();attStart();
   timer=setInterval(tick,250);
-  if(ML)toast('🏅 '+CHL.t('મહાચેમ્પ લેવલ ','MahaChamp level ','MahaChamp level ')+ML+' · '+SHN[TY]+' · '+G.slots.length+CHL.t(' ટુકડા · ',' pieces · ',' tukda · ')+T+CHL.t(' સે','s',' se'));else if(chal)toast('🏆 '+CHL.t('ચેલેન્જ ','Challenge ','Challenge ')+chal+' / 3 — '+N+CHL.t(' ટુકડા',' pieces',' tukda'));else if(boss)toast(CHL.t('👑 અંતિમ સ્ટેજ — રેખા વગર, ઓછો સમય','👑 Final stage — no lines, less time','👑 Antim stej — rekha vagar, ocho samay'));
+  if(ML)toast('🏅 '+CHL.t('MahaChamp Level ','MahaChamp level ','MahaChamp level ')+ML+' · '+SHN[TY]+' · '+G.slots.length+CHL.t(' ટુકડા · ',' pieces · ',' tukda · ')+T+CHL.t(' સે','s',' se'));else if(chal)toast('🏆 '+CHL.t('Challenge ','Challenge ','Challenge ')+chal+' / 3 — '+N+CHL.t(' ટુકડા',' pieces',' tukda'));else if(boss)toast(CHL.t('👑 અંતિમ Stage — રેખા વગર, ઓછો સમય','👑 Final stage — no lines, less time','👑 Antim stej — rekha vagar, ocho samay'));
 }
 function knobPts(sh,nh,k,s){const P=[];// local: [t offset from knob center, o outward]
   if(sh==='round'){const cy=.27*s*k,r=.19*s*k,yn=cy-Math.sqrt(r*r-nh*nh);P.push([-nh,yn*.6]);let a0=Math.atan2(yn-cy,-nh),a1=Math.atan2(yn-cy,nh);if(a1>a0)a1-=2*Math.PI;for(let i=0;i<=30;i++){const a=a0+(a1-a0)*i/30;P.push([r*Math.cos(a),cy+r*Math.sin(a)])}P.push([nh,yn*.6])}
@@ -509,7 +509,7 @@ function celebrate(steps,fin){
     tm=setTimeout(next,an?1000:700)}
   next()}
 function fail(){ls('chihnaWin','0');over=true;clearInterval(timer);attRec('timeup');sBad();
-  openCard(`<h2>⏱ ${CHL.t('સમય પૂરો','Time up','Samay puro')}</h2><div class="big">😔</div><div class="txt" style="text-align:center">${placed} / ${G.slots.length} ${CHL.t('ટુકડા બેસ્યા.','pieces placed.','tukda besya.')}<br>${CHL.t('ફરી પ્રયત્ન કરો!','Try again!','Fari prayatna karo!')}</div><div class="btn" id="again">${CHL.t('ફરી રમો','Play again','Fari ramo')}</div><div class="btn g" id="gh">${CHL.t('ઝોનમાં','To the zone','Zonma')}</div>`);
+  openCard(`<h2>⏱ ${CHL.t('સમય પૂરો','Time up','Samay puro')}</h2><div class="big">😔</div><div class="txt" style="text-align:center">${placed} / ${G.slots.length} ${CHL.t('ટુકડા બેસ્યા.','pieces placed.','tukda besya.')}<br>${CHL.t('ફરી પ્રયત્ન કરો!','Try again!','Fari prayatna karo!')}</div><div class="btn" id="again">${CHL.t('Play again','Play again','Fari ramo')}</div><div class="btn g" id="gh">${CHL.t('ઝોનમાં','To the zone','Zonma')}</div>`);
   $('again').onclick=()=>startStage(stage,chal);$('gh').onclick=()=>location.href=HOME}
 
 // ===== હિન્ટ, ઝલક =====
@@ -526,21 +526,21 @@ function nClose(){lastCard=null;closeCard()}
 function settings(){const B=(x,c)=>`<i class="ns ${c||''}">${x}</i>`,on=x=>x?B('✓','on'):B('✕'),LG={g:'ગુ',e:'E',r:'ABC'};
   const R=[['🔊',CHL.t('અવાજ','Sound','Avaj'),on(soundOn()),'snd'],['✨',CHL.t('એનિમેશન','Animation','Animation'),on(animOn()),'anm'],['🌐',CHL.t('ભાષા','Language','Bhasha'),B(LG[CHL.L()]||'ગુ','on'),'lng'],
    ['↺',CHL.t('પ્રગતિ ફરી શરૂ','Reset progress','Fari sharu'),rc?B(CHL.t('ખરેખર?','Sure?','Kharekhar?'),'rd'):'','rst']];
-  const G=[['📊',CHL.t('રેકોર્ડ','Record','Record'),'rec'],['📜',CHL.t('નિયમો','Rules','Niyamo'),'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
-  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('સેટિંગ્સ','Settings','Settings')}</div><div class="nx" data-x="1">✕</div>`+
+  const G=[['📊',CHL.t('Record','Record','Record'),'rec'],['📜',CHL.t('Rules','Rules','Niyamo'),'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
+  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('Settings','Settings','Settings')}</div><div class="nx" data-x="1">✕</div>`+
    R.map((r,k)=>`<div class="nr ss" data-sa="${r[3]}" style="top:${140+82*k}px"><div class="i">${r[0]}</div><div class="t"><b>${r[1]}</b></div>${r[2]}</div>`).join('')+
    G.map((g,k)=>`<div class="ng" data-sa="${g[2]}" style="left:${80+80*k}px"><i>${g[0]}</i>${g[1]}</div>`).join('')+'</div>')}
 function record(){const P=getProg(),st=Object.values(P).reduce((a,b)=>a+b,0),dn=Object.values(P).filter(v=>v>=11).length,m=Math.min(11,...['swastik','ashtakon','ankush','kamal','ketu','urdhva-rekha','vajra','jambu','java','matsya','trikon','gaupad','dhanush','vyom','ardha-chandra','kalash'].map(k=>P[k]||0));
   const R=(y,i,l,v,o)=>`<div class="nr" style="top:${y}px"><div class="i">${i}</div><div class="t"><small>${l}</small><b>${v}${o?` <span>/ ${o}</span>`:''}</b></div></div>`;
-  nOpen(record,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('રેકોર્ડ','Record','Record')}</div><div class="nx" data-x="1">✕</div>`+
-   R(140,'🏘️',CHL.t('ઝોન પૂર્ણ','Zones done','Zon purn'),m,11)+R(222,'⭐',CHL.t('ચિહ્ન પૂર્ણ','Chihna done','Chihna purn'),dn,16)+R(304,'🧩',CHL.t('સ્ટેજ પૂર્ણ','Stages done','Stej purn'),st,176)+R(386,'🏆',CHL.t('કુલ પોઇન્ટ','Total points','Kul point'),(+lg('chihnaPts')||mem.pts).toLocaleString('en-IN'))+
+  nOpen(record,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('Record','Record','Record')}</div><div class="nx" data-x="1">✕</div>`+
+   R(140,'🏘️',CHL.t('Zone પૂર્ણ','Zones done','Zon purn'),m,11)+R(222,'⭐',CHL.t('ચિહ્ન પૂર્ણ','Chihna done','Chihna purn'),dn,16)+R(304,'🧩',CHL.t('Stage પૂર્ણ','Stages done','Stej purn'),st,176)+R(386,'🏆',CHL.t('કુલ Points','Total points','Kul point'),(+lg('chihnaPts')||mem.pts).toLocaleString('en-IN'))+
    `<div class="nbk" data-bk="1" style="left:95px;top:486px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
 function rules(){const P=CHL.t;const L=[['🧩',P('સાચો ટુકડો 100 / 200 / 300 (સળંગ સાચા)','Correct piece 100 / 200 / 300 (in a row)','Sacho tukdo 100 / 200 / 300 (salang sacha)')],
    ['🔥',P('સળંગ 3 કોયડા ભૂલ વગર અને સમયમાં: કોમ્બો બોનસ','3 puzzles in a row, no mistakes, in time: combo bonus','Salang 3 koyda bhul vagar ane samayma: combo bonus')],
    ['💡',P('ખોટો −20 · હિન્ટ −50 · 🖼️ ચિત્ર −100','Wrong −20 · hint −50 · 🖼️ peek −100','Khoto −20 · hint −50 · 🖼️ chitra −100')],
    ['⏱',P('બાકી સમય ×5 · ✨ ભૂલ વગર +200','Time left ×5 · ✨ no mistakes +200','Baki samay ×5 · ✨ bhul vagar +200')],
    ['⚡',P('અડધા સમયમાં +300 · 💎 બધું એકસાથે ×2','Half the time +300 · 💎 all together ×2','Adha samayma +300 · 💎 badhu eksathe ×2')]];
-  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${P('નિયમો','Rules','Niyamo')}</div><div class="nx" data-x="1">✕</div>`+
+  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${P('Rules','Rules','Niyamo')}</div><div class="nx" data-x="1">✕</div>`+
    L.map((a,k)=>`<div class="nl" style="top:${140+68*k}px"><i>${a[0]}</i>${a[1]}</div>`).join('')+`<div class="nbk" data-bk="1" style="left:95px;top:520px">${P('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
 function sub(ti,body){nOpen(()=>sub(ti,body),`<div class="nc" style="left:35px;top:200px;width:320px;height:420px"><div class="nt" style="top:52px">${ti}</div><div class="nx" data-x="1">✕</div><div class="ntx">${body}</div><div class="nbk" data-bk="1" style="left:95px;top:320px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
 function setAct(a){

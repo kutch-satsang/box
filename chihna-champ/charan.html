@@ -73,7 +73,7 @@ body.noanim .cur::before{animation:none}
 #f.aura .c{opacity:1!important}#f.aura .c img{opacity:1!important;filter:drop-shadow(0 0 8px #fff3b0) drop-shadow(0 0 16px #ffb300)!important}#f.aura .c::before{display:none}body.zrw .bb,body.zrw #tb,body.zrw .nx{visibility:hidden}
 @keyframes aura{50%{filter:brightness(1.25)}}
 
-/* નવી ફ્રેમ: Record, નિયમો, ઝોન યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
+/* નવી ફ્રેમ: Record, Rules, Zone યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
 #nov{position:absolute;inset:0;z-index:62;background:#1a0526cc;display:none}
 #nov .nw{position:absolute;left:84px;top:0;width:390px;height:844px;transform:scale(1.98);transform-origin:0 0;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
 #nov .nc{position:absolute;background:url(p/mn/panel.webp) center/100% 100% no-repeat;filter:drop-shadow(0 8px 18px #000a)}
@@ -129,7 +129,7 @@ body.noanim .cur::before{animation:none}
  <div class="bb"><div class="l" id="cnt"></div><div class="bar"><i id="bar"></i></div><div class="p" id="pts"></div></div>
  <button class="hit" id="home" style="left:55px;top:130px;width:140px;height:140px" aria-label="હોમ"></button>
  <button class="hit" id="set" style="left:740px;top:128px;width:140px;height:140px" aria-label="સેટિંગ"></button>
- <button class="hit" id="b1" style="left:150px;top:300px;width:100px;height:100px" aria-label="આંકડા"></button><button class="hit" id="b2" style="left:690px;top:300px;width:100px;height:100px" aria-label="નિયમો"></button>
+ <button class="hit" id="b1" style="left:150px;top:300px;width:100px;height:100px" aria-label="આંકડા"></button><button class="hit" id="b2" style="left:690px;top:300px;width:100px;height:100px" aria-label="Rules"></button>
  <div id="toast"></div>
  <div id="zr"></div>
  <div id="tb" style="display:none;position:absolute;left:300px;top:1366px;width:340px;text-align:center;font-size:26px;color:#ffe58a;text-shadow:0 2px 6px #000;pointer-events:none">🧪 ટેસ્ટ: બધા ચિહ્ન ખુલ્લા</div>
@@ -175,7 +175,7 @@ function chime(){[523,659,784,1046].forEach((f,i)=>tone(f,.4,i*.13,.18))}
 let toastT;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1800)}
 
 function status(P){ // દરેક ચિહ્નની સ્થિતિ
-  const D=CH.map(c=>Math.min(11,P[c.id]||0)),m=Math.min(...D);let cur=-1; // રાઉન્ડ: બધા ચિહ્નનો સ્ટેજ m+1
+  const D=CH.map(c=>Math.min(11,P[c.id]||0)),m=Math.min(...D);let cur=-1; // રાઉન્ડ: બધા ચિહ્નનો Stage m+1
   return CH.map((c,i)=>{const d=D[i],rd=m>=11||d>m;if(cur<0&&!rd)cur=i;const unlocked=TEST||(!rd&&cur===i);
     return {d,m,rd,unlocked,state:d>=11?'done':(rd?'rd':(unlocked?'cur':'lock'))}})
 }
@@ -198,8 +198,8 @@ function render(){
       else if(false)html+=`<div class="pr" style="left:${L.toFixed(1)}px;top:${(T+sz+2).toFixed(1)}px;width:${sz.toFixed(1)}px"><i style="width:${(p*100).toFixed(0)}%"></i></div>`;
     })});
   f.insertAdjacentHTML('beforeend',html);
-  const nxt=S.findIndex(s=>!s.rd),rnd=Math.min(11,S[0].m+1);$('nx').textContent=nxt<0?CHL.t('🎉 બધા 11 સ્ટેજ પૂર્ણ','🎉 All 11 stages done','🎉 Badha 11 stej purn'):'🎯 '+CHL.t('સ્ટેજ ','Stage ','Stej ')+rnd+': '+CH[nxt].n;
-  $('cnt').textContent=`⭐ ${CHL.t('સ્ટેજ','Stage','Stej')} ${Math.min(11,S[0].m+1)} · ${done} / 16 ${CHL.t('ચિહ્ન','chihna','chihna')}`;
+  const nxt=S.findIndex(s=>!s.rd),rnd=Math.min(11,S[0].m+1);$('nx').textContent=nxt<0?CHL.t('🎉 બધા 11 Stage પૂર્ણ','🎉 All 11 stages done','🎉 Badha 11 stej purn'):'🎯 '+CHL.t('Stage ','Stage ','Stej ')+rnd+': '+CH[nxt].n;
+  $('cnt').textContent=`⭐ ${CHL.t('Stage','Stage','Stej')} ${Math.min(11,S[0].m+1)} · ${done} / 16 ${CHL.t('ચિહ્ન','chihna','chihna')}`;
   $('bar').style.width=(done/16*100)+'%';
   $('pts').textContent=getPts().toLocaleString('en-IN');
   window._stat={done,stages};
@@ -211,7 +211,7 @@ $('f').addEventListener('click',e=>{
   tone(660,.15,0,.15);const go=q=>goPage('game','?c='+c.id+q+(TEST?'&test=1':''));
   let CH_L={},MG={};try{CH_L=JSON.parse(lsGet('chihnaChal')||'{}')||{};MG=JSON.parse(lsGet('chihnaMega')||'{}')||{}}catch(e){}
   if(st.state==='done'&&CH_L[c.id]>=3){const nl=(MG[c.id]||0)+1,gn=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
-    openCard(`<h2>${c.n}</h2><div class="x" id="cx">✕</div><div class="row" id="m1" style="margin-top:40px;background:linear-gradient(#ffe27a,#d98a00);color:#5a0036">🏅 ${CHL.t('મહાચેમ્પ લેવલ '+gn(nl)+' રમો','Play MahaChamp level '+nl,'MahaChamp level '+nl+' ramo')}</div><div class="row" id="m2">🏆 ${CHL.t('ચેલેન્જ ફરી','Challenge again','Challenge fari')}</div><div class="row" id="m3">🧩 ${CHL.t('સ્ટેજ ફરી રમો','Replay stages','Stej fari ramo')}</div>`);
+    openCard(`<h2>${c.n}</h2><div class="x" id="cx">✕</div><div class="row" id="m1" style="margin-top:40px;background:linear-gradient(#ffe27a,#d98a00);color:#5a0036">🏅 ${CHL.t('MahaChamp Level '+gn(nl)+' રમો','Play MahaChamp level '+nl,'MahaChamp level '+nl+' ramo')}</div><div class="row" id="m2">🏆 ${CHL.t('Challenge ફરી','Challenge again','Challenge fari')}</div><div class="row" id="m3">🧩 ${CHL.t('Stage ફરી રમો','Replay stages','Stej fari ramo')}</div>`);
     $('cx').onclick=closeCard;$('m1').onclick=()=>go('&ch='+(3+nl));$('m2').onclick=()=>go('&ch=1');$('m3').onclick=()=>go('&s=1');return}
   if(st.state==='rd'){go('&s='+st.d);return}
   go('');
@@ -254,14 +254,14 @@ function checkFly(){
 }
 
 
-// ===== ઝોન પૂરો: ચરણ ઇનામ (દરેક ઝોનનું અલગ ઇનામ: રંગની આભા, નામ, બેજ) =====
+// ===== Zone પૂરો: ચરણ ઇનામ (દરેક ઝોનનું અલગ ઇનામ: રંગની આભા, નામ, બેજ) =====
 const ZR=[{n:{g:'કમળ વન',e:'Lotus Grove',r:'Kamal Van'},c:'#ff7ac0',e:'🪷'},{n:{g:'તુલસી વન',e:'Tulsi Forest',r:'Tulsi Van'},c:'#6dff8a',e:'🌿'},{n:{g:'ગંગા કિનારો',e:'Ganga Shore',r:'Ganga Kinaro'},c:'#6ad8ff',e:'🌊'},{n:{g:'સૂર્ય નગર',e:'Sun City',r:'Surya Nagar'},c:'#ffb13a',e:'🌅'},{n:{g:'ચંદ્ર બાગ',e:'Moon Garden',r:'Chandra Baag'},c:'#c6b8ff',e:'🌙'},{n:{g:'મોર બાગ',e:'Peacock Garden',r:'Mor Baag'},c:'#3affd0',e:'🦚'},{n:{g:'દીવા નગર',e:'Diya City',r:'Diva Nagar'},c:'#ffd24a',e:'🪔'},{n:{g:'હિમાલય',e:'Himalaya',r:'Himalay'},c:'#e8f6ff',e:'🏔️'},{n:{g:'ગૌ લોક',e:'Gau Lok',r:'Gau Lok'},c:'#fff3b0',e:'🐄'},{n:{g:'અક્ષર નગર',e:'Akshar Nagar',r:'Akshar Nagar'},c:'#ff9bff',e:'✨'},{n:{g:'અક્ષરધામ',e:'Akshardham',r:'Akshardham'},c:'#ffe27a',e:'👑'}];
 function zoneReward(z){const d=ZR[z-1];if(!d)return;const gn=n=>String(n).replace(/\d/g,x=>'0123456789'[x]);
   let B=[];try{B=JSON.parse(lsGet('chihnaBadges')||'[]')||[]}catch(e){}if(!B.includes(z)){B.push(z);lsSet('chihnaBadges',JSON.stringify(B))}
   const f=$('f');f.classList.add('aura');f.querySelector('.feet').style.filter=`drop-shadow(0 0 26px ${d.c}) drop-shadow(0 0 60px ${d.c}) drop-shadow(0 12px 22px #000a)`;
   const r=$('zr');r.style.display='block';document.body.classList.add('zrw');
-  r.innerHTML=`<div class="zt">${d.e} ${CHL.t('ઝોન '+gn(z)+' પૂર્ણ!','Zone '+z+' complete!','Zon '+z+' purn!')} ${d.e}<small>${d.n[CHL.L()]||d.n.g} · ${CHL.t('બેજ મળ્યો 🏅 · 16 ચિહ્ન ચરણ પર','Badge won 🏅 · 16 chihna on the charan','Badge malyo 🏅 · 16 chihna charan par')}</small></div>`+
-   (z<11?`<div class="zg" id="zgo">${CHL.t('આગળના ઝોનમાં ચાલો 🚶 ▶','On to the next zone 🚶 ▶','Aagalna zonma chalo 🚶 ▶')}</div>`:`<div class="zg" id="zgo">${CHL.t('👑 ચેલેન્જ અને મહાચેમ્પ રમો','👑 Play Challenge and MahaChamp','👑 Challenge ane MahaChamp ramo')}</div><div class="zg zg2" id="zg2">${CHL.t('ઝોનમાં પાછા','Back to the zone','Zonma pachha')}</div>`);
+  r.innerHTML=`<div class="zt">${d.e} ${CHL.t('Zone '+gn(z)+' પૂર્ણ!','Zone '+z+' complete!','Zon '+z+' purn!')} ${d.e}<small>${d.n[CHL.L()]||d.n.g} · ${CHL.t('બેજ મળ્યો 🏅 · 16 ચિહ્ન ચરણ પર','Badge won 🏅 · 16 chihna on the charan','Badge malyo 🏅 · 16 chihna charan par')}</small></div>`+
+   (z<11?`<div class="zg" id="zgo">${CHL.t('આગળના ઝોનમાં ચાલો 🚶 ▶','On to the next zone 🚶 ▶','Aagalna zonma chalo 🚶 ▶')}</div>`:`<div class="zg" id="zgo">${CHL.t('👑 Challenge અને MahaChamp રમો','👑 Play Challenge and MahaChamp','👑 Challenge ane MahaChamp ramo')}</div><div class="zg zg2" id="zg2">${CHL.t('ઝોનમાં પાછા','Back to the zone','Zonma pachha')}</div>`);
   if(z>=11){f.querySelector('.feet').style.filter+=' sepia(.6) saturate(2.2) brightness(1.1)'}
   // 16 ચિહ્ન એક પછી એક ચમકે
   const els=[...f.querySelectorAll('.c')];els.forEach((el,k)=>setTimeout(()=>{tone(523+k*40,.18,0,.12);if(animOn()){el.animate([{transform:'scale(1.8)',filter:'brightness(2)'},{transform:'scale(1)',filter:'none'}],{duration:600});
@@ -282,21 +282,21 @@ function nClose(){lastCard=null;$('nov').style.display='none';closeCard()}
 function settings(){const B=(x,c)=>`<i class="ns ${c||''}">${x}</i>`,on=x=>x?B('✓','on'):B('✕'),LG={g:'ગુ',e:'E',r:'ABC'};
   const R=[['🔊',CHL.t('અવાજ','Sound','Avaj'),on(soundOn()),'snd'],['✨',CHL.t('એનિમેશન','Animation','Animation'),on(animOn()),'anm'],['🌐',CHL.t('ભાષા','Language','Bhasha'),B(LG[CHL.L()]||'ગુ','on'),'lng'],
    ['↺',CHL.t('પ્રગતિ ફરી શરૂ','Reset progress','Fari sharu'),rc?B(CHL.t('ખરેખર?','Sure?','Kharekhar?'),'rd'):'','rst']];
-  const G=[['📊',CHL.t('રેકોર્ડ','Record','Record'),'rec'],['📜',CHL.t('નિયમો','Rules','Niyamo'),'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
-  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('સેટિંગ્સ','Settings','Settings')}</div><div class="nxx" data-x="1">✕</div>`+
+  const G=[['📊',CHL.t('Record','Record','Record'),'rec'],['📜',CHL.t('Rules','Rules','Niyamo'),'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
+  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('Settings','Settings','Settings')}</div><div class="nxx" data-x="1">✕</div>`+
    R.map((r,k)=>`<div class="nr ss" data-sa="${r[3]}" style="top:${140+82*k}px"><div class="i">${r[0]}</div><div class="t"><b>${r[1]}</b></div>${r[2]}</div>`).join('')+
    G.map((g,k)=>`<div class="ng" data-sa="${g[2]}" style="left:${80+80*k}px"><i>${g[0]}</i>${g[1]}</div>`).join('')+'</div>')}
 function stats(){const s=window._stat||{done:0,stages:0};
   const R=(y,i,l,v,o)=>`<div class="nr" style="top:${y}px"><div class="i">${i}</div><div class="t"><small>${l}</small><b>${v}${o?` <span>/ ${o}</span>`:''}</b></div></div>`;
-  nOpen(stats,`<div class="nc" style="left:35px;top:150px;width:320px;height:525px"><div class="nt" style="top:66px">${CHL.t('રેકોર્ડ','Record','Record')}</div><div class="nxx" data-x="1">✕</div>`+
-   R(130,'⭐',CHL.t('ચિહ્ન પૂર્ણ','Chihna done','Chihna purn'),s.done,16)+R(212,'🧩',CHL.t('સ્ટેજ પૂર્ણ','Stages done','Stej purn'),s.stages,176)+R(294,'🏆',CHL.t('કુલ પોઇન્ટ','Total points','Kul point'),getPts().toLocaleString('en-IN'))+
+  nOpen(stats,`<div class="nc" style="left:35px;top:150px;width:320px;height:525px"><div class="nt" style="top:66px">${CHL.t('Record','Record','Record')}</div><div class="nxx" data-x="1">✕</div>`+
+   R(130,'⭐',CHL.t('ચિહ્ન પૂર્ણ','Chihna done','Chihna purn'),s.done,16)+R(212,'🧩',CHL.t('Stage પૂર્ણ','Stages done','Stej purn'),s.stages,176)+R(294,'🏆',CHL.t('કુલ Points','Total points','Kul point'),getPts().toLocaleString('en-IN'))+
    `<div class="nbk" data-bk="1" style="left:95px;top:400px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
-function rules(){const P=CHL.t;const L=[['👣',P('ખાલી ચરણ પર ચિહ્ન ટેપ કરો, તેના 11 સ્ટેજ રમો','Tap a chihna on the charan and play its 11 stages','Khali charan par chihna tap karo, tena 11 stej ramo')],
+function rules(){const P=CHL.t;const L=[['👣',P('ખાલી ચરણ પર ચિહ્ન ટેપ કરો, તેના 11 Stage રમો','Tap a chihna on the charan and play its 11 stages','Khali charan par chihna tap karo, tena 11 stej ramo')],
    ['🧩',P('સાચો ટુકડો 100 / 200 / 300 (કોમ્બો)','Correct piece 100 / 200 / 300 (combo)','Sacho tukdo 100 / 200 / 300 (combo)')],
    ['💡',P('ખોટો −20 · હિન્ટ −50','Wrong −20 · hint −50','Khoto −20 · hint −50')],
    ['⚡',P('✨ ભૂલ વગર +200 · અડધા સમયમાં +300','✨ No mistakes +200 · half the time +300','✨ Bhul vagar +200 · adha samayma +300')],
-   ['🕊️',P('11 સ્ટેજ પછી ચિહ્ન ઊડીને ચરણ પર બેસે, +500','After 11 stages the chihna flies to the charan, +500','11 stej pachhi chihna udine charan par bese, +500')]];
-  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${P('નિયમો','Rules','Niyamo')}</div><div class="nxx" data-x="1">✕</div>`+
+   ['🕊️',P('11 Stage પછી ચિહ્ન ઊડીને ચરણ પર બેસે, +500','After 11 stages the chihna flies to the charan, +500','11 stej pachhi chihna udine charan par bese, +500')]];
+  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${P('Rules','Rules','Niyamo')}</div><div class="nxx" data-x="1">✕</div>`+
    L.map((a,k)=>`<div class="nl" style="top:${140+68*k}px"><i>${a[0]}</i>${a[1]}</div>`).join('')+`<div class="nbk" data-bk="1" style="left:95px;top:520px">${P('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
 function sub(ti,body){nOpen(()=>sub(ti,body),`<div class="nc" style="left:35px;top:200px;width:320px;height:420px"><div class="nt" style="top:52px">${ti}</div><div class="nxx" data-x="1">✕</div><div class="ntx">${body}</div><div class="nbk" data-bk="1" style="left:95px;top:320px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
 function setAct(a){

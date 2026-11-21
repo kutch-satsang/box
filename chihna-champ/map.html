@@ -78,7 +78,7 @@ body.noanim .bt.cur{animation:none}
 #zp{cursor:pointer;pointer-events:auto}
 #tb{position:absolute;left:0;top:1526px;width:941px;text-align:center;font-size:20px;color:#ffe58a;pointer-events:none;display:none}
 
-/* નવી ફ્રેમ: Record, નિયમો, ઝોન યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
+/* નવી ફ્રેમ: Record, Rules, Zone યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
 #nov{position:absolute;inset:0;z-index:62;background:#1a0526cc;display:none}
 .nw{position:absolute;left:84px;top:0;width:390px;height:844px;transform:scale(1.98);transform-origin:0 0;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
 .nc{position:absolute;background:url(p/mn/panel.webp) center/100% 100% no-repeat;filter:drop-shadow(0 8px 18px #000a)}
@@ -144,7 +144,7 @@ const BW=941,BH=1671,MH=3700;const qs=new URLSearchParams(location.search);const
 function goPage(p,q){location.href=p+'.html'+(q||'')}
 const PQ=TEST?'&test=1':'';
 const CH=[['swastik','સ્વસ્તિક'],['ashtakon','અષ્ટકોણ'],['ankush','અંકુશ'],['kamal','કમળ'],['ketu','ધ્વજ'],['urdhva-rekha','ઊર્ધ્વરેખા'],['vajra','વજ્ર'],['jambu','જાંબુ'],['java','જવ'],['matsya','મત્સ્ય'],['trikon','ત્રિકોણ'],['gaupad','ગોપદ'],['dhanush','ધનુષ'],['vyom','વ્યોમ'],['ardha-chandra','અર્ધચંદ્ર'],['kalash','કળશ']].map(([id,g])=>({id,g,get n(){return CHL.cn(id,g)}}));
-// 11 ગામ: નામ, રંગ (દૃશ્ય હાલ ઝોન 1 નું જ, રંગ બદલીને) — નવાં ચિત્રો આવે ત્યારે bg અહીં બદલવું
+// 11 ગામ: નામ, રંગ (દૃશ્ય હાલ Zone 1 નું જ, રંગ બદલીને) — નવાં ચિત્રો આવે ત્યારે bg અહીં બદલવું
 const ZN=[{n:{g:'કમળ વન',e:'Lotus Grove',r:'Kamal Van'},hue:0,e:'🪷'},{n:{g:'તુલસી વન',e:'Tulsi Forest',r:'Tulsi Van'},hue:110,e:'🌿'},{n:{g:'ગંગા કિનારો',e:'Ganga Shore',r:'Ganga Kinaro'},hue:200,e:'🌊'},{n:{g:'સૂર્ય નગર',e:'Sun City',r:'Surya Nagar'},hue:-40,e:'🌅'},{n:{g:'ચંદ્ર બાગ',e:'Moon Garden',r:'Chandra Baag'},hue:240,e:'🌙'},{n:{g:'મોર બાગ',e:'Peacock Garden',r:'Mor Baag'},hue:150,e:'🦚'},{n:{g:'દીવા નગર',e:'Diya City',r:'Diva Nagar'},hue:-20,e:'🪔'},{n:{g:'હિમાલય',e:'Himalaya',r:'Himalay'},hue:180,e:'🏔️'},{n:{g:'ગૌ લોક',e:'Gau Lok',r:'Gau Lok'},hue:60,e:'🐄'},{n:{g:'અક્ષર નગર',e:'Akshar Nagar',r:'Akshar Nagar'},hue:300,e:'✨'},{n:{g:'અક્ષરધામ',e:'Akshardham',r:'Akshardham'},hue:20,e:'👑'}];
 const ZCH=[{g:'સોનેરી દ્વાર',e:'Golden Gate',r:'Soneri Dwar'},{g:'હીરા પર્વત',e:'Diamond Hill',r:'Heera Parvat'},{g:'મુગટ શિખર',e:'Crown Peak',r:'Mugat Shikhar'}];
 const zname=zd=>zd.n[L()];
@@ -153,15 +153,14 @@ const $=id=>document.getElementById(id);
 
 const L=()=>{try{return window.SatsangBox?SatsangBox.lang():(localStorage.getItem('satsangLang')||'g')}catch(e){return 'g'}};
 const TX={
-g:{zone:'ઝોન',stats:'રેકોર્ડ',rules:'નિયમો',zones:'ઝોન',back:'‹ પાછા',s1:'ઝોન પૂર્ણ',s2:'આ ઝોનનાં ઘર',s3:'સ્ટેજ પૂર્ણ',s4:'કુલ પોઇન્ટ',pts:'પોઇન્ટ',lang:'ભાષા',lg:'ગુ',
- r:['દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ','લીલું ▶ દબાવો: અવતાર ઘરમાં જાય, પઝલ ખૂલે','પૂરું ઘર દબાવો: તારા, પોઇન્ટ અને સમય','16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ'],
+g:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zone',back:'‹ પાછા',s1:'Zone પૂર્ણ',s2:'આ ઝોનનાં ઘર',s3:'Stage પૂર્ણ',s4:'કુલ Points',pts:'Points',lang:'ભાષા',lg:'ગુ',
+ r:['દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ','લીલું ▶ દબાવો: અવતાર ઘરમાં જાય, પઝલ ખૂલે','પૂરું ઘર દબાવો: તારા, Points અને સમય','16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ'],
  p:['સાચો ટુકડો','ખોટો ટુકડો','ભૂલ વગર','અડધા સમયમાં']},
 e:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zones',back:'‹ Back',s1:'Zones done',s2:'Houses in this zone',s3:'Stages done',s4:'Total points',pts:'Points',lang:'Language',lg:'E',
  r:['16 houses in every zone, one chihna puzzle in each house','Press the green ▶: avatar enters the house, puzzle opens','Press a finished house: stars, points and time','After 16 houses the gate opens, prize on the charan'],
  p:['Correct','Wrong','No mistakes','Half the time']},
-r:{zone:'Zon',stats:'Record',rules:'Niyamo',zones:'Zon',back:'‹ Pachha',s1:'Zon purn',s2:'Aa zonna ghar',s3:'Stej purn',s4:'Kul point',pts:'Point',lang:'Bhasha',lg:'ABC',
- r:['Darek zonma 16 ghar, darek gharma ek chihnani puzzle','Lilu ▶ dabavo: avatar gharma jay, puzzle khule','Puru ghar dabavo: tara, point ane samay','16 ghar pachi gate khule, charan par inam'],
- p:['Sacho','Khoto','Bhul vagar','Adha samay']}};
+r:null};
+TX.r=Object.assign({},TX.e,{lg:'ABC'});
 const t=()=>TX[L()];
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
@@ -173,11 +172,11 @@ function chime(){[523,659,784,1046].forEach((f,i)=>tone(f,.4,i*.13,.18))}
 function step(){tone(300+Math.random()*60,.06,0,.05,'triangle')}
 let toastT;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1900)}
 
-// ===== પ્રગતિ: ગામ (ઝોન) r = સ્ટેજ r; ઘર n = ક્રમનું n-મું ચિહ્ન =====
+// ===== પ્રગતિ: ગામ (Zone) r = Stage r; ઘર n = ક્રમનું n-મું ચિહ્ન =====
 const minDone=P=>Math.min(...CH.map(c=>Math.min(11,P[c.id]||0)));
 const NB=11;
 function syncZN(){const M=J('chihnaMega',{});const mx=Math.max(0,...CH.map(c=>M[c.id]||0));const n=14+Math.min(45,Math.max(5,mx+2));
-  while(ZN.length<n){const z=ZN.length+1;ZN.push(z<=14?{n:ZCH[z-12],hue:40+(z-12)*30,e:'🏆'}:{n:{g:'મહાચેમ્પ '+(z-14),e:'MahaChamp '+(z-14),r:'MahaChamp '+(z-14)},hue:300+(z-15)*20,e:'🏅'})}}
+  while(ZN.length<n){const z=ZN.length+1;ZN.push(z<=14?{n:ZCH[z-12],hue:40+(z-12)*30,e:'🏆'}:{n:{g:'MahaChamp '+(z-14),e:'MahaChamp '+(z-14),r:'MahaChamp '+(z-14)},hue:300+(z-15)*20,e:'🏅'})}}
 const getChal=()=>J('chihnaChal',{}),getMega=()=>J('chihnaMega',{}),maxView=P=>(syncZN(),TEST)||minDone(P)>=NB?ZN.length:Math.min(NB,minDone(P)+1);
 function zoneState(P,z){ // z = 1..11 (12 Challenge, 13 MahaChamp)
   if(z>NB){const C=getChal(),M=getMega(),open=minDone(P)>=NB;
@@ -261,11 +260,11 @@ function bubble(i){
   const c=CH[i],s=ST[i].s,r=res(c.id,Z),st=stars(c.id,Z),b=$('bub');tone(700,.08,0,.12);
   let h=`<div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="nm">${CHL.t('ઘર','House','Ghar')} ${GN(i+1)} · ${c.n}</div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
   if(Z>NB){const ch3=Z<=NB+3,r=Z-NB,L=Z-NB-3;
-    if(s==='lock')h+=`<div class="sm" style="font-size:28px">${minDone(getProg())<NB?CHL.t('પહેલાં બધા 11 ઝોન પૂરા કરો 🙏','Finish all 11 zones first 🙏','Pahela badha 11 zon pura karo 🙏'):(ch3?CHL.t('પહેલાં આગળનો રાઉન્ડ પૂરો કરો 🙏','Finish the previous round first 🙏','Pahela aagalno round puro karo 🙏'):CHL.t('પહેલાં આગળનું લેવલ પૂરું કરો 🙏','Finish the previous level first 🙏','Pahela aagalnu level puru karo 🙏'))}</div>`;
-    else h+=`<div class="sm">${ch3?'🏆 '+CHL.t('ચેલેન્જ · રાઉન્ડ ','Challenge · round ','Challenge · round ')+r:'🏅 '+CHL.t('મહાચેમ્પ · લેવલ ','MahaChamp · level ','MahaChamp · level ')+L}</div><div class="bb" id="bgo">${s==='done'?CHL.t('↻ ફરી રમો','↻ Play again','↻ Fari ramo'):CHL.t('રમો ▶','Play ▶','Ramo ▶')}</div>`;
+    if(s==='lock')h+=`<div class="sm" style="font-size:28px">${minDone(getProg())<NB?CHL.t('પહેલાં બધા 11 Zone પૂરા કરો 🙏','Finish all 11 zones first 🙏','Pahela badha 11 zon pura karo 🙏'):(ch3?CHL.t('પહેલાં આગળનો રાઉન્ડ પૂરો કરો 🙏','Finish the previous round first 🙏','Pahela aagalno round puro karo 🙏'):CHL.t('પહેલાં આગળનું Level પૂરું કરો 🙏','Finish the previous level first 🙏','Pahela aagalnu level puru karo 🙏'))}</div>`;
+    else h+=`<div class="sm">${ch3?'🏆 '+CHL.t('Challenge · રાઉન્ડ ','Challenge · round ','Challenge · round ')+r:'🏅 '+CHL.t('MahaChamp · Level ','MahaChamp · level ','MahaChamp · level ')+L}</div><div class="bb" id="bgo">${s==='done'?CHL.t('↻ Play again','↻ Play again','↻ Fari ramo'):CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`;
   }else if(s==='done'){
-    h+=`<div class="rw"><span>⭐ ${CHL.t('પોઇન્ટ','Points','Point')}: ${r?r.p.toLocaleString('en-IN'):'—'}</span><span>⏱ ${r?fmt(r.t):'—'}</span></div><div class="sm">${CHL.t('શ્રેષ્ઠ સમય','Best time','Shreshth samay')} ${r?fmt(r.b):'—'}</div><div class="bb g" id="bgo">${CHL.t('↻ ફરી રમો','↻ Play again','↻ Fari ramo')}</div>`;
-  }else if(s==='cur'||TEST){h+=`<div class="sm">${CHL.t('ઝોન '+GN(Z)+' નો સ્ટેજ '+GN(Z)+' · આ ઘરમાં '+c.n+' ની પઝલ','Zone '+Z+', stage '+Z+' · '+c.n+' puzzle in this house','Zon '+Z+' no stej '+Z+' · aa gharma '+c.n+' ni puzzle')}</div><div class="bb" id="bgo">${CHL.t('રમો ▶','Play ▶','Ramo ▶')}</div>`}
+    h+=`<div class="rw"><span>⭐ ${CHL.t('Points','Points','Point')}: ${r?r.p.toLocaleString('en-IN'):'—'}</span><span>⏱ ${r?fmt(r.t):'—'}</span></div><div class="sm">${CHL.t('શ્રેષ્ઠ સમય','Best time','Shreshth samay')} ${r?fmt(r.b):'—'}</div><div class="bb g" id="bgo">${CHL.t('↻ Play again','↻ Play again','↻ Fari ramo')}</div>`;
+  }else if(s==='cur'||TEST){h+=`<div class="sm">${CHL.t('Zone '+GN(Z)+' નો Stage '+GN(Z)+' · આ ઘરમાં '+c.n+' ની પઝલ','Zone '+Z+', stage '+Z+' · '+c.n+' puzzle in this house','Zon '+Z+' no stej '+Z+' · aa gharma '+c.n+' ni puzzle')}</div><div class="bb" id="bgo">${CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`}
   else h+=`<div class="sm" style="font-size:28px">${CHL.t('પહેલાં આગળનું ઘર પૂરું કરો 🙏','Finish the previous house first 🙏','Pahela aagalnu ghar puru karo 🙏')}</div>`;
   b.innerHTML=h+'<div class="tip"></div>';b.style.display='block';
   const x=HX(i),hy=HY(i)-250*328/260+30;let L=Math.max(20,Math.min(941-560,x-270));b.style.left=L+'px';
@@ -289,7 +288,7 @@ $('gate').onclick=()=>{if(Z>NB)return;if(ST.every(s=>s.s==='done'))goPage('chara
 $('zl').onclick=()=>{if(VIEW>1){VIEW--;hideBub();render();avAtCurrent();showZN()}};
 $('zr').onclick=()=>{if(VIEW<maxView(getProg())){VIEW++;hideBub();render();avAtCurrent();showZN()}};
 
-// ===== ઝોન યાદી (ઝોન ઘણા થાય તો પણ સ્ક્રોલ યાદી; ZN માં એક લીટી ઉમેરવાથી નવો ઝોન) =====
+// ===== Zone યાદી (Zone ઘણા થાય તો પણ સ્ક્રોલ યાદી; ZN માં એક લીટી ઉમેરવાથી નવો Zone) =====
 function zoneInfo(z,P){let dn=0,st=0;if(z>NB){const stt=zoneState(P,z);return{dn:stt.filter(x=>x.s==='done').length,st:0}}CH.forEach(c=>{if((P[c.id]||0)>=z)dn++;st+=stars(c.id,z)});return{dn,st}}
 let zpg=0;
 function openZones(){zpg=Math.floor((VIEW-1)/6);zRender();$('zov').style.display='block'}
@@ -305,19 +304,19 @@ $('znw').onclick=e=>{e.stopPropagation();
   const g=e.target.closest('[data-pg]');if(g){zpg+=+g.dataset.pg;zRender();tone(660,.08,0,.12);return}
   const el=e.target.closest('.nz');if(!el||el.classList.contains('d'))return;VIEW=+el.dataset.z;$('zov').style.display='none';hideBub();render();avAtCurrent();showZN();tone(660,.08,0,.12)};
 $('zp').onclick=openZones;$('zov').onclick=e=>{if(e.target.id==='zov')$('zov').style.display='none'};
-function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} ${t().zone} ${Z}: ${zname(z)}<small>${sub||CHL.t('16 ઘર · ','16 houses · ','16 ghar · ')+(Z<=NB?CHL.t('સ્ટેજ ','Stage ','Stej ')+Z:(Z<=NB+3?CHL.t('ચેલેન્જ રાઉન્ડ ','Challenge round ','Challenge round ')+(Z-NB):CHL.t('મહાચેમ્પ લેવલ ','MahaChamp level ','MahaChamp level ')+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
+function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} ${t().zone} ${Z}: ${zname(z)}<small>${sub||CHL.t('16 ઘર · ','16 houses · ','16 ghar · ')+(Z<=NB?CHL.t('Stage ','Stage ','Stej ')+Z:(Z<=NB+3?CHL.t('Challenge રાઉન્ડ ','Challenge round ','Challenge round ')+(Z-NB):CHL.t('MahaChamp Level ','MahaChamp level ','MahaChamp level ')+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
 
 // ===== જીત પછી પાછા આવ્યા: અવતાર આગળના ઘરે ચાલે / ગામ પૂરું: ગેટ =====
 function afterReturn(){
   const P=getProg(),m=minDone(P),seen=+lsGet('chihnaZoneSeen')||0;
   let id=lsGet('chihnaFly');if(id)lsSet('chihnaFly','');
   if(qs.get('enter')){ // ગેટમાંથી નવા ગામમાં
-    placeAv(ENTRY.x,ENTRY.y,'m/av_idle.webp');follow(ENTRY.y);showZN(CHL.t('નવો ઝોન! 🎉','New zone! 🎉','Navo zon! 🎉'));
+    placeAv(ENTRY.x,ENTRY.y,'m/av_idle.webp');follow(ENTRY.y);showZN(CHL.t('નવો Zone! 🎉','New zone! 🎉','Navo zon! 🎉'));
     const c=ST.findIndex(s=>s.s==='cur');setTimeout(()=>walk(0,IDX[c<0?0:c]),900);return}
   if(m>seen&&m>=1&&!TEST||(TEST&&qs.get('zdone'))){ // ગામ m પૂરું થયું
     lsSet('chihnaZoneSeen',String(m));VIEW=m;render();
     const p=PTS[IDX[15]];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);
-    setTimeout(()=>{showZN(CHL.t('ઝોન પૂરો! ગેટ ખૂલ્યો 🎉','Zone complete! Gate open 🎉','Zon puro! Gate khulyo 🎉'));chime();walk(IDX[15],IDX[16],()=>{placeAv(GATE.x,GATE.y,'m/av_cheer.webp');chime();
+    setTimeout(()=>{showZN(CHL.t('Zone પૂરો! ગેટ ખૂલ્યો 🎉','Zone complete! Gate open 🎉','Zon puro! Gate khulyo 🎉'));chime();walk(IDX[15],IDX[16],()=>{placeAv(GATE.x,GATE.y,'m/av_cheer.webp');chime();
       setTimeout(()=>goPage('charan','?zone='+m+PQ),1600)})},800);return}
   const i=id?CH.findIndex(c=>c.id===id):-1;
   if(i>=0&&i<15&&ST[i].s==='done'&&ST[i+1].s==='cur'){ // ઘર i જીત્યા → i+1
@@ -329,7 +328,7 @@ function afterReturn(){
   avAtCurrent();
 }
 
-// ===== સેટિંગ, આંકડા, નિયમો =====
+// ===== સેટિંગ, આંકડા, Rules =====
 function openCard(html){const q=$('sp');if(q)q.style.display='none';const c=$('card');c.innerHTML=html;c.style.display='block';$('dim').style.display='block'}
 function closeCard(){const q=$('sp');if(q)q.style.display='none';$('nov').style.display='none';$('card').style.display='none';$('dim').style.display='none';if(fromMenu){fromMenu=false;location.href='index.html'+(TEST?'?test=1':'')}}
 function openFromMenu(){const f={settings,stats,rules}[FM];if(f)f()}
@@ -339,7 +338,7 @@ function settings(){const T=t(),B=(x,c)=>`<i class="ns ${c||''}">${x}</i>`,on=x=
   const R=[['🔊',CHL.t('અવાજ','Sound','Avaj'),on(soundOn()),'snd'],['✨',CHL.t('એનિમેશન','Animation','Animation'),on(animOn()),'anm'],['🌐',T.lang,B(T.lg,'on'),'lng'],
    ['↺',CHL.t('પ્રગતિ ફરી શરૂ','Reset progress','Fari sharu'),rc?B(CHL.t('ખરેખર?','Sure?','Kharekhar?'),'rd'):'','rst']];
   const G=[['👣',CHL.t('ચરણ','Charan','Charan'),'chr'],['📜',T.rules,'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
-  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('સેટિંગ્સ','Settings','Settings')}</div><div class="nx" data-x="1">✕</div>`+
+  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('Settings','Settings','Settings')}</div><div class="nx" data-x="1">✕</div>`+
    R.map((r,k)=>`<div class="nr ss" data-sa="${r[3]}" style="top:${140+82*k}px"><div class="i">${r[0]}</div><div class="t"><b>${r[1]}</b></div>${r[2]}</div>`).join('')+
    G.map((g,k)=>`<div class="ng" data-sa="${g[2]}" style="left:${80+80*k}px"><i>${g[0]}</i>${g[1]}</div>`).join('')+'</div>')}
 function setAct(a){

@@ -72,12 +72,12 @@ const ZN=[['કમળ વન','Lotus Grove','Kamal Van'],['તુલસી વ�
 const T=(g,e,r)=>window.CHL?CHL.t(g,e,r):e;
 function langText(){const X=(id,a,b)=>{$(id).innerHTML=a+'<small>'+b+'</small>'};
   $('ttl').textContent=T('ચિહ્ન ચેમ્પ','Chihna Champ','Chihna Champ');document.title=$('ttl').textContent;
-  X('t1',T('નિયમો','Rules','Niyamo'),T('કેવી રીતે રમવું','How to play','Kevi rite ramvu'));
-  X('t2',T('રેકોર્ડ','Record','Record'),T('ઝોન · સ્ટેજ · પોઇન્ટ','Zones · stages · points','Zon · stej · point'));
-  X('t3',T('સેટિંગ્સ','Settings','Settings'),T('અવાજ · ભાષા','Sound · language','Avaj · bhasha'));
-  $('c1t').textContent=T('ચેલેન્જ','Challenge','Challenge');$('c2t').textContent=T('મહાચેમ્પ','MahaChamp','MahaChamp');
+  X('t1',T('Rules','Rules','Niyamo'),T('કેવી રીતે રમવું','How to play','Kevi rite ramvu'));
+  X('t2',T('Record','Record','Record'),T('Zone · Stage · Points','Zones · stages · points','Zon · stej · point'));
+  X('t3',T('Settings','Settings','Settings'),T('અવાજ · ભાષા','Sound · language','Avaj · bhasha'));
+  $('c1t').textContent=T('Challenge','Challenge','Challenge');$('c2t').textContent=T('MahaChamp','MahaChamp','MahaChamp');
   const l=window.CHL?CHL.L():'e',k=l==='g'?0:l==='r'?2:1,P=J('chihnaProg',{}),m=Math.min(...IDS.map(id=>Math.min(11,P[id]||0))),z=Math.min(11,m+1);
-  $('zn').textContent=m>=11?T('બધા ઝોન પૂર્ણ','All zones done','Badha zon purn'):T('ઝોન ','Zone ','Zon ')+z+' · '+ZN[z-1][k]}
+  $('zn').textContent=m>=11?T('બધા Zone પૂર્ણ','All zones done','Badha zon purn'):T('Zone ','Zone ','Zon ')+z+' · '+ZN[z-1][k]}
 
 // ખેલાડીનું નામ (હબના લોગિનમાંથી)
 function showName(o){let n='';try{if(!(window.SatsangAuth&&SatsangAuth.isGuest()))n=String((o&&o.name)||'').trim()}catch(e){}
@@ -85,7 +85,7 @@ function showName(o){let n='';try{if(!(window.SatsangAuth&&SatsangAuth.isGuest()
 showName(J('sbProf',{}));
 try{window.SatsangAuth&&SatsangAuth.profile&&SatsangAuth.profile().then(showName).catch(()=>{})}catch(e){}
 
-// પ્રગતિ: હાલનો ઝોન, તારા, પઝલ
+// પ્રગતિ: હાલનો Zone, તારા, પઝલ
 (function(){const P=J('chihnaProg',{}),S=J('chihnaStars',{}),R=J('chihnaRes',{});
   const d=id=>Math.min(11,P[id]||0),m=Math.min(...IDS.map(d)),z=Math.min(11,m+1);
   const st=id=>Math.max((S[id]||[])[z-1]||0,(R[id+'_'+z]||{}).s||0);
