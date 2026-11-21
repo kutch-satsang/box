@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ચિહ્ન ચેમ્પ</title>
+<style>
+@font-face{font-family:G;src:url(h/f.woff2)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{margin:0;height:100%;background:#3a0230;overflow:hidden;font-family:G,system-ui,sans-serif;color:#fff}
+#app{opacity:0;transition:opacity .6s;position:absolute;width:941px;height:1671px;transform-origin:0 0;background:linear-gradient(#5a0f6e,#8a1a8a);overflow:hidden}
+#app.on{opacity:1}
+#ld{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:radial-gradient(#8a1058,#3a0230);z-index:50;transition:opacity .5s;color:#ffe9a8;font-size:26px}
+#ld.off{opacity:0;pointer-events:none}
+#ld .sw{font-size:70px}
+#ld .lb{width:200px;height:8px;border-radius:5px;background:#0007;overflow:hidden}
+#ld .lb i{display:block;height:100%;width:0;background:linear-gradient(#fff3a0,#ffc93c);transition:width .3s}
+/* ઉપર અને નીચેની સ્થિર પટ્ટીઓ */
+.rb{position:absolute;border-radius:50%;background:radial-gradient(circle at 50% 35%,#ff5aa8,#d6246e 60%,#8a1050);border:5px solid #ffc83a;box-shadow:0 0 14px #ff7ac0aa,0 5px 0 #6a0a3a;display:flex;align-items:center;justify-content:center;font-size:48px;cursor:pointer}
+.pill{position:absolute;border-radius:40px;background:linear-gradient(#ff4fa0,#b0125a);border:5px solid #ffc83a;box-shadow:0 0 16px #ff7ac088;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;text-shadow:0 2px 4px #4a0030;white-space:nowrap}
+#zp{left:200px;top:116px;width:541px;height:50px;font-size:26px;gap:12px;color:#fff3c4;border-width:3px;background:#b0125a}
+#zp .zb{width:120px;height:14px;border-radius:7px;background:#3a0a3a;overflow:hidden;display:inline-block}
+#zp .zb i{display:block;height:100%;background:linear-gradient(#ffe27a,#ffa800)}
+.za{position:absolute;top:110px;width:62px;height:62px;border-radius:50%;background:#b0125a;border:3px solid #ffc83a;font-size:34px;line-height:54px;text-align:center;color:#ffe9a8;cursor:pointer}
+.za.off{opacity:.25;pointer-events:none}
+#bot{left:110px;top:1548px;width:500px;height:100px;font-size:40px;justify-content:space-around}
+#bot .s{color:#ffe27a;font-size:36px}
+/* નકશો */
+#mv{position:absolute;left:0;top:184px;width:941px;height:1340px;overflow-y:auto;overflow-x:hidden;border-top:6px solid #ffc83a;border-bottom:6px solid #ffc83a;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#mv::-webkit-scrollbar{display:none}
+#mp{position:relative;width:941px;height:3700px;overflow:hidden}
+#bgl{position:absolute;inset:0;background:url(m/bg1.jpg) 0 0/941px 3700px}
+#road{position:absolute;left:0;top:0;pointer-events:none}
+.hs{position:absolute;width:250px;cursor:pointer;transition:transform .5s}
+.hs>img.h{width:250px;display:block;filter:drop-shadow(0 8px 8px #0008);pointer-events:none}
+.hs>img.c{position:absolute;left:97px;width:56px;height:56px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 0 4px #fff3b0) drop-shadow(0 0 2px #fff)}
+.hs.lock>img.c{filter:grayscale(1) brightness(1.3);opacity:.45}
+.hs.open{transform:scale(1.25);z-index:9}
+.hs.open::after{content:"";position:absolute;left:95px;top:150px;width:60px;height:90px;border-radius:30px 30px 0 0;background:radial-gradient(#fff,#fff6c0 50%,#ffd24a00);animation:door .7s forwards}
+@keyframes door{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1.6)}}
+.bt{position:absolute;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;z-index:4}
+.bt.done{background:radial-gradient(#fff3b0,#ffc83a 55%,#c27800);border:5px solid #fff6d0;box-shadow:0 6px 0 #7a4a00;color:#5a0036;font-size:32px}
+.bt.cur{width:96px;height:96px;margin:-48px 0 0 -48px;background:radial-gradient(#b9ffb0,#35c24a 55%,#157a28);border:5px solid #eaffdc;box-shadow:0 6px 0 #0b4a18,0 0 30px #7dff8a;color:#fff;font-size:42px;animation:bp 1.4s infinite}
+.bt.lock{background:radial-gradient(#d9a8ff,#7a2db8);border:5px solid #e8d0ff;box-shadow:0 6px 0 #3d1560;font-size:32px}
+@keyframes bp{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+body.noanim .bt.cur{animation:none}
+.pl{position:absolute;width:150px;margin-left:-75px;pointer-events:none;opacity:.95}
+#av{position:absolute;height:150px;width:auto;margin:0;pointer-events:none;z-index:6;filter:drop-shadow(0 6px 5px #000a);transform-origin:50% 100%}
+#gate{position:absolute;left:300px;top:190px;width:340px;height:200px;cursor:pointer}
+#gl{position:absolute;left:470px;top:300px;width:10px;height:10px;pointer-events:none}
+#gl.on{box-shadow:0 0 120px 90px #fff3b0,0 0 240px 160px #ffd24a88;border-radius:50%;animation:gp 1.2s infinite}
+@keyframes gp{50%{box-shadow:0 0 160px 120px #fff3b0,0 0 300px 200px #ffd24aaa}}
+/* બબલ */
+#bub{position:absolute;width:540px;border-radius:36px;background:linear-gradient(#fff9e0,#ffe9a8);border:6px solid #ffc83a;box-shadow:0 10px 24px #000a,0 0 30px #ffd95a;color:#5a0036;padding:18px 26px 22px;z-index:8;display:none}
+#bub .hd{display:flex;align-items:center;gap:16px}
+#bub .hd img{width:70px;height:70px;object-fit:contain}
+#bub .nm{font-size:34px;font-weight:700}
+#bub .st{font-size:40px;color:#e8a400;letter-spacing:4px}
+#bub .rw{display:flex;justify-content:space-between;font-size:29px;margin-top:8px;font-weight:700}
+#bub .sm{font-size:25px;margin-top:6px;opacity:.85}
+#bub .bb{margin-top:14px;height:72px;border-radius:36px;background:linear-gradient(#3fd06a,#0e8a3a);color:#fff;font-size:32px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 0 #0b4a18}
+#bub .bb.g{background:linear-gradient(#ffe27a,#d98a00);color:#5a0036;box-shadow:0 5px 0 #7a4a00}
+#bub .tip{position:absolute;width:0;height:0;border-left:28px solid transparent;border-right:28px solid transparent;border-top:34px solid #ffc83a;bottom:-34px}
+#toast{position:absolute;left:50%;top:1440px;transform:translateX(-50%);background:#000c;border:2px solid #ff9ad8aa;border-radius:40px;padding:14px 34px;font-size:32px;color:#fff;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:20}
+#toast.on{opacity:1}
+#zn{position:absolute;left:50%;top:420px;transform:translate(-50%,0) scale(.6);opacity:0;padding:16px 50px;border-radius:50px;font-size:52px;font-weight:700;color:#5a0036;background:linear-gradient(#fff3b0,#ffd24a 60%,#d98a00);border:4px solid #fff6d0;box-shadow:0 0 30px #ffb300,0 6px 10px #0008;white-space:nowrap;z-index:15;transition:all .6s;pointer-events:none;text-align:center}
+#zn.on{opacity:1;transform:translate(-50%,0) scale(1)}
+#zn small{display:block;font-size:30px}
+.dim{position:absolute;inset:0;background:#000a;z-index:10;display:none}
+.glass{position:absolute;border-radius:60px;background:linear-gradient(#8a1058,#7a0648);box-shadow:inset 0 0 0 5px #ff9ad8aa,inset 0 0 36px #e062ae88,0 0 36px #e062ae55}
+.card{left:110px;top:330px;width:721px;z-index:11;display:none;padding-bottom:40px}
+.card h2{margin:0;text-align:center;padding-top:34px;font-size:48px;color:#ffe9a8}
+.card .x{position:absolute;right:30px;top:24px;width:70px;height:70px;font-size:46px;text-align:center;line-height:70px;cursor:pointer}
+.row{position:relative;margin:16px 50px 0;height:96px;border-radius:48px;background:#7a0648;box-shadow:inset 0 0 0 2px #ff9ad866;font-size:36px;line-height:96px;padding-left:36px;cursor:pointer}
+.row b.g{position:absolute;right:30px;top:20px;height:56px;min-width:100px;border-radius:28px;background:#645;color:#fde;text-align:center;line-height:56px;font-size:30px;padding:0 18px}
+.txt{margin:22px 50px 0;font-size:34px;line-height:1.5;color:#fff0fa}
+.txt p{margin:8px 0}
+#sp{position:absolute;left:0;top:250px;width:941px;height:1176px;background:url(p/set.jpg) 0 0/941px 1176px;z-index:11;display:none}.spx{position:absolute;left:722px;top:122px;width:100px;height:100px;cursor:pointer}.spl{position:absolute;left:277px;width:350px;height:80px;line-height:80px;font-size:34px;color:#fff3c4;text-shadow:0 2px 6px #3a0230;white-space:nowrap;pointer-events:none}.spp{position:absolute;left:629px;width:147px;height:66px;line-height:66px;border-radius:33px;text-align:center;font-size:30px;color:#fff;box-shadow:inset 0 0 0 3px #ffd95a;pointer-events:none}.spp.on,.spp.lg{background:linear-gradient(#3fd06a,#0e8a3a)}.spp.lg{font-size:26px}.spp.off{background:linear-gradient(#9a8a98,#6a5a68)}.spp.rd{background:linear-gradient(#ff7a7a,#c62828)}.sph{position:absolute;left:126px;width:700px;height:120px;cursor:pointer}
+
+#zov{position:absolute;left:0;top:0;width:941px;height:1671px;z-index:60;background:#1a0526cc;display:none}
+#zpn{position:absolute;left:30px;top:150px;width:880px;height:1380px;box-sizing:border-box;border-style:solid;border-width:270px 90px 140px 90px;border-image:url(p/zl_pan.webp) 270 90 140 90 fill stretch}
+#zpt{position:absolute;left:0;right:0;top:-165px;text-align:center;font-size:60px;font-weight:900;color:#fff;text-shadow:0 0 4px #7a0040,0 3px 6px #7a0040}
+#zlist{position:absolute;left:-60px;right:-60px;top:-30px;bottom:-70px;overflow-y:auto;overflow-x:hidden;padding:6px 0 30px;scrollbar-width:none}
+#zlist::-webkit-scrollbar{display:none}
+.zc{position:relative;width:743px;height:150px;margin:0 auto 14px;cursor:pointer}
+.zi{position:absolute;left:0;top:0;width:874px;height:176px;transform:scale(.85);transform-origin:0 0;background:url(p/zl_card.webp) 0 0/874px 176px;color:#fff;font-weight:900}
+.zc.d .zi{filter:brightness(1.1) drop-shadow(0 0 12px #ffe27a)}
+.zc.l .zi{filter:grayscale(.55) brightness(.62) contrast(.95)}
+.zi .em{position:absolute;left:59px;top:25px;width:120px;height:120px;line-height:120px;text-align:center;font-size:66px;overflow:hidden;border-radius:60px}
+.zi .t2{position:absolute;left:205px;top:22px;height:70px;font-size:46px;line-height:70px;color:#fff;text-shadow:0 2px 4px #6a0036;white-space:nowrap;display:flex;align-items:center;gap:14px}
+.zi .zn{display:inline-block;min-width:54px;height:54px;line-height:54px;border-radius:27px;text-align:center;font-size:40px;color:#7a0040;background:linear-gradient(#fff3b0,#ffc83a);text-shadow:none;box-shadow:0 2px 4px #6a0036}
+.zi .bar{position:absolute;left:210px;top:110px;width:393px;height:22px;border-radius:11px;overflow:hidden}
+.zi .bar i{display:block;height:100%;background:linear-gradient(#ffe27a,#ffa800);border-radius:11px}
+.zi .sf{position:absolute;top:44px;width:62px;height:auto}
+.zi .cn{position:absolute;left:620px;top:112px;width:190px;text-align:center;font-size:40px;color:#fff3c4;text-shadow:0 2px 4px #6a0036}
+.zi .lkp{position:absolute;left:606px;top:40px;width:200px;height:68px;border-radius:34px;background:#3a0a3acc;display:flex;align-items:center;justify-content:center}.zi .lkp img{width:60px}
+.zc.l .em .my{display:inline-block;filter:brightness(0) drop-shadow(0 0 5px #e9a8ff);opacity:.85}
+#zx{position:absolute;right:-70px;top:-290px;width:126px;cursor:pointer}
+#zp{cursor:pointer;pointer-events:auto}
+#tb{position:absolute;left:0;top:1526px;width:941px;text-align:center;font-size:20px;color:#ffe58a;pointer-events:none;display:none}
+</style></head><body>
+<div id="ld"><div class="sw">🪷</div><div>લોડ થાય છે…</div><div class="lb"><i id="lbar"></i></div></div>
+<div id="app">
+ <div id="mv"><div id="mp"><div id="bgl"></div><svg id="road" width="941" height="3700"></svg><div id="gl"></div><div id="gate"></div><div id="hz"></div><img id="av" src="m/av_idle.webp" alt=""><div id="bub"></div></div></div>
+ <div class="rb" id="home" style="left:36px;top:18px;width:100px;height:100px">🏠</div>
+ <div class="rb" id="set" style="left:805px;top:18px;width:100px;height:100px">⚙️</div>
+ <div class="pill" style="left:290px;top:22px;width:361px;height:80px;font-size:42px">ચિહ્ન ચેમ્પ</div>
+ <div class="za" id="zl" style="left:132px">‹</div><div class="pill" id="zp"></div><div class="za" id="zr" style="left:747px">›</div>
+ <div class="pill" id="bot"><span id="pts">⭐ 0</span><span class="s" id="stt">★ 0 / 48</span></div>
+ <div class="rb" id="b1" style="left:640px;top:1548px;width:100px;height:100px;font-size:46px">📊</div>
+ <div class="rb" id="b2" style="left:775px;top:1548px;width:100px;height:100px;font-size:46px">📜</div>
+ <div id="tb">🧩 TEST: all houses open · ‹ › for all zones</div>
+ <div id="zn"></div>
+ <div id="toast"></div>
+ <div id="zov"><div id="zpn"><div id="zpt">ZONES</div><div id="zlist"></div><img id="zx" src="p/zl_x.webp" alt=""></div></div>
+ <div class="dim" id="dim"></div>
+ <div class="glass card" id="card"></div>
+</div>
+<script>
+const BW=941,BH=1671,MH=3700;const qs=new URLSearchParams(location.search);const TEST=(()=>{try{return new URLSearchParams(location.search).has('test')&&String((JSON.parse(localStorage.getItem('sbProf')||'{}')||{}).email||'').toLowerCase()==='vsbhuj@gmail.com'}catch(e){return false}})();const FM=qs.get('open');let fromMenu=!!FM;
+// પાનું બદલવું (એક-ફાઇલ HTML માં આ બદલાય છે)
+function goPage(p,q){location.href=p+'.html'+(q||'')}
+const PQ=TEST?'&test=1':'';
+const CH=[['swastik','સ્વસ્તિક'],['ashtakon','અષ્ટકોણ'],['ankush','અંકુશ'],['kamal','કમળ'],['ketu','ધ્વજ'],['urdhva-rekha','ઊર્ધ્વરેખા'],['vajra','વજ્ર'],['jambu','જાંબુ'],['java','જવ'],['matsya','મત્સ્ય'],['trikon','ત્રિકોણ'],['gaupad','ગોપદ'],['dhanush','ધનુષ'],['vyom','વ્યોમ'],['ardha-chandra','અર્ધચંદ્ર'],['kalash','કળશ']].map(([id,n])=>({id,n}));
+// 11 ગામ: નામ, રંગ (દૃશ્ય હાલ ઝોન 1 નું જ, રંગ બદલીને) — નવાં ચિત્રો આવે ત્યારે bg અહીં બદલવું
+const ZN=[{n:'Lotus Grove',hue:0,e:'🪷'},{n:'Tulsi Forest',hue:110,e:'🌿'},{n:'Ganga Shore',hue:200,e:'🌊'},{n:'Sun City',hue:-40,e:'🌅'},{n:'Moon Garden',hue:240,e:'🌙'},{n:'Peacock Garden',hue:150,e:'🦚'},{n:'Diya City',hue:-20,e:'🪔'},{n:'Himalaya',hue:180,e:'🏔️'},{n:'Gau Lok',hue:60,e:'🐄'},{n:'Akshar Nagar',hue:300,e:'✨'},{n:'Akshardham',hue:20,e:'👑'}];
+const GN=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
+const $=id=>document.getElementById(id);
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const J=(k,d)=>{try{return JSON.parse(lsGet(k)||'null')||d}catch(e){return d}};
+const getProg=()=>J('chihnaProg',{}),getPts=()=>+lsGet('chihnaPts')||0;
+const soundOn=()=>lsGet('satsangSound')!=='0',animOn=()=>lsGet('chihnaAnim')!=='0';
+let AC;function tone(f,d,t=0,v=.18,type='sine'){if(!soundOn())return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;const T=AC.currentTime+t;g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.001,T+d);o.connect(g);g.connect(AC.destination);o.start(T);o.stop(T+d)}catch(e){}}
+function chime(){[523,659,784,1046].forEach((f,i)=>tone(f,.4,i*.13,.18))}
+function step(){tone(300+Math.random()*60,.06,0,.05,'triangle')}
+let toastT;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1900)}
+
+// ===== પ્રગતિ: ગામ (ઝોન) r = સ્ટેજ r; ઘર n = ક્રમનું n-મું ચિહ્ન =====
+const minDone=P=>Math.min(...CH.map(c=>Math.min(11,P[c.id]||0)));
+const NB=11;
+function syncZN(){const M=J('chihnaMega',{});const mx=Math.max(0,...CH.map(c=>M[c.id]||0));const n=14+Math.min(45,Math.max(5,mx+2));
+  while(ZN.length<n){const z=ZN.length+1;ZN.push(z<=14?{n:'Challenge '+(z-11),hue:40+(z-12)*30,e:'🏆'}:{n:'MahaChamp '+(z-14),hue:300+(z-15)*20,e:'🏅'})}}
+const getChal=()=>J('chihnaChal',{}),getMega=()=>J('chihnaMega',{}),maxView=P=>(syncZN(),TEST)||minDone(P)>=NB?ZN.length:Math.min(NB,minDone(P)+1);
+function zoneState(P,z){ // z = 1..11 (12 Challenge, 13 MahaChamp)
+  if(z>NB){const C=getChal(),M=getMega(),open=minDone(P)>=NB;
+    return CH.map(c=>{const ch=C[c.id]||0,mg=M[c.id]||0;
+      if(z<=NB+3){const r=z-NB;return {d:ch,s:!open?'lock':(ch>=r?'done':(ch===r-1?'cur':'lock'))}}
+      const L=z-NB-3;return {d:mg,s:(!open||ch<3)?'lock':(mg>=L?'done':(mg===L-1?'cur':'lock'))}})}
+  const m=minDone(P);let cur=-1;
+  return CH.map((c,i)=>{const d=Math.min(11,P[c.id]||0),done=d>=z;let s=done?'done':'lock';
+    if(!done&&cur<0&&z===m+1){cur=i;s='cur'}return {d,s}})
+}
+// ===== નકશાની ભૂમિતિ =====
+const HX=n=>n%2===0?250:690, HY=n=>3330-n*190; // ઘરનો પાયો
+const STOP=n=>({x:HX(n)+(n%2===0?135:-135),y:HY(n)+78}); // અવતાર ઊભો રહે એ જગ્યા
+const ENTRY={x:470,y:MH-40},GATE={x:470,y:360};
+let PTS=[],IDX=[];
+function buildPath(){
+  const K=[ENTRY,{x:470,y:MH-200}].concat(CH.map((c,i)=>STOP(i))).concat([{x:470,y:HY(15)-40},GATE]);
+  PTS=[];IDX=[];
+  for(let i=0;i<K.length-1;i++){const p0=K[Math.max(0,i-1)],p1=K[i],p2=K[i+1],p3=K[Math.min(K.length-1,i+2)];
+    if(i>=2&&i-2<16)IDX[i-2]=PTS.length;
+    for(let t=0;t<1;t+=.02){const t2=t*t,t3=t2*t;
+      PTS.push({x:.5*((2*p1.x)+(-p0.x+p2.x)*t+(2*p0.x-5*p1.x+4*p2.x-p3.x)*t2+(-p0.x+3*p1.x-3*p2.x+p3.x)*t3),
+                y:.5*((2*p1.y)+(-p0.y+p2.y)*t+(2*p0.y-5*p1.y+4*p2.y-p3.y)*t2+(-p0.y+3*p1.y-3*p2.y+p3.y)*t3)})}}
+  PTS.push(GATE);IDX[16]=PTS.length-1;IDX[-1]=0;
+  const d='M'+PTS.map(p=>p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' L');
+  $('road').innerHTML=`<defs><pattern id="rp" patternUnits="userSpaceOnUse" width="1155" height="200"><image href="m/road.jpg" width="1155" height="200"/></pattern></defs>
+   <path d="${d}" fill="none" stroke="#5a1a3a" stroke-opacity=".55" stroke-width="104" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="${d}" fill="none" stroke="#ffcf7a" stroke-width="98" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="${d}" fill="none" stroke="url(#rp)" stroke-width="88" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+// ===== અવતાર =====
+const HI={gold:'m/h_gold.webp',normal:'m/h_normal.webp',lock:'m/h_lock.webp'};
+const AVF=['m/av_w0.webp','m/av_w1.webp','m/av_w2.webp','m/av_w3.webp'],AVB=[0,1,2,3].map(i=>'m/av_b'+i+'.webp'),AVS=[0,1,2,3].map(i=>'m/av_s'+i+'.webp');
+let avX=0,avY=0;
+function placeAv(x,y,img,flip){avX=x;avY=y;const a=$('av');if(img)a.src=img;
+  const w=a.naturalWidth&&a.naturalHeight?150*a.naturalWidth/a.naturalHeight:56;
+  a.style.left=(x-w/2)+'px';a.style.top=(y-150)+'px';a.style.transform=flip?'scaleX(-1)':''}
+function follow(y,smooth){const mv=$('mv'),t=Math.max(0,Math.min(MH-1340,y-760));if(smooth)mv.scrollTop+= (t-mv.scrollTop)*.15;else mv.scrollTop=t}
+function walk(from,to,done){ // PTS અનુક્રમે from→to
+  if(!animOn()){const p=PTS[to];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);done&&done();return}
+  let i=from,f=0,last=0;const dir=to>from?1:-1,speed=.6;
+  function fr(ts){if(!last)last=ts;const dt=Math.min(50,ts-last);last=ts;
+    i+=dir*speed*dt/16;if((dir>0&&i>=to)||(dir<0&&i<=to))i=to;
+    const k=Math.floor(i),p=PTS[k],q=PTS[Math.min(PTS.length-1,k+1)];
+    const fi=Math.floor(ts/130)%4;if(fi!==f){f=fi;if(fi%2===0)step()}
+    const vx=dir*(q.x-p.x),vy=dir*(q.y-p.y),bob=Math.abs(Math.sin(ts/130*Math.PI/2))*6;
+    const side=Math.abs(vx)>Math.abs(vy)*1.2,set=side?AVS:(vy<0?AVB:AVF);
+    placeAv(p.x,p.y-bob,set[f],side&&vx<0);follow(p.y,true);
+    if(i===to){placeAv(PTS[to].x,PTS[to].y,'m/av_idle.webp');done&&done();return}
+    requestAnimationFrame(fr)}
+  requestAnimationFrame(fr)
+}
+// ===== દોરવું =====
+let Z=1,VIEW=1,MAXZ=1,ST=[];
+function stars(id,z){const s=J('chihnaStars',{}),r=J('chihnaRes',{})[id+'_'+z];return Math.max((s[id]||[])[z-1]||0,r?r.s:0)}
+function res(id,z){return J('chihnaRes',{})[id+'_'+z]||null}
+function render(){syncZN();
+  const P=getProg();const m=minDone(P);MAXZ=Math.min(11,m+1);Z=VIEW;ST=zoneState(P,Z);
+  const zd=ZN[Z-1];$('bgl').style.filter=zd.hue?`hue-rotate(${zd.hue}deg) saturate(1.1)`:'';
+  let h='';
+  CH.forEach((c,i)=>{const s=TEST&&ST[i].s==='lock'?'lock':ST[i].s,x=HX(i),y=HY(i),hh=250*328/260;
+    const k=s==='done'?'gold':(s==='cur'?'normal':'lock');
+    h+=`<div class="hs ${s}" id="h${i}" data-i="${i}" style="left:${x-125}px;top:${(y-hh+30).toFixed(0)}px"><img class="h" src="${HI[k]}" alt=""><img class="c" src="h/${c.id}.webp" style="top:${(hh*.6).toFixed(0)}px" alt="${c.n}"></div>`;
+    const sp=STOP(i);h+=`<img class="pl" src="m/plat.webp" style="left:${sp.x}px;top:${sp.y-34}px" alt="">`;
+    h+=`<div class="bt ${s}" data-i="${i}" style="left:${x}px;top:${y+62}px">${s==='done'?GN(i+1):(s==='cur'?'▶':'🔒')}</div>`;
+  });
+  $('hz').innerHTML=h;
+  const dn=ST.filter(s=>s.s==='done').length;
+  $('zp').innerHTML=`${zd.e} Zone ${Z} · ${zd.n} · ${dn}/16 <span class="zb"><i style="width:${dn/16*100}%"></i></span>`;
+  $('zl').classList.toggle('off',Z<=1);$('zr').classList.toggle('off',Z>=maxView(P));
+  let sum=0;CH.forEach(c=>sum+=stars(c.id,Z));
+  $('pts').textContent='⭐ '+getPts().toLocaleString('en-IN');$('stt').textContent='★ '+GN(sum)+' / 48';
+  $('gl').classList.toggle('on',dn===16);
+  window._stat={zone:Z,done:dn,stages:CH.reduce((a,c)=>a+Math.min(11,P[c.id]||0),0)};
+}
+function avAtCurrent(){const c=ST.findIndex(s=>s.s==='cur');const k=c<0?(ST.every(s=>s.s==='done')?(Z>NB?15:16):-1):c;
+  const p=PTS[IDX[k]];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);return k}
+
+// ===== બબલ =====
+function bubble(i){
+  const c=CH[i],s=ST[i].s,r=res(c.id,Z),st=stars(c.id,Z),b=$('bub');tone(700,.08,0,.12);
+  let h=`<div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="nm">ઘર ${GN(i+1)} · ${c.n}</div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
+  if(Z>NB){const ch3=Z<=NB+3,r=Z-NB,L=Z-NB-3;
+    if(s==='lock')h+=`<div class="sm" style="font-size:28px">${minDone(getProg())<NB?'Finish all 11 zones first 🙏':(ch3?'Finish the previous round first 🙏':'Finish the previous level first 🙏')}</div>`;
+    else h+=`<div class="sm">${ch3?'🏆 Challenge · round '+r:'🏅 MahaChamp · level '+L}</div><div class="bb" id="bgo">${s==='done'?'↻ Play again':'Play ▶'}</div>`;
+  }else if(s==='done'){
+    h+=`<div class="rw"><span>⭐ પોઈન્ટ: ${r?r.p.toLocaleString('en-IN'):'—'}</span><span>⏱ ${r?fmt(r.t):'—'}</span></div><div class="sm">શ્રેષ્ઠ સમય ${r?fmt(r.b):'—'}</div><div class="bb g" id="bgo">↻ ફરી રમો</div>`;
+  }else if(s==='cur'||TEST){h+=`<div class="sm">ઝોન ${GN(Z)} નો સ્ટેજ ${GN(Z)} · આ ઘરમાં ${c.n} ની પઝલ</div><div class="bb" id="bgo">રમો ▶</div>`}
+  else h+=`<div class="sm" style="font-size:28px">પહેલાં આગળનું ઘર પૂરું કરો 🙏</div>`;
+  b.innerHTML=h+'<div class="tip"></div>';b.style.display='block';
+  const x=HX(i),hy=HY(i)-250*328/260+30;let L=Math.max(20,Math.min(941-560,x-270));b.style.left=L+'px';
+  const bh=b.offsetHeight;b.style.top=Math.max(10,hy-bh-20)+'px';b.querySelector('.tip').style.left=(x-L-34)+'px';
+  const g=$('bgo');if(g)g.onclick=e=>{e.stopPropagation();enter(i,s==='done')};
+}
+const fmt=t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
+function hideBub(){$('bub').style.display='none'}
+// ઘરમાં પ્રવેશ: અવતાર દરવાજે જાય, દરવાજો ખૂલે, પઝલ
+let busy=false;
+function enter(i,replay){if(busy)return;busy=true;hideBub();
+  const go=()=>{if(replay&&Z<=NB)lsSet('chihnaAt',String(i));const hs=$('h'+i);hs.classList.add('open');chime();setTimeout(()=>goPage('game','?c='+CH[i].id+(Z>NB?'&ch='+(Z<=NB+3?Z-NB:Z-NB):(replay||Z!==MAXZ||ST[i].s!=='cur'?'&s='+Z:''))+PQ),animOn()?750:50)};
+  const ti=IDX[i],ci=PTS.findIndex(p=>p.x===avX&&p.y===avY);
+  if(Math.abs(PTS[ti].y-avY)>4&&ci>=0)walk(ci,ti,go);else go()}
+$('hz').addEventListener('click',e=>{const el=e.target.closest('[data-i]');if(!el)return;e.stopPropagation();const i=+el.dataset.i,s=ST[i].s;
+  if(el.classList.contains('bt')){if(s==='cur'||(TEST&&s!=='done')){enter(i,false);return}
+    if(s==='lock'){el.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});tone(180,.25,0,.15,'square');toast('પહેલાં આગળનું ઘર પૂરું કરો')}else bubble(i);return}
+  bubble(i)});
+$('mp').addEventListener('click',e=>{if(!e.target.closest('#bub'))hideBub()});
+$('gate').onclick=()=>{if(Z>NB)return;if(ST.every(s=>s.s==='done'))goPage('charan','?zone='+Z+PQ);else toast('16 ઘર પૂરાં થાય પછી ગેટ ખૂલશે 🚪')};
+$('zl').onclick=()=>{if(VIEW>1){VIEW--;hideBub();render();avAtCurrent();showZN()}};
+$('zr').onclick=()=>{if(VIEW<maxView(getProg())){VIEW++;hideBub();render();avAtCurrent();showZN()}};
+
+// ===== ઝોન યાદી (ઝોન ઘણા થાય તો પણ સ્ક્રોલ યાદી; ZN માં એક લીટી ઉમેરવાથી નવો ઝોન) =====
+function zoneInfo(z,P){let dn=0,st=0;if(z>NB){const stt=zoneState(P,z);return{dn:stt.filter(x=>x.s==='done').length,st:0}}CH.forEach(c=>{if((P[c.id]||0)>=z)dn++;st+=stars(c.id,z)});return{dn,st}}
+function openZones(){
+  const P=getProg(),m=minDone(P),open=maxView(P);let h='',cur=0;
+  ZN.forEach((zd,i)=>{const z=i+1,inf=zoneInfo(z,P),done=inf.dn>=16,isCur=z===MAXZ&&!done,k=(done||(TEST&&z<=ZN.length&&z<MAXZ))?'d':(isCur?'c':(z<=open?'c':'l'));
+    const locked=z>open,cls=locked?'l':(done?'d':'c');if(isCur)cur=i;
+    
+    const sx=[613,678,743],sf=locked?'':[0,1,2].map(n=>(inf.st/16)>=n+.5&&done?`<img class="sf" style="left:${sx[n]}px" src="p/zl_st.webp" alt="">`:'').join('');
+    h+=`<div class="zc ${cls}" data-z="${z}"><div class="zi"><div class="em">${locked?`<span class="my">${zd.e}</span>`:zd.e}</div><div class="t2"><b class="zn">${z}</b>${locked?'• • •':zd.n}</div><div class="bar"><i style="width:${locked?0:inf.dn/16*100}%"></i></div>${sf}${locked?'<div class="lkp"><img src="p/zl_lk.webp" alt=""></div>':(z>NB?`<div class="lkp" style="font-size:46px">${zd.e}</div>`:'')}<div class="cn">${locked?'':inf.dn+'/16'+(done?' ✓':'')}</div></div></div>`});
+  $('zlist').innerHTML=h;$('zov').style.display='block';
+  const L=$('zlist');L.scrollTop=Math.max(0,cur*164-170);
+  L.onclick=e=>{const el=e.target.closest('.zc');if(!el||el.classList.contains('l'))return;VIEW=+el.dataset.z;$('zov').style.display='none';hideBub();render();avAtCurrent();showZN();tone(660,.08,0,.12)};
+}
+$('zp').onclick=openZones;$('zx').onclick=()=>{$('zov').style.display='none'};$('zov').onclick=e=>{if(e.target.id==='zov')$('zov').style.display='none'};
+function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} Zone ${Z}: ${z.n}<small>${sub||'16 houses · '+(Z<=NB?'Stage '+Z:(Z<=NB+3?'Challenge round '+(Z-NB):'MahaChamp level '+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
+
+// ===== જીત પછી પાછા આવ્યા: અવતાર આગળના ઘરે ચાલે / ગામ પૂરું: ગેટ =====
+function afterReturn(){
+  const P=getProg(),m=minDone(P),seen=+lsGet('chihnaZoneSeen')||0;
+  let id=lsGet('chihnaFly');if(id)lsSet('chihnaFly','');
+  if(qs.get('enter')){ // ગેટમાંથી નવા ગામમાં
+    placeAv(ENTRY.x,ENTRY.y,'m/av_idle.webp');follow(ENTRY.y);showZN('નવો ઝોન! 🎉');
+    const c=ST.findIndex(s=>s.s==='cur');setTimeout(()=>walk(0,IDX[c<0?0:c]),900);return}
+  if(m>seen&&m>=1&&!TEST||(TEST&&qs.get('zdone'))){ // ગામ m પૂરું થયું
+    lsSet('chihnaZoneSeen',String(m));VIEW=m;render();
+    const p=PTS[IDX[15]];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);
+    setTimeout(()=>{showZN('ઝોન પૂરો! ગેટ ખૂલ્યો 🎉');chime();walk(IDX[15],IDX[16],()=>{placeAv(GATE.x,GATE.y,'m/av_cheer.webp');chime();
+      setTimeout(()=>goPage('charan','?zone='+m+PQ),1600)})},800);return}
+  const i=id?CH.findIndex(c=>c.id===id):-1;
+  if(i>=0&&i<15&&ST[i].s==='done'&&ST[i+1].s==='cur'){ // ઘર i જીત્યા → i+1
+    const p=PTS[IDX[i]];placeAv(p.x,p.y,'m/av_cheer.webp');follow(p.y);
+    const hs=$('h'+i);if(hs&&animOn())hs.animate([{filter:'brightness(2.2)'},{filter:'none'}],{duration:900});chime();
+    setTimeout(()=>walk(IDX[i],IDX[i+1],()=>toast('🏠 ઘર '+GN(i+2)+': '+CH[i+1].n)),1100);return}
+  {const at=lsGet('chihnaAt');if(at){lsSet('chihnaAt','');const ai=+at,c=ST.findIndex(s=>s.s==='cur');
+    if(c>=0&&ai!==c&&Z===MAXZ&&animOn()&&PTS[IDX[ai]]){const p=PTS[IDX[ai]];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);setTimeout(()=>walk(IDX[ai],IDX[c]),900);return}}}
+  avAtCurrent();
+}
+
+// ===== સેટિંગ, આંકડા, નિયમો =====
+function openCard(html){const q=$('sp');if(q)q.style.display='none';const c=$('card');c.innerHTML=html;c.style.display='block';$('dim').style.display='block'}
+function closeCard(){const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none';if(fromMenu){fromMenu=false;location.href='index.html'+(TEST?'?test=1':'')}}
+function openFromMenu(){const f={settings,stats,rules}[FM];if(f)f()}
+$('dim').onclick=closeCard;
+const SPY=[279,401,521,640,752,864,980];
+function panel(rows){let p=$('sp');if(!p){p=document.createElement('div');p.id='sp';$('app').appendChild(p)}
+ p.innerHTML='<div class="spx" id="spx"></div>'+rows.map((r,i)=>`<div class="spl" style="top:${SPY[i]-40}px">${r.label}</div>`+(r.pill?`<div class="spp ${r.pill.c}" style="top:${SPY[i]-33}px">${r.pill.t}</div>`:'')+`<div class="sph" id="sh${i}" style="top:${SPY[i]-60}px"></div>`).join('');
+ p.style.display='block';$('dim').style.display='block';$('card').style.display='none';$('spx').onclick=closeCard;rows.forEach((r,i)=>$('sh'+i).onclick=r.fn)}
+let rc=false;
+function settings(){const on=x=>x?{t:'ચાલુ',c:'on'}:{t:'બંધ',c:'off'};
+  panel([{label:'અવાજ',pill:on(soundOn()),fn:()=>{lsSet('satsangSound',soundOn()?'0':'1');settings();tone(660,.15)}},
+   {label:'એનિમેશન',pill:on(animOn()),fn:()=>{lsSet('chihnaAnim',animOn()?'0':'1');document.body.classList.toggle('noanim',!animOn());settings()}},
+   {label:'ચરણ (16 ચિહ્ન)',fn:()=>goPage('charan','?'+PQ.slice(1))},
+   {label:'આંકડા',fn:stats},{label:'નિયમો અને પોઇન્ટ',fn:rules},
+   {label:'જાહેરાત',fn:()=>sub('📣 જાહેરાત','<p>હાલ કોઈ નવી જાહેરાત નથી.</p>')},
+   {label:'પ્રગતિ ફરી શરૂ',pill:rc?{t:'ખરેખર?',c:'rd'}:null,fn:reset}])}
+function sub(t,body){openCard(`<h2>${t}</h2><div class="x" id="cx">✕</div><div class="txt">${body}</div><div class="row" id="bk" style="margin-top:28px">‹ પાછા<b class="g">⚙️</b></div>`);$('cx').onclick=closeCard;$('bk').onclick=settings}
+function stats(){const s=window._stat||{};const P=getProg(),m=minDone(P);sub('📊 આંકડા',`<p>🏘️ ઝોન પૂર્ણ: <b>${GN(m)} / 11</b></p><p>🏠 આ ઝોનનાં ઘર: <b>${GN(s.done||0)} / 16</b></p><p>🧩 સ્ટેજ પૂર્ણ: <b>${GN(s.stages||0)} / 176</b></p><p>🏆 કુલ પોઇન્ટ: <b>${getPts().toLocaleString('en-IN')}</b></p>`)}
+function rules(){sub('📜 નિયમો અને પોઇન્ટ',`<p>• દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ.</p><p>• લીલું ▶ દબાવો: અવતાર ઘરમાં જાય અને પઝલ ખૂલે.</p><p>• પૂરું ઘર દબાવો: તારા, પોઈન્ટ અને સમય દેખાય.</p><p>• 16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ, પછી નવો ઝોન.</p><p>• સાચો ટુકડો 100/200/300 · ખોટો −20</p><p>• ✨ ભૂલ વગર +200 · ⚡ અડધા સમયમાં +300</p>`)}
+function reset(){if(!rc){rc=true;settings();setTimeout(()=>{rc=false},3000);return}
+  rc=false;['chihnaProg','chihnaStars','chihnaChal','chihnaMega','chihnaRes'].forEach(k=>lsSet(k,'{}'));lsSet('chihnaPts','0');lsSet('chihnaFly','');lsSet('chihnaZoneSeen','0');closeCard();VIEW=1;render();avAtCurrent();toast('પ્રગતિ ફરી શરૂ થઈ')}
+$('set').onclick=settings;$('b1').onclick=stats;$('b2').onclick=rules;
+$('home').onclick=()=>{location.href='index.html'+(TEST?'?test=1':'')};
+if(TEST)$('tb').style.display='block';
+
+// ===== સ્ક્રીનમાં બેસાડવું અને શરૂઆત =====
+function fit(){const s=Math.min(innerWidth/BW,innerHeight/BH),a=$('app');a.style.transform=`scale(${s})`;a.style.left=((innerWidth-BW*s)/2)+'px';a.style.top=((innerHeight-BH*s)/2)+'px'}
+addEventListener('resize',fit);fit();document.body.classList.toggle('noanim',!animOn());
+if(qs.get('demo')){const P={};CH.forEach((c,i)=>P[c.id]=i<13?1:0);lsSet('chihnaProg',JSON.stringify(P))}
+(function(){
+  const list=['m/bg1.jpg','m/h_gold.webp','m/h_normal.webp','m/h_lock.webp','m/road.jpg','m/plat.webp','m/av_idle.webp','m/av_cheer.webp','p/set.jpg'].concat(AVF,AVB,AVS,CH.map(c=>'h/'+c.id+'.webp'));
+  let n=0,shown=false;
+  function show(){if(shown)return;shown=true;buildPath();const P=getProg();VIEW=+qs.get('z')||Math.min(11,minDone(P)+1);render();$('app').classList.add('on');$('ld').classList.add('off');afterReturn();openFromMenu()}
+  list.forEach(u=>{const im=new Image();const d=()=>{n++;$('lbar').style.width=(n/list.length*100)+'%';if(n>=list.length)show()};im.onload=d;im.onerror=d;im.src=u});
+  setTimeout(show,9000);
+})();
+</script></body></html>

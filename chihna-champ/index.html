@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ચિહ્ન ચેમ્પ</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+@font-face{font-family:G;src:url(h/f.woff2)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{margin:0;height:100%;overflow:hidden;font-family:G,system-ui,sans-serif;color:#fff;background:#3a0230}
+#bg{position:fixed;inset:0;background:linear-gradient(#3a0a3fcc,#5a0f4ecc),url(m/bg1.jpg) center/cover}
+/* આખું મેનુ 390×812 માપમાં બને, પછી સ્ક્રીન પ્રમાણે નાનું-મોટું થાય: બધાં માપ સરખાં રહે */
+#app{position:absolute;width:390px;height:812px;transform-origin:0 0;padding:6px 3px;opacity:0;transition:opacity .4s}
+#app.on{opacity:1}
+.top{display:flex;justify-content:space-between;align-items:center;height:68px;padding:0 4px}
+.gb{width:50px;height:50px;flex:0 0 50px;cursor:pointer;display:grid;place-items:center}
+#back{background:url(p/mn/gem.webp) center/contain no-repeat;font-size:22px;font-weight:800;text-shadow:0 2px 2px #7a0040}
+#home{background:url(p/mn/home.webp) center/contain no-repeat}
+.np{position:relative;width:232px;height:75px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat}
+.ni{position:absolute;left:22px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:#ffe27a;color:#8a1458;display:grid;place-items:center;font-size:19px;font-weight:800}
+.nt{position:absolute;left:84px;right:28px;top:50%;transform:translateY(-50%);font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 2px #7a0040}
+.pn{position:relative;width:384px;height:728px;background:url(p/mn/panel.webp) center/100% 100% no-repeat}
+.ttl{position:absolute;left:0;right:0;top:82px;text-align:center;font-size:24px;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 3px #7a0040}
+.av{position:absolute;left:42px;top:135px;width:96px;height:96px;border-radius:50%;background:#ffd6ec url(m/av_idle.webp) center 12%/82% no-repeat;border:3px solid #ffc94a;box-shadow:0 0 12px #ff7ac0}
+.zi{position:absolute;left:154px;right:36px;top:142px}
+.zi b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 3px #7a0040}
+.zi small{display:flex;align-items:center;gap:5px;font-size:15px;font-weight:800;margin-top:6px;text-shadow:0 2px 3px #7a0040}
+.zi small img{width:20px}
+.bar{height:12px;border-radius:7px;background:#4a0a3e;border:2px solid #ffc94a;overflow:hidden;margin-top:9px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffe27a,#ffad2e)}
+.ch{position:absolute;top:244px;left:42px;right:42px;display:flex;gap:10px}
+.ch span{flex:1;height:30px;font-size:12px;font-weight:800;border-radius:15px;background:#4a0a3e;border:2px solid #ffc94a99;display:flex;justify-content:center;align-items:center;gap:4px}
+.ch .lk{opacity:.6}.ch img{height:15px}
+/* ત્રણે બટન એકસરખા: 288×93, દરેક વચ્ચે 5px */
+.pl{position:absolute;left:48px;width:288px;height:93px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat;cursor:pointer;transition:transform .12s}
+.pl:active,.gb:active,.go:active{transform:scale(.94)}
+.pl .ic{position:absolute;left:19px;top:50%;width:72px;height:72px;transform:translateY(-50%)}
+.pl .ic img{width:100%;height:100%;object-fit:contain}
+.pl .tx{position:absolute;left:104px;right:24px;top:50%;transform:translateY(-50%);font-size:22px;font-weight:800;line-height:1.1;text-shadow:0 2px 2px #7a0040}
+.pl .tx small{display:block;font-size:12px;font-weight:600;color:#ffe1f1;margin-top:2px}
+.go{position:absolute;left:134px;bottom:22px;width:116px;height:116px;background:url(p/mn/play.webp) center/contain no-repeat;filter:drop-shadow(0 0 10px #7dff7a99);cursor:pointer}
+.go:active{transform:scale(.94)}
+</style></head><body>
+<div id="bg"></div>
+<div id="app">
+ <div class="top">
+  <div class="gb" id="back" aria-label="Back">←</div>
+  <div class="np"><div class="ni" id="ni">G</div><div class="nt" id="nt">Guest</div></div>
+  <div class="gb" id="home" aria-label="Home"></div>
+ </div>
+ <div class="pn">
+  <div class="ttl">Chihna Champ</div>
+  <div class="av"></div>
+  <div class="zi"><b id="zn">Zone 1 · Lotus Grove</b><small><img src="p/mn/star.webp" alt=""><span id="zs">0 / 48</span> · 🧩 <span id="zp">0/16</span></small><div class="bar"><i id="zb"></i></div></div>
+  <div class="ch"><span class="lk" id="c1"><img src="p/mn/lock.webp" alt="">Challenge</span><span class="lk" id="c2"><img src="p/mn/lock.webp" alt="">MahaChamp</span></div>
+  <div class="pl" id="b-rules" style="top:290px"><div class="ic"><img src="p/mi_rules.webp" alt=""></div><div class="tx">Rules<small>How to play</small></div></div>
+  <div class="pl" id="b-stats" style="top:388px"><div class="ic"><img src="p/mi_stats.webp" alt=""></div><div class="tx">Stats<small>Zones · stages · points</small></div></div>
+  <div class="pl" id="b-settings" style="top:486px"><div class="ic"><img src="p/mi_settings.webp" alt=""></div><div class="tx">Settings<small>Sound · animation</small></div></div>
+  <div class="go" id="play" aria-label="Play"></div>
+ </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+// ટેસ્ટ મોડ: ફક્ત એડમિન લોગિન અને ?test=1 સાથે
+const TEST=(()=>{try{return new URLSearchParams(location.search).has('test')&&String((JSON.parse(localStorage.getItem('sbProf')||'{}')||{}).email||'').toLowerCase()==='vsbhuj@gmail.com'}catch(e){return false}})();
+const TQ=TEST?'test=1':'';
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const J=(k,d)=>{try{return JSON.parse(lsGet(k)||'null')||d}catch(e){return d}};
+const IDS=['swastik','ashtakon','ankush','kamal','ketu','urdhva-rekha','vajra','jambu','java','matsya','trikon','gaupad','dhanush','vyom','ardha-chandra','kalash'];
+const ZN=['Lotus Grove','Tulsi Forest','Ganga Shore','Sun City','Moon Garden','Peacock Garden','Diya City','Himalaya','Gau Lok','Akshar Nagar','Akshardham'];
+
+// ખેલાડીનું નામ (હબના લોગિનમાંથી)
+function showName(o){let n='';try{if(!(window.SatsangAuth&&SatsangAuth.isGuest()))n=String((o&&o.name)||'').trim()}catch(e){}
+  if(!n)n='Guest';$('nt').textContent=n;$('ni').textContent=Array.from(n)[0].toUpperCase()}
+showName(J('sbProf',{}));
+try{window.SatsangAuth&&SatsangAuth.profile&&SatsangAuth.profile().then(showName).catch(()=>{})}catch(e){}
+
+// પ્રગતિ: હાલનો ઝોન, તારા, પઝલ
+(function(){const P=J('chihnaProg',{}),S=J('chihnaStars',{}),R=J('chihnaRes',{});
+  const d=id=>Math.min(11,P[id]||0),m=Math.min(...IDS.map(d)),z=Math.min(11,m+1);
+  const st=id=>Math.max((S[id]||[])[z-1]||0,(R[id+'_'+z]||{}).s||0);
+  const stars=IDS.reduce((a,id)=>a+st(id),0),done=IDS.filter(id=>d(id)>=z).length,all=IDS.reduce((a,id)=>a+d(id),0);
+  $('zn').textContent=(m>=11?'All zones done':'Zone '+z+' · '+ZN[z-1]);
+  $('zs').textContent=stars+' / 48';$('zp').textContent=done+'/16';
+  $('zb').style.width=Math.round(all/176*100)+'%';
+  if(m>=11){['c1','c2'].forEach(c=>{const e=$(c);e.classList.remove('lk');const i=e.querySelector('img');if(i)i.remove()})}
+})();
+
+const go=(p,q)=>{const s=[q,TQ].filter(Boolean).join('&');location.href=p+(s?'?'+s:'')};
+$('play').onclick=()=>go('map.html');
+$('b-rules').onclick=()=>go('map.html','open=rules');
+$('b-stats').onclick=()=>go('map.html','open=stats');
+$('b-settings').onclick=()=>go('map.html','open=settings');
+$('back').onclick=()=>{location.href='../#z3'};
+$('home').onclick=()=>{location.href='../'};
+
+function fit(){const W=390,H=812,s=Math.min(innerWidth/W,innerHeight/H),a=$('app');a.style.transform=`scale(${s})`;a.style.left=((innerWidth-W*s)/2)+'px';a.style.top=Math.max(0,(innerHeight-H*s)/2)+'px'}
+addEventListener('resize',fit);fit();
+const im=['p/mn/panel.webp','p/mn/pill_n.webp','p/mn/play.webp','m/bg1.jpg'];let n=0;const on=()=>$('app').classList.add('on');
+im.forEach(u=>{const i=new Image();i.onload=i.onerror=()=>{if(++n>=im.length)on()};i.src=u});setTimeout(on,2500);
+</script>
+</body></html>

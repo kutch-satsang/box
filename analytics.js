@@ -14,7 +14,7 @@
 (function(){
   if(window.sbTrack) return;
   var ID = 'G-4G2T8EMR6V';
-  var m = location.pathname.match(/\/(prashn-leela|dhyan-murti|antahshatru-vijay|fal-ful-memory|ekadashi|charanvidhi)(\/|$)/);
+  var m = location.pathname.match(/\/(prashn-leela|dhyan-murti|antahshatru-vijay|fal-ful-memory|ekadashi|charanvidhi|chihna-champ)(\/|$)/);
   var GAME = m ? m[1] : 'hub';
   var LIVE = /(^|\.)github\.io$/.test(location.hostname);
   var st = {on:0, done:0, t0:0, where:'', quit:0}, errs = 0;
@@ -121,6 +121,7 @@
     'dhyan-murti':{g:'ધ્યાન દર્શન',e:'Dhyan Darshan',r:'Dhyan Darshan'},
     'antahshatru-vijay':{g:'અંતઃશત્રુ વિજય',e:'Antahshatru Vijay',r:'Antahshatru Vijay'},
     'fal-ful-memory':{g:'ફળ ફૂલ મેમરી',e:'Fruit & Flower Memory',r:'Fal Ful Memory'},
+    'chihna-champ':{g:'ચિહ્ન ચેમ્પ',e:'Chihna Champ',r:'Chihna Champ'},
     'ekadashi':{g:'એકાદશી',e:'Ekadashi',r:'Ekadashi'},
     'charanvidhi':{g:'ચરણ ચિહ્ન માસ્ટર',e:'Charan Chihna Master',r:'Charan Chihna Master'}
   };
