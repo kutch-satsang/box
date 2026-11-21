@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><meta charset="utf-8">
+<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><meta charset="utf-8"><link rel="stylesheet" href="../fonts/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>ચિહ્ન ચેમ્પ</title>
 <style>
 @font-face{font-family:G;src:url(h/f.woff2)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-html,body{margin:0;height:100%;background:#3a0230;overflow:hidden;font-family:G,system-ui,sans-serif;color:#fff}
+html,body{margin:0;height:100%;background:#3a0230;overflow:hidden;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
 #app{opacity:0;transition:opacity .6s;position:absolute;width:941px;height:1671px;transform-origin:0 0;background:linear-gradient(#5a0f6e,#8a1a8a);overflow:hidden}
 #app.on{opacity:1}
 #ld{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:radial-gradient(#8a1058,#3a0230);z-index:50;transition:opacity .5s;color:#ffe9a8;font-size:26px}
@@ -73,29 +73,46 @@ body.noanim .bt.cur{animation:none}
 .row b.g{position:absolute;right:30px;top:20px;height:56px;min-width:100px;border-radius:28px;background:#645;color:#fde;text-align:center;line-height:56px;font-size:30px;padding:0 18px}
 .txt{margin:22px 50px 0;font-size:34px;line-height:1.5;color:#fff0fa}
 .txt p{margin:8px 0}
-#sp{position:absolute;left:0;top:250px;width:941px;height:1176px;background:url(p/set.jpg) 0 0/941px 1176px;z-index:11;display:none}.spx{position:absolute;left:722px;top:122px;width:100px;height:100px;cursor:pointer}.spl{position:absolute;left:277px;width:350px;height:80px;line-height:80px;font-size:34px;color:#fff3c4;text-shadow:0 2px 6px #3a0230;white-space:nowrap;pointer-events:none}.spp{position:absolute;left:629px;width:147px;height:66px;line-height:66px;border-radius:33px;text-align:center;font-size:30px;color:#fff;box-shadow:inset 0 0 0 3px #ffd95a;pointer-events:none}.spp.on,.spp.lg{background:linear-gradient(#3fd06a,#0e8a3a)}.spp.lg{font-size:26px}.spp.off{background:linear-gradient(#9a8a98,#6a5a68)}.spp.rd{background:linear-gradient(#ff7a7a,#c62828)}.sph{position:absolute;left:126px;width:700px;height:120px;cursor:pointer}
+#sp{position:absolute;left:0;top:250px;width:941px;height:1176px;background:url(p/set.jpg) 0 0/941px 1176px;z-index:11;display:none}.spx{position:absolute;left:722px;top:122px;width:100px;height:100px;cursor:pointer}.spl{position:absolute;left:277px;width:350px;height:80px;line-height:80px;font-size:34px;font-weight:600;color:#fff3c4;text-shadow:0 2px 6px #3a0230;white-space:nowrap;pointer-events:none}.spp{position:absolute;left:629px;width:147px;height:66px;line-height:66px;border-radius:33px;text-align:center;font-size:30px;color:#fff;box-shadow:inset 0 0 0 3px #ffd95a;pointer-events:none}.spp.on,.spp.lg{background:linear-gradient(#3fd06a,#0e8a3a)}.spp.lg{font-size:26px}.spp.off{background:linear-gradient(#9a8a98,#6a5a68)}.spp.rd{background:linear-gradient(#ff7a7a,#c62828)}.sph{position:absolute;left:126px;width:700px;height:120px;cursor:pointer}
 
 #zov{position:absolute;left:0;top:0;width:941px;height:1671px;z-index:60;background:#1a0526cc;display:none}
-#zpn{position:absolute;left:30px;top:150px;width:880px;height:1380px;box-sizing:border-box;border-style:solid;border-width:270px 90px 140px 90px;border-image:url(p/zl_pan.webp) 270 90 140 90 fill stretch}
-#zpt{position:absolute;left:0;right:0;top:-165px;text-align:center;font-size:60px;font-weight:900;color:#fff;text-shadow:0 0 4px #7a0040,0 3px 6px #7a0040}
-#zlist{position:absolute;left:-60px;right:-60px;top:-30px;bottom:-70px;overflow-y:auto;overflow-x:hidden;padding:6px 0 30px;scrollbar-width:none}
-#zlist::-webkit-scrollbar{display:none}
-.zc{position:relative;width:743px;height:150px;margin:0 auto 14px;cursor:pointer}
-.zi{position:absolute;left:0;top:0;width:874px;height:176px;transform:scale(.85);transform-origin:0 0;background:url(p/zl_card.webp) 0 0/874px 176px;color:#fff;font-weight:900}
-.zc.d .zi{filter:brightness(1.1) drop-shadow(0 0 12px #ffe27a)}
-.zc.l .zi{filter:grayscale(.55) brightness(.62) contrast(.95)}
-.zi .em{position:absolute;left:59px;top:25px;width:120px;height:120px;line-height:120px;text-align:center;font-size:66px;overflow:hidden;border-radius:60px}
-.zi .t2{position:absolute;left:205px;top:22px;height:70px;font-size:46px;line-height:70px;color:#fff;text-shadow:0 2px 4px #6a0036;white-space:nowrap;display:flex;align-items:center;gap:14px}
-.zi .zn{display:inline-block;min-width:54px;height:54px;line-height:54px;border-radius:27px;text-align:center;font-size:40px;color:#7a0040;background:linear-gradient(#fff3b0,#ffc83a);text-shadow:none;box-shadow:0 2px 4px #6a0036}
-.zi .bar{position:absolute;left:210px;top:110px;width:393px;height:22px;border-radius:11px;overflow:hidden}
-.zi .bar i{display:block;height:100%;background:linear-gradient(#ffe27a,#ffa800);border-radius:11px}
-.zi .sf{position:absolute;top:44px;width:62px;height:auto}
-.zi .cn{position:absolute;left:620px;top:112px;width:190px;text-align:center;font-size:40px;color:#fff3c4;text-shadow:0 2px 4px #6a0036}
-.zi .lkp{position:absolute;left:606px;top:40px;width:200px;height:68px;border-radius:34px;background:#3a0a3acc;display:flex;align-items:center;justify-content:center}.zi .lkp img{width:60px}
-.zc.l .em .my{display:inline-block;filter:brightness(0) drop-shadow(0 0 5px #e9a8ff);opacity:.85}
-#zx{position:absolute;right:-70px;top:-290px;width:126px;cursor:pointer}
 #zp{cursor:pointer;pointer-events:auto}
 #tb{position:absolute;left:0;top:1526px;width:941px;text-align:center;font-size:20px;color:#ffe58a;pointer-events:none;display:none}
+
+/* નવી ફ્રેમ: Record, નિયમો, ઝોન યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
+#nov{position:absolute;inset:0;z-index:62;background:#1a0526cc;display:none}
+.nw{position:absolute;left:84px;top:0;width:390px;height:844px;transform:scale(1.98);transform-origin:0 0;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
+.nc{position:absolute;background:url(p/mn/panel.webp) center/100% 100% no-repeat;filter:drop-shadow(0 8px 18px #000a)}
+.nt{position:absolute;left:60px;right:60px;transform:translateY(-50%);text-align:center;font-size:24px;font-weight:800;text-shadow:0 2px 3px #7a0040}
+.nx{position:absolute;right:-8px;top:-14px;width:46px;height:46px;background:url(p/mn/gem.webp) center/contain no-repeat;display:grid;place-items:center;font-size:20px;font-weight:800;text-shadow:0 2px 2px #7a0040;cursor:pointer}
+.nbk{position:absolute;width:130px;height:46px;border-radius:23px;background:linear-gradient(#ffe27a,#ffad2e);border:3px solid #fff3c4;color:#7a0040;font-size:19px;font-weight:800;display:grid;place-items:center;box-shadow:0 3px 0 #b25a00;cursor:pointer;white-space:nowrap}
+.nr{position:absolute;left:42px;width:236px;height:76px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat}
+.nr .i{position:absolute;left:28px;top:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:23px}
+.nr .t{position:absolute;left:86px;right:24px;top:38px;transform:translateY(-50%);line-height:1.05}
+.nr .t small{display:block;font-size:13px;font-weight:600;color:#ffe1f1;white-space:nowrap}
+.nr .t b{display:block;font-size:22px;font-weight:800;text-shadow:0 2px 2px #7a0040;margin-top:2px}
+.nr .t b span{font-size:14px;color:#ffd6ec}
+.nl{position:absolute;left:44px;right:44px;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;line-height:1.25}
+.nl i{flex:0 0 40px;height:40px;background:url(p/mn/ring_g.webp) center/contain no-repeat;display:grid;place-items:center;font-style:normal;font-size:18px}
+.nsep{position:absolute;left:50px;right:50px;top:394px;height:34px;background:url(p/mn/bar_t.webp) center/100% 100% no-repeat;text-align:center;font-size:15px;font-weight:800;line-height:34px;text-shadow:0 2px 2px #7a0040}
+.np{position:absolute;left:44px;right:44px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;padding:0 6px;height:30px;border-bottom:1px solid #ffc94a44}
+.np b{color:#ffe27a;font-size:16px;white-space:nowrap}
+.nz{position:absolute;left:30px;width:300px;height:88px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat;cursor:pointer}
+.nz.g{background-image:url(p/mn/pill_g.webp);height:106px;margin-top:-9px}
+.nz.d{background-image:url(p/mn/pill_d.webp);height:90px;cursor:default}
+.nz .i{position:absolute;left:30px;top:18px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:28px}
+.nz.g .i{top:27px}
+.nz .n{position:absolute;left:100px;right:30px;top:25px;font-size:14px;font-weight:800;text-shadow:0 2px 2px #7a0040;white-space:nowrap}
+.nz.g .n{top:34px}.nz.g .b,.nz.g .s{margin-top:9px}
+.nz .s{position:absolute;right:32px;top:25px;display:flex;gap:1px}.nz .s img{width:16px}
+.nz .b{position:absolute;left:102px;right:36px;top:52px;height:12px;border-radius:7px;background:#5a0636;border:2px solid #ffc94a;overflow:hidden}
+.nz .b u{display:block;height:100%;background:linear-gradient(90deg,#ffe27a,#ffad2e)}
+.nz .bt{position:absolute;right:36px;top:66px;font-size:11px;font-weight:700;color:#ffe1f1}
+.nz.d .n,.nz.d .i{opacity:.75}
+.nz .lk{position:absolute;right:34px;top:30px;width:32px}
+.npg{position:absolute;left:0;right:0;top:620px;display:flex;justify-content:center;gap:14px;align-items:center;font-size:15px;font-weight:800}
+.npg span{width:38px;height:38px;background:url(p/mn/gem.webp) center/contain no-repeat;display:grid;place-items:center;text-shadow:0 2px 2px #7a0040;cursor:pointer}
+.npg span.off{opacity:.35;pointer-events:none}
 </style></head><body>
 <div id="ld"><div class="sw">🪷</div><div>લોડ થાય છે…</div><div class="lb"><i id="lbar"></i></div></div>
 <div id="app">
@@ -110,7 +127,8 @@ body.noanim .bt.cur{animation:none}
  <div id="tb">🧩 TEST: all houses open · ‹ › for all zones</div>
  <div id="zn"></div>
  <div id="toast"></div>
- <div id="zov"><div id="zpn"><div id="zpt">ZONES</div><div id="zlist"></div><img id="zx" src="p/zl_x.webp" alt=""></div></div>
+ <div id="zov"><div class="nw" id="znw"></div></div>
+ <div id="nov"><div class="nw" id="nw"></div></div>
  <div class="dim" id="dim"></div>
  <div class="glass card" id="card"></div>
 </div>
@@ -121,9 +139,24 @@ function goPage(p,q){location.href=p+'.html'+(q||'')}
 const PQ=TEST?'&test=1':'';
 const CH=[['swastik','સ્વસ્તિક'],['ashtakon','અષ્ટકોણ'],['ankush','અંકુશ'],['kamal','કમળ'],['ketu','ધ્વજ'],['urdhva-rekha','ઊર્ધ્વરેખા'],['vajra','વજ્ર'],['jambu','જાંબુ'],['java','જવ'],['matsya','મત્સ્ય'],['trikon','ત્રિકોણ'],['gaupad','ગોપદ'],['dhanush','ધનુષ'],['vyom','વ્યોમ'],['ardha-chandra','અર્ધચંદ્ર'],['kalash','કળશ']].map(([id,n])=>({id,n}));
 // 11 ગામ: નામ, રંગ (દૃશ્ય હાલ ઝોન 1 નું જ, રંગ બદલીને) — નવાં ચિત્રો આવે ત્યારે bg અહીં બદલવું
-const ZN=[{n:'Lotus Grove',hue:0,e:'🪷'},{n:'Tulsi Forest',hue:110,e:'🌿'},{n:'Ganga Shore',hue:200,e:'🌊'},{n:'Sun City',hue:-40,e:'🌅'},{n:'Moon Garden',hue:240,e:'🌙'},{n:'Peacock Garden',hue:150,e:'🦚'},{n:'Diya City',hue:-20,e:'🪔'},{n:'Himalaya',hue:180,e:'🏔️'},{n:'Gau Lok',hue:60,e:'🐄'},{n:'Akshar Nagar',hue:300,e:'✨'},{n:'Akshardham',hue:20,e:'👑'}];
+const ZN=[{n:{g:'કમળ વન',e:'Lotus Grove',r:'Kamal Van'},hue:0,e:'🪷'},{n:{g:'તુલસી વન',e:'Tulsi Forest',r:'Tulsi Van'},hue:110,e:'🌿'},{n:{g:'ગંગા કિનારો',e:'Ganga Shore',r:'Ganga Kinaro'},hue:200,e:'🌊'},{n:{g:'સૂર્ય નગર',e:'Sun City',r:'Surya Nagar'},hue:-40,e:'🌅'},{n:{g:'ચંદ્ર બાગ',e:'Moon Garden',r:'Chandra Baag'},hue:240,e:'🌙'},{n:{g:'મોર બાગ',e:'Peacock Garden',r:'Mor Baag'},hue:150,e:'🦚'},{n:{g:'દીવા નગર',e:'Diya City',r:'Diva Nagar'},hue:-20,e:'🪔'},{n:{g:'હિમાલય',e:'Himalaya',r:'Himalay'},hue:180,e:'🏔️'},{n:{g:'ગૌ લોક',e:'Gau Lok',r:'Gau Lok'},hue:60,e:'🐄'},{n:{g:'અક્ષર નગર',e:'Akshar Nagar',r:'Akshar Nagar'},hue:300,e:'✨'},{n:{g:'અક્ષરધામ',e:'Akshardham',r:'Akshardham'},hue:20,e:'👑'}];
+const ZCH=[{g:'સોનેરી દ્વાર',e:'Golden Gate',r:'Soneri Dwar'},{g:'હીરા પર્વત',e:'Diamond Hill',r:'Heera Parvat'},{g:'મુગટ શિખર',e:'Crown Peak',r:'Mugat Shikhar'}];
+const zname=zd=>zd.n[L()];
 const GN=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
 const $=id=>document.getElementById(id);
+
+const L=()=>{try{return window.SatsangBox?SatsangBox.lang():(localStorage.getItem('satsangLang')||'g')}catch(e){return 'g'}};
+const TX={
+g:{zone:'ઝોન',stats:'રેકોર્ડ',rules:'નિયમો',zones:'ઝોન',back:'‹ પાછા',s1:'ઝોન પૂર્ણ',s2:'આ ઝોનનાં ઘર',s3:'સ્ટેજ પૂર્ણ',s4:'કુલ પોઇન્ટ',pts:'પોઇન્ટ',lang:'ભાષા',lg:'ગુ',
+ r:['દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ','લીલું ▶ દબાવો: અવતાર ઘરમાં જાય, પઝલ ખૂલે','પૂરું ઘર દબાવો: તારા, પોઇન્ટ અને સમય','16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ'],
+ p:['સાચો ટુકડો','ખોટો ટુકડો','ભૂલ વગર','અડધા સમયમાં']},
+e:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zones',back:'‹ Back',s1:'Zones done',s2:'Houses in this zone',s3:'Stages done',s4:'Total points',pts:'Points',lang:'Language',lg:'E',
+ r:['16 houses in every zone, one chihna puzzle in each house','Press the green ▶: avatar enters the house, puzzle opens','Press a finished house: stars, points and time','After 16 houses the gate opens, prize on the charan'],
+ p:['Correct','Wrong','No mistakes','Half the time']},
+r:{zone:'Zon',stats:'Record',rules:'Niyamo',zones:'Zon',back:'‹ Pachha',s1:'Zon purn',s2:'Aa zonna ghar',s3:'Stej purn',s4:'Kul point',pts:'Point',lang:'Bhasha',lg:'ABC',
+ r:['Darek zonma 16 ghar, darek gharma ek chihnani puzzle','Lilu ▶ dabavo: avatar gharma jay, puzzle khule','Puru ghar dabavo: tara, point ane samay','16 ghar pachi gate khule, charan par inam'],
+ p:['Sacho','Khoto','Bhul vagar','Adha samay']}};
+const t=()=>TX[L()];
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 const J=(k,d)=>{try{return JSON.parse(lsGet(k)||'null')||d}catch(e){return d}};
@@ -138,7 +171,7 @@ let toastT;function toast(m){const t=$('toast');t.textContent=m;t.classList.add(
 const minDone=P=>Math.min(...CH.map(c=>Math.min(11,P[c.id]||0)));
 const NB=11;
 function syncZN(){const M=J('chihnaMega',{});const mx=Math.max(0,...CH.map(c=>M[c.id]||0));const n=14+Math.min(45,Math.max(5,mx+2));
-  while(ZN.length<n){const z=ZN.length+1;ZN.push(z<=14?{n:'Challenge '+(z-11),hue:40+(z-12)*30,e:'🏆'}:{n:'MahaChamp '+(z-14),hue:300+(z-15)*20,e:'🏅'})}}
+  while(ZN.length<n){const z=ZN.length+1;ZN.push(z<=14?{n:ZCH[z-12],hue:40+(z-12)*30,e:'🏆'}:{n:{g:'મહાચેમ્પ '+(z-14),e:'MahaChamp '+(z-14),r:'MahaChamp '+(z-14)},hue:300+(z-15)*20,e:'🏅'})}}
 const getChal=()=>J('chihnaChal',{}),getMega=()=>J('chihnaMega',{}),maxView=P=>(syncZN(),TEST)||minDone(P)>=NB?ZN.length:Math.min(NB,minDone(P)+1);
 function zoneState(P,z){ // z = 1..11 (12 Challenge, 13 MahaChamp)
   if(z>NB){const C=getChal(),M=getMega(),open=minDone(P)>=NB;
@@ -207,7 +240,7 @@ function render(){syncZN();
   });
   $('hz').innerHTML=h;
   const dn=ST.filter(s=>s.s==='done').length;
-  $('zp').innerHTML=`${zd.e} Zone ${Z} · ${zd.n} · ${dn}/16 <span class="zb"><i style="width:${dn/16*100}%"></i></span>`;
+  $('zp').innerHTML=`${zd.e} ${t().zone} ${Z} · ${zname(zd)} · ${dn}/16 <span class="zb"><i style="width:${dn/16*100}%"></i></span>`;
   $('zl').classList.toggle('off',Z<=1);$('zr').classList.toggle('off',Z>=maxView(P));
   let sum=0;CH.forEach(c=>sum+=stars(c.id,Z));
   $('pts').textContent='⭐ '+getPts().toLocaleString('en-IN');$('stt').textContent='★ '+GN(sum)+' / 48';
@@ -252,19 +285,21 @@ $('zr').onclick=()=>{if(VIEW<maxView(getProg())){VIEW++;hideBub();render();avAtC
 
 // ===== ઝોન યાદી (ઝોન ઘણા થાય તો પણ સ્ક્રોલ યાદી; ZN માં એક લીટી ઉમેરવાથી નવો ઝોન) =====
 function zoneInfo(z,P){let dn=0,st=0;if(z>NB){const stt=zoneState(P,z);return{dn:stt.filter(x=>x.s==='done').length,st:0}}CH.forEach(c=>{if((P[c.id]||0)>=z)dn++;st+=stars(c.id,z)});return{dn,st}}
-function openZones(){
-  const P=getProg(),m=minDone(P),open=maxView(P);let h='',cur=0;
-  ZN.forEach((zd,i)=>{const z=i+1,inf=zoneInfo(z,P),done=inf.dn>=16,isCur=z===MAXZ&&!done,k=(done||(TEST&&z<=ZN.length&&z<MAXZ))?'d':(isCur?'c':(z<=open?'c':'l'));
-    const locked=z>open,cls=locked?'l':(done?'d':'c');if(isCur)cur=i;
-    
-    const sx=[613,678,743],sf=locked?'':[0,1,2].map(n=>(inf.st/16)>=n+.5&&done?`<img class="sf" style="left:${sx[n]}px" src="p/zl_st.webp" alt="">`:'').join('');
-    h+=`<div class="zc ${cls}" data-z="${z}"><div class="zi"><div class="em">${locked?`<span class="my">${zd.e}</span>`:zd.e}</div><div class="t2"><b class="zn">${z}</b>${locked?'• • •':zd.n}</div><div class="bar"><i style="width:${locked?0:inf.dn/16*100}%"></i></div>${sf}${locked?'<div class="lkp"><img src="p/zl_lk.webp" alt=""></div>':(z>NB?`<div class="lkp" style="font-size:46px">${zd.e}</div>`:'')}<div class="cn">${locked?'':inf.dn+'/16'+(done?' ✓':'')}</div></div></div>`});
-  $('zlist').innerHTML=h;$('zov').style.display='block';
-  const L=$('zlist');L.scrollTop=Math.max(0,cur*164-170);
-  L.onclick=e=>{const el=e.target.closest('.zc');if(!el||el.classList.contains('l'))return;VIEW=+el.dataset.z;$('zov').style.display='none';hideBub();render();avAtCurrent();showZN();tone(660,.08,0,.12)};
+let zpg=0;
+function openZones(){zpg=Math.floor((VIEW-1)/6);zRender();$('zov').style.display='block'}
+function zRender(){
+  const P=getProg(),open=maxView(P),pages=Math.ceil(ZN.length/6);zpg=Math.max(0,Math.min(pages-1,zpg));let h='';
+  for(let k=0;k<6;k++){const i=zpg*6+k;if(i>=ZN.length)break;const zd=ZN[i],z=i+1,inf=zoneInfo(z,P),done=inf.dn>=16,locked=z>open,cls=locked?'d':(done?'':'g'),top=128+80*k;
+    let st='';if(!locked&&z<=NB)st='<div class="s">'+[0,1,2].map(n=>`<img src="p/mn/star${inf.st/16>=n+.5?'':'_e'}.webp" alt="">`).join('')+'</div>';
+    h+=`<div class="nz ${cls}" data-z="${z}" style="top:${top}px"><div class="i">${zd.e}</div><div class="n">${z} · ${zname(zd)}</div>`+(locked?'<img class="lk" src="p/mn/lock.webp" alt="">':`${st}<div class="b"><u style="width:${inf.dn/16*100}%"></u></div><div class="bt">${inf.dn}/16</div>`)+'</div>'}
+  $('znw').innerHTML=`<div class="nc" style="left:15px;top:60px;width:360px;height:724px"><div class="nt" style="top:86px">${t().zones}</div><div class="nx" data-x="1">✕</div>${h}<div class="npg"><span data-pg="-1" class="${zpg<=0?'off':''}">‹</span>${zpg+1} / ${pages}<span data-pg="1" class="${zpg>=pages-1?'off':''}">›</span></div></div>`;
 }
-$('zp').onclick=openZones;$('zx').onclick=()=>{$('zov').style.display='none'};$('zov').onclick=e=>{if(e.target.id==='zov')$('zov').style.display='none'};
-function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} Zone ${Z}: ${z.n}<small>${sub||'16 houses · '+(Z<=NB?'Stage '+Z:(Z<=NB+3?'Challenge round '+(Z-NB):'MahaChamp level '+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
+$('znw').onclick=e=>{e.stopPropagation();
+  if(e.target.closest('[data-x]')){$('zov').style.display='none';return}
+  const g=e.target.closest('[data-pg]');if(g){zpg+=+g.dataset.pg;zRender();tone(660,.08,0,.12);return}
+  const el=e.target.closest('.nz');if(!el||el.classList.contains('d'))return;VIEW=+el.dataset.z;$('zov').style.display='none';hideBub();render();avAtCurrent();showZN();tone(660,.08,0,.12)};
+$('zp').onclick=openZones;$('zov').onclick=e=>{if(e.target.id==='zov')$('zov').style.display='none'};
+function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} ${t().zone} ${Z}: ${zname(z)}<small>${sub||'16 houses · '+(Z<=NB?'Stage '+Z:(Z<=NB+3?'Challenge round '+(Z-NB):'MahaChamp level '+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
 
 // ===== જીત પછી પાછા આવ્યા: અવતાર આગળના ઘરે ચાલે / ગામ પૂરું: ગેટ =====
 function afterReturn(){
@@ -290,36 +325,51 @@ function afterReturn(){
 
 // ===== સેટિંગ, આંકડા, નિયમો =====
 function openCard(html){const q=$('sp');if(q)q.style.display='none';const c=$('card');c.innerHTML=html;c.style.display='block';$('dim').style.display='block'}
-function closeCard(){const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none';if(fromMenu){fromMenu=false;location.href='index.html'+(TEST?'?test=1':'')}}
+function closeCard(){const q=$('sp');if(q)q.style.display='none';$('nov').style.display='none';$('card').style.display='none';$('dim').style.display='none';if(fromMenu){fromMenu=false;location.href='index.html'+(TEST?'?test=1':'')}}
 function openFromMenu(){const f={settings,stats,rules}[FM];if(f)f()}
 $('dim').onclick=closeCard;
 const SPY=[279,401,521,640,752,864,980];
 function panel(rows){let p=$('sp');if(!p){p=document.createElement('div');p.id='sp';$('app').appendChild(p)}
  p.innerHTML='<div class="spx" id="spx"></div>'+rows.map((r,i)=>`<div class="spl" style="top:${SPY[i]-40}px">${r.label}</div>`+(r.pill?`<div class="spp ${r.pill.c}" style="top:${SPY[i]-33}px">${r.pill.t}</div>`:'')+`<div class="sph" id="sh${i}" style="top:${SPY[i]-60}px"></div>`).join('');
- p.style.display='block';$('dim').style.display='block';$('card').style.display='none';$('spx').onclick=closeCard;rows.forEach((r,i)=>$('sh'+i).onclick=r.fn)}
+ p.style.display='block';$('nov').style.display='none';$('dim').style.display='block';$('card').style.display='none';$('spx').onclick=closeCard;rows.forEach((r,i)=>$('sh'+i).onclick=r.fn)}
 let rc=false;
 function settings(){const on=x=>x?{t:'ચાલુ',c:'on'}:{t:'બંધ',c:'off'};
   panel([{label:'અવાજ',pill:on(soundOn()),fn:()=>{lsSet('satsangSound',soundOn()?'0':'1');settings();tone(660,.15)}},
    {label:'એનિમેશન',pill:on(animOn()),fn:()=>{lsSet('chihnaAnim',animOn()?'0':'1');document.body.classList.toggle('noanim',!animOn());settings()}},
    {label:'ચરણ (16 ચિહ્ન)',fn:()=>goPage('charan','?'+PQ.slice(1))},
-   {label:'આંકડા',fn:stats},{label:'નિયમો અને પોઇન્ટ',fn:rules},
+   {label:t().lang,pill:{t:t().lg,c:'lg'},fn:()=>{const o=['g','e','r'];window.SatsangBox&&SatsangBox.set('lang',o[(o.indexOf(L())+1)%3])}},
+   {label:'નિયમો અને પોઇન્ટ',fn:rules},
    {label:'જાહેરાત',fn:()=>sub('📣 જાહેરાત','<p>હાલ કોઈ નવી જાહેરાત નથી.</p>')},
    {label:'પ્રગતિ ફરી શરૂ',pill:rc?{t:'ખરેખર?',c:'rd'}:null,fn:reset}])}
 function sub(t,body){openCard(`<h2>${t}</h2><div class="x" id="cx">✕</div><div class="txt">${body}</div><div class="row" id="bk" style="margin-top:28px">‹ પાછા<b class="g">⚙️</b></div>`);$('cx').onclick=closeCard;$('bk').onclick=settings}
-function stats(){const s=window._stat||{};const P=getProg(),m=minDone(P);sub('📊 આંકડા',`<p>🏘️ ઝોન પૂર્ણ: <b>${GN(m)} / 11</b></p><p>🏠 આ ઝોનનાં ઘર: <b>${GN(s.done||0)} / 16</b></p><p>🧩 સ્ટેજ પૂર્ણ: <b>${GN(s.stages||0)} / 176</b></p><p>🏆 કુલ પોઇન્ટ: <b>${getPts().toLocaleString('en-IN')}</b></p>`)}
-function rules(){sub('📜 નિયમો અને પોઇન્ટ',`<p>• દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ.</p><p>• લીલું ▶ દબાવો: અવતાર ઘરમાં જાય અને પઝલ ખૂલે.</p><p>• પૂરું ઘર દબાવો: તારા, પોઈન્ટ અને સમય દેખાય.</p><p>• 16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ, પછી નવો ઝોન.</p><p>• સાચો ટુકડો 100/200/300 · ખોટો −20</p><p>• ✨ ભૂલ વગર +200 · ⚡ અડધા સમયમાં +300</p>`)}
+let lastCard=null;
+function nOpen(fn,html){lastCard=fn;const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none';$('nw').innerHTML=html;$('nov').style.display='block'}
+$('nw').onclick=e=>{e.stopPropagation();if(e.target.closest('[data-x]'))closeCard();else if(e.target.closest('[data-bk]'))settings()};
+$('nov').onclick=e=>{if(e.target.id==='nov')closeCard()};
+function stats(){const s=window._stat||{},P=getProg(),m=minDone(P),T=t();
+  const R=(y,i,l,v,o)=>`<div class="nr" style="top:${y}px"><div class="i">${i}</div><div class="t"><small>${l}</small><b>${v}${o?` <span>/ ${o}</span>`:''}</b></div></div>`;
+  nOpen(stats,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${T.stats}</div><div class="nx" data-x="1">✕</div>`+
+   R(140,'🏘️',T.s1,GN(m),11)+R(222,'🏠',T.s2,GN(s.done||0),16)+R(304,'🧩',T.s3,GN(s.stages||0),176)+R(386,'🏆',T.s4,getPts().toLocaleString('en-IN'))+
+   `<div class="nbk" data-bk="1" style="left:95px;top:486px">${T.back}</div></div>`)}
+function rules(){const T=t();
+  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${T.rules}</div><div class="nx" data-x="1">✕</div>`+
+   ['🏠','▶','⭐','🚪'].map((ic,k)=>`<div class="nl" style="top:${140+62*k}px"><i>${ic}</i>${T.r[k]}</div>`).join('')+`<div class="nsep">${T.pts}</div>`+
+   [['🧩','100 / 200 / 300'],['❌','−20'],['✨','+200'],['⚡','+300']].map((a,k)=>`<div class="np" style="top:${438+32*k}px${k==3?';border:0':''}"><span>${a[0]} ${T.p[k]}</span><b>${a[1]}</b></div>`).join('')+
+   `<div class="nbk" data-bk="1" style="left:95px;top:580px">${T.back}</div></div>`)}
 function reset(){if(!rc){rc=true;settings();setTimeout(()=>{rc=false},3000);return}
   rc=false;['chihnaProg','chihnaStars','chihnaChal','chihnaMega','chihnaRes'].forEach(k=>lsSet(k,'{}'));lsSet('chihnaPts','0');lsSet('chihnaFly','');lsSet('chihnaZoneSeen','0');closeCard();VIEW=1;render();avAtCurrent();toast('પ્રગતિ ફરી શરૂ થઈ')}
 $('set').onclick=settings;$('b1').onclick=stats;$('b2').onclick=rules;
 $('home').onclick=()=>{location.href='index.html'+(TEST?'?test=1':'')};
 if(TEST)$('tb').style.display='block';
 
+window.SatsangBox&&SatsangBox.onChange(k=>{if(k!=='lang')return;render();const q=$('sp');if(q&&q.style.display==='block')settings();if($('nov').style.display==='block'&&lastCard)lastCard();if($('zov').style.display==='block')zRender()});
+
 // ===== સ્ક્રીનમાં બેસાડવું અને શરૂઆત =====
 function fit(){const s=Math.min(innerWidth/BW,innerHeight/BH),a=$('app');a.style.transform=`scale(${s})`;a.style.left=((innerWidth-BW*s)/2)+'px';a.style.top=((innerHeight-BH*s)/2)+'px'}
 addEventListener('resize',fit);fit();document.body.classList.toggle('noanim',!animOn());
 if(qs.get('demo')){const P={};CH.forEach((c,i)=>P[c.id]=i<13?1:0);lsSet('chihnaProg',JSON.stringify(P))}
 (function(){
-  const list=['m/bg1.jpg','m/h_gold.webp','m/h_normal.webp','m/h_lock.webp','m/road.jpg','m/plat.webp','m/av_idle.webp','m/av_cheer.webp','p/set.jpg'].concat(AVF,AVB,AVS,CH.map(c=>'h/'+c.id+'.webp'));
+  const list=['m/bg1.jpg','m/h_gold.webp','m/h_normal.webp','m/h_lock.webp','m/road.jpg','m/plat.webp','m/av_idle.webp','m/av_cheer.webp','p/set.jpg','p/mn/panel.webp','p/mn/pill_n.webp','p/mn/pill_g.webp','p/mn/pill_d.webp','p/mn/gem.webp','p/mn/ring_g.webp','p/mn/bar_t.webp','p/mn/star.webp','p/mn/star_e.webp','p/mn/lock.webp'].concat(AVF,AVB,AVS,CH.map(c=>'h/'+c.id+'.webp'));
   let n=0,shown=false;
   function show(){if(shown)return;shown=true;buildPath();const P=getProg();VIEW=+qs.get('z')||Math.min(11,minDone(P)+1);render();$('app').classList.add('on');$('ld').classList.add('off');afterReturn();openFromMenu()}
   list.forEach(u=>{const im=new Image();const d=()=>{n++;$('lbar').style.width=(n/list.length*100)+'%';if(n>=list.length)show()};im.onload=d;im.onerror=d;im.src=u});
