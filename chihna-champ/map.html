@@ -49,16 +49,21 @@ body.noanim .bt.cur{animation:none}
 #gl.on{box-shadow:0 0 120px 90px #fff3b0,0 0 240px 160px #ffd24a88;border-radius:50%;animation:gp 1.2s infinite}
 @keyframes gp{50%{box-shadow:0 0 160px 120px #fff3b0,0 0 300px 200px #ffd24aaa}}
 /* બબલ */
-#bub{position:absolute;width:540px;border-radius:36px;background:linear-gradient(#a01868,#7a0648);border:6px solid #ffc94a;box-shadow:inset 0 0 0 3px #ff9ad877,0 10px 24px #000a,0 0 30px #e062ae88;color:#fff;padding:18px 26px 22px;z-index:8;display:none}
-#bub .hd{display:flex;align-items:center;gap:16px}
-#bub .hd img{width:70px;height:70px;object-fit:contain}
-#bub .nm{font-size:34px;font-weight:700}
-#bub .st{font-size:40px;color:#ffd84a;letter-spacing:4px}
-#bub .rw{display:flex;justify-content:space-between;font-size:29px;margin-top:8px;font-weight:700}
-#bub .sm{font-size:25px;margin-top:6px;color:#ffe1f1}
-#bub .bb{margin-top:14px;height:72px;border-radius:36px;background:linear-gradient(#3fd06a,#0e8a3a);color:#fff;font-size:32px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 0 #0b4a18}
-#bub .bb.g{background:linear-gradient(#ffe27a,#ffad2e);color:#7a0040;box-shadow:0 5px 0 #b25a00}
-#bub .tip{position:absolute;width:0;height:0;border-left:28px solid transparent;border-right:28px solid transparent;border-top:34px solid #ffc94a;bottom:-34px}
+#bub{position:absolute;width:460px;filter:drop-shadow(0 10px 18px #000a);color:#fff;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;z-index:8;display:none}
+#bub .mid{position:absolute;left:0;width:100%;top:200px;bottom:100px;background:url(p/mn/bub_m.webp) 0 0/100% auto repeat-y}
+#bub::before,#bub::after{content:'';position:absolute;left:0;width:100%;pointer-events:none;z-index:1}
+#bub::before{top:0;height:239px;background:url(p/mn/bub_t.webp) 0 0/100% 100% no-repeat}
+#bub::after{bottom:0;height:136px;background:url(p/mn/bub_b.webp) 0 0/100% 100% no-repeat}
+#bub .nmr{position:absolute;left:84px;right:84px;top:76px;height:50px;line-height:50px;text-align:center;font-size:28px;font-weight:800;text-shadow:0 2px 3px #7a0040;white-space:nowrap;overflow:hidden;z-index:2}
+#bub .in{position:relative;z-index:2;padding:164px 62px 80px}
+#bub .hd{display:flex;align-items:center;justify-content:center;gap:16px}
+#bub .hd img{width:74px;height:74px;object-fit:contain}
+#bub .st{font-size:40px;color:#ffd84a;letter-spacing:4px;text-shadow:0 2px 2px #7a0040}
+#bub .rw{display:flex;justify-content:space-between;font-size:26px;margin-top:8px;font-weight:700;color:#ffe27a}
+#bub .sm{font-size:22px;line-height:1.3;margin-top:8px;text-align:center;color:#ffe1f1;font-weight:600}
+#bub .bb{margin:14px auto 0;width:250px;height:64px;border-radius:32px;background:linear-gradient(#5be07f,#12a044);border:3px solid #d8ffe0;color:#fff;font-size:30px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 0 #0b5a24;text-shadow:0 2px 2px #0b5a24}
+#bub .bb.g{background:linear-gradient(#ffe27a,#ffad2e);border-color:#fff3c4;color:#7a0040;box-shadow:0 4px 0 #b25a00;text-shadow:none}
+#bub .tip{position:absolute;width:0;height:0;border-left:28px solid transparent;border-right:28px solid transparent;border-top:34px solid #ffc94a;bottom:-40px;z-index:3}
 #toast{position:absolute;left:50%;top:1440px;transform:translateX(-50%);background:#000c;border:2px solid #ff9ad8aa;border-radius:40px;padding:14px 34px;font-size:32px;color:#fff;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;z-index:20}
 #toast.on{opacity:1}
 #zn{position:absolute;left:50%;top:420px;transform:translate(-50%,0) scale(.6);opacity:0;padding:16px 50px;border-radius:50px;font-size:52px;font-weight:700;color:#5a0036;background:linear-gradient(#fff3b0,#ffd24a 60%,#d98a00);border:4px solid #fff6d0;box-shadow:0 0 30px #ffb300,0 6px 10px #0008;white-space:nowrap;z-index:15;transition:all .6s;pointer-events:none;text-align:center}
@@ -258,7 +263,7 @@ function avAtCurrent(){const c=ST.findIndex(s=>s.s==='cur');const k=c<0?(ST.ever
 // ===== બબલ =====
 function bubble(i){
   const c=CH[i],s=ST[i].s,r=res(c.id,Z),st=stars(c.id,Z),b=$('bub');tone(700,.08,0,.12);
-  let h=`<div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="nm">${CHL.t('દિવ્ય મહેલ','Divine Palace','Divine Palace')} ${GN(i+1)} · ${c.n}</div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
+  let h=`<div class="mid"></div><div class="nmr" id="nmr">${CHL.t('દિવ્ય મહેલ','Divine Palace','Divine Palace')} ${GN(i+1)} · ${c.n}</div><div class="in"><div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
   if(Z>NB){const ch3=Z<=NB+3,r=Z-NB,L=Z-NB-3;
     if(s==='lock')h+=`<div class="sm" style="font-size:28px">${minDone(getProg())<NB?CHL.t('પહેલાં બધા 11 Zone પૂરા કરો 🙏','Finish all 11 zones first 🙏','Pahela badha 11 zon pura karo 🙏'):(ch3?CHL.t('પહેલાં આગળનો રાઉન્ડ પૂરો કરો 🙏','Finish the previous round first 🙏','Pahela aagalno round puro karo 🙏'):CHL.t('પહેલાં આગળનું Level પૂરું કરો 🙏','Finish the previous level first 🙏','Pahela aagalnu level puru karo 🙏'))}</div>`;
     else h+=`<div class="sm">${ch3?'🏆 '+CHL.t('Challenge · રાઉન્ડ ','Challenge · round ','Challenge · round ')+r:'🏅 '+CHL.t('MahaChamp · Level ','MahaChamp · level ','MahaChamp · level ')+L}</div><div class="bb" id="bgo">${s==='done'?CHL.t('↻ Play again','↻ Play again','↻ Fari ramo'):CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`;
@@ -266,8 +271,8 @@ function bubble(i){
     h+=`<div class="rw"><span>⭐ ${CHL.t('Points','Points','Point')}: ${r?r.p.toLocaleString('en-IN'):'—'}</span><span>⏱ ${r?fmt(r.t):'—'}</span></div><div class="sm">${CHL.t('શ્રેષ્ઠ સમય','Best time','Shreshth samay')} ${r?fmt(r.b):'—'}</div><div class="bb g" id="bgo">${CHL.t('↻ Play again','↻ Play again','↻ Fari ramo')}</div>`;
   }else if(s==='cur'||TEST){h+=`<div class="sm">${CHL.t('Zone '+GN(Z)+' નો Stage '+GN(Z)+' · આ મહેલમાં '+c.n+' ની પઝલ','Zone '+Z+', stage '+Z+' · '+c.n+' puzzle in this palace','Zon '+Z+' no stej '+Z+' · aa mahelma '+c.n+' ni puzzle')}</div><div class="bb" id="bgo">${CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`}
   else h+=`<div class="sm" style="font-size:28px">${CHL.t('પહેલાં આગળનો મહેલ પૂરો કરો 🙏','Finish the previous palace first 🙏','Pahela aagalno mahel puro karo 🙏')}</div>`;
-  b.innerHTML=h+'<div class="tip"></div>';b.style.display='block';
-  const x=HX(i),hy=HY(i)-250*328/260+30;let L=Math.max(20,Math.min(941-560,x-270));b.style.left=L+'px';
+  b.innerHTML=h+'</div><div class="tip"></div>';b.style.display='block';{const n=$('nmr');for(let f=28;f>15&&n.scrollWidth>n.clientWidth;f--)n.style.fontSize=f+'px'}
+  const x=HX(i),hy=HY(i)-250*328/260+30;let L=Math.max(20,Math.min(941-480,x-230));b.style.left=L+'px';
   const bh=b.offsetHeight;b.style.top=Math.max(10,hy-bh-20)+'px';b.querySelector('.tip').style.left=(x-L-34)+'px';
   const g=$('bgo');if(g)g.onclick=e=>{e.stopPropagation();enter(i,s==='done')};
 }
