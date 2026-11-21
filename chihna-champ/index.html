@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><script src="cloud.js"></script><meta charset="utf-8">
+<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><script src="cloud.js"></script><script src="lang.js"></script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>ચિહ્ન ચેમ્પ</title>
 <link rel="stylesheet" href="../fonts/fonts.css">
@@ -30,7 +30,7 @@ html,body{margin:0;height:100%;overflow:hidden;font-family:G,system-ui,sans-seri
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffe27a,#ffad2e)}
 .ch{position:absolute;top:244px;left:42px;right:42px;display:flex;gap:10px}
 .ch span{flex:1;height:30px;font-size:12px;font-weight:800;border-radius:15px;background:#4a0a3e;border:2px solid #ffc94a99;display:flex;justify-content:center;align-items:center;gap:4px}
-.ch .lk{opacity:.6}.ch img{height:15px}
+.ch .lk{opacity:.6}.ch img{height:15px}.ch i{font-style:normal}
 /* ત્રણે બટન એકસરખા: 288×93, દરેક વચ્ચે 5px */
 .pl{position:absolute;left:48px;width:288px;height:93px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat;cursor:pointer;transition:transform .12s}
 .pl:active,.gb:active,.go:active{transform:scale(.94)}
@@ -50,13 +50,13 @@ html,body{margin:0;height:100%;overflow:hidden;font-family:G,system-ui,sans-seri
   <div class="gb" id="home" aria-label="Home"></div>
  </div>
  <div class="pn">
-  <div class="ttl">Chihna Champ</div>
+  <div class="ttl" id="ttl">Chihna Champ</div>
   <div class="av"></div>
   <div class="zi"><b id="zn">Zone 1 · Lotus Grove</b><small><img src="p/mn/star.webp" alt=""><span id="zs">0 / 48</span> · 🧩 <span id="zp">0/16</span></small><div class="bar"><i id="zb"></i></div></div>
-  <div class="ch"><span class="lk" id="c1"><img src="p/mn/lock.webp" alt="">Challenge</span><span class="lk" id="c2"><img src="p/mn/lock.webp" alt="">MahaChamp</span></div>
-  <div class="pl" id="b-rules" style="top:290px"><div class="ic"><img src="p/mi_rules.webp" alt=""></div><div class="tx">Rules<small>How to play</small></div></div>
-  <div class="pl" id="b-stats" style="top:388px"><div class="ic"><img src="p/mi_stats.webp" alt=""></div><div class="tx">Stats<small>Zones · stages · points</small></div></div>
-  <div class="pl" id="b-settings" style="top:486px"><div class="ic"><img src="p/mi_settings.webp" alt=""></div><div class="tx">Settings<small>Sound · animation</small></div></div>
+  <div class="ch"><span class="lk" id="c1"><img src="p/mn/lock.webp" alt=""><i id="c1t">Challenge</i></span><span class="lk" id="c2"><img src="p/mn/lock.webp" alt=""><i id="c2t">MahaChamp</i></span></div>
+  <div class="pl" id="b-rules" style="top:290px"><div class="ic"><img src="p/mi_rules.webp" alt=""></div><div class="tx" id="t1">Rules<small>How to play</small></div></div>
+  <div class="pl" id="b-stats" style="top:388px"><div class="ic"><img src="p/mi_stats.webp" alt=""></div><div class="tx" id="t2">Record<small>Zones · stages · points</small></div></div>
+  <div class="pl" id="b-settings" style="top:486px"><div class="ic"><img src="p/mi_settings.webp" alt=""></div><div class="tx" id="t3">Settings<small>Sound · animation</small></div></div>
   <div class="go" id="play" aria-label="Play"></div>
  </div>
 </div>
@@ -68,7 +68,16 @@ const TQ=TEST?'test=1':'';
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const J=(k,d)=>{try{return JSON.parse(lsGet(k)||'null')||d}catch(e){return d}};
 const IDS=['swastik','ashtakon','ankush','kamal','ketu','urdhva-rekha','vajra','jambu','java','matsya','trikon','gaupad','dhanush','vyom','ardha-chandra','kalash'];
-const ZN=['Lotus Grove','Tulsi Forest','Ganga Shore','Sun City','Moon Garden','Peacock Garden','Diya City','Himalaya','Gau Lok','Akshar Nagar','Akshardham'];
+const ZN=[['કમળ વન','Lotus Grove','Kamal Van'],['તુલસી વન','Tulsi Forest','Tulsi Van'],['ગંગા કિનારો','Ganga Shore','Ganga Kinaro'],['સૂર્ય નગર','Sun City','Surya Nagar'],['ચંદ્ર બાગ','Moon Garden','Chandra Baag'],['મોર બાગ','Peacock Garden','Mor Baag'],['દીવા નગર','Diya City','Diva Nagar'],['હિમાલય','Himalaya','Himalay'],['ગૌ લોક','Gau Lok','Gau Lok'],['અક્ષર નગર','Akshar Nagar','Akshar Nagar'],['અક્ષરધામ','Akshardham','Akshardham']];
+const T=(g,e,r)=>window.CHL?CHL.t(g,e,r):e;
+function langText(){const X=(id,a,b)=>{$(id).innerHTML=a+'<small>'+b+'</small>'};
+  $('ttl').textContent=T('ચિહ્ન ચેમ્પ','Chihna Champ','Chihna Champ');document.title=$('ttl').textContent;
+  X('t1',T('નિયમો','Rules','Niyamo'),T('કેવી રીતે રમવું','How to play','Kevi rite ramvu'));
+  X('t2',T('રેકોર્ડ','Record','Record'),T('ઝોન · સ્ટેજ · પોઇન્ટ','Zones · stages · points','Zon · stej · point'));
+  X('t3',T('સેટિંગ્સ','Settings','Settings'),T('અવાજ · ભાષા','Sound · language','Avaj · bhasha'));
+  $('c1t').textContent=T('ચેલેન્જ','Challenge','Challenge');$('c2t').textContent=T('મહાચેમ્પ','MahaChamp','MahaChamp');
+  const l=window.CHL?CHL.L():'e',k=l==='g'?0:l==='r'?2:1,P=J('chihnaProg',{}),m=Math.min(...IDS.map(id=>Math.min(11,P[id]||0))),z=Math.min(11,m+1);
+  $('zn').textContent=m>=11?T('બધા ઝોન પૂર્ણ','All zones done','Badha zon purn'):T('ઝોન ','Zone ','Zon ')+z+' · '+ZN[z-1][k]}
 
 // ખેલાડીનું નામ (હબના લોગિનમાંથી)
 function showName(o){let n='';try{if(!(window.SatsangAuth&&SatsangAuth.isGuest()))n=String((o&&o.name)||'').trim()}catch(e){}
@@ -81,13 +90,13 @@ try{window.SatsangAuth&&SatsangAuth.profile&&SatsangAuth.profile().then(showName
   const d=id=>Math.min(11,P[id]||0),m=Math.min(...IDS.map(d)),z=Math.min(11,m+1);
   const st=id=>Math.max((S[id]||[])[z-1]||0,(R[id+'_'+z]||{}).s||0);
   const stars=IDS.reduce((a,id)=>a+st(id),0),done=IDS.filter(id=>d(id)>=z).length,all=IDS.reduce((a,id)=>a+d(id),0);
-  $('zn').textContent=(m>=11?'All zones done':'Zone '+z+' · '+ZN[z-1]);
   $('zs').textContent=stars+' / 48';$('zp').textContent=done+'/16';
   $('zb').style.width=Math.round(all/176*100)+'%';
   if(m>=11){['c1','c2'].forEach(c=>{const e=$(c);e.classList.remove('lk');const i=e.querySelector('img');if(i)i.remove()})}
 })();
 
 const go=(p,q)=>{const s=[q,TQ].filter(Boolean).join('&');location.href=p+(s?'?'+s:'')};
+langText();window.SatsangBox&&SatsangBox.onChange(k=>{if(k==='lang')langText()});
 $('play').onclick=()=>go('map.html');
 $('b-rules').onclick=()=>go('map.html','open=rules');
 $('b-stats').onclick=()=>go('map.html','open=stats');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><script src="cloud.js"></script><meta charset="utf-8">
+<html lang="gu"><head><script src="../oldcss.js"></script><script src="../auth.js"></script><script src="../box.js"></script><script src="../analytics.js" defer></script><script src="cloud.js"></script><script src="lang.js"></script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>ચિહ્ન ચેમ્પ</title>
 <style>
@@ -59,7 +59,6 @@ body.noanim .cur::before{animation:none}
 .row b.off{background:#556;color:#ccd}
 .txt{margin:22px 50px 0;font-size:34px;line-height:1.5;color:#fff0fa}
 .txt p{margin:8px 0}
-#sp{position:absolute;left:0;top:250px;width:941px;height:1176px;background:url(p/set.jpg) 0 0/941px 1176px;z-index:11;display:none}.spx{position:absolute;left:722px;top:122px;width:100px;height:100px;cursor:pointer}.spl{position:absolute;left:277px;width:350px;height:80px;line-height:80px;font-size:34px;color:#fff3c4;text-shadow:0 2px 6px #3a0230;white-space:nowrap;pointer-events:none}.spp{position:absolute;left:629px;width:147px;height:66px;line-height:66px;border-radius:33px;text-align:center;font-size:30px;color:#fff;box-shadow:inset 0 0 0 3px #ffd95a;pointer-events:none}.spp.on,.spp.lg{background:linear-gradient(#3fd06a,#0e8a3a)}.spp.lg{font-size:26px}.spp.off{background:linear-gradient(#9a8a98,#6a5a68)}.spp.rd{background:linear-gradient(#ff7a7a,#c62828)}.sph{position:absolute;left:126px;width:700px;height:120px;cursor:pointer}
 .done img{filter:sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.15) contrast(1.1) drop-shadow(0 0 6px #fff3b0) drop-shadow(0 0 16px #ffb300) drop-shadow(0 3px 4px #0008)!important}.done::after{content:"💎";position:absolute;right:-8px;top:-10px;font-size:30px;filter:drop-shadow(0 0 6px #7fe9ff)}
 .done.orig img{filter:drop-shadow(0 0 12px #ffd95a) drop-shadow(0 3px 4px #0008)!important}
 .rd img{filter:drop-shadow(0 0 12px #ffd95a) drop-shadow(0 3px 4px #0008)}
@@ -73,8 +72,56 @@ body.noanim .cur::before{animation:none}
 .aura{animation:aura 1.6s infinite}
 #f.aura .c{opacity:1!important}#f.aura .c img{opacity:1!important;filter:drop-shadow(0 0 8px #fff3b0) drop-shadow(0 0 16px #ffb300)!important}#f.aura .c::before{display:none}body.zrw .bb,body.zrw #tb,body.zrw .nx{visibility:hidden}
 @keyframes aura{50%{filter:brightness(1.25)}}
+
+/* નવી ફ્રેમ: Record, નિયમો, ઝોન યાદી (390×844 ની ભૂમિતિ, 1.98 ગણી મોટી) */
+#nov{position:absolute;inset:0;z-index:62;background:#1a0526cc;display:none}
+#nov .nw{position:absolute;left:84px;top:0;width:390px;height:844px;transform:scale(1.98);transform-origin:0 0;font-family:G,'Baloo Bhai 2',system-ui,sans-serif;color:#fff}
+#nov .nc{position:absolute;background:url(p/mn/panel.webp) center/100% 100% no-repeat;filter:drop-shadow(0 8px 18px #000a)}
+#nov .nt{position:absolute;left:60px;right:60px;transform:translateY(-50%);text-align:center;font-size:24px;font-weight:800;text-shadow:0 2px 3px #7a0040}
+#nov .nxx{position:absolute;right:-8px;top:-14px;width:46px;height:46px;background:url(p/mn/gem.webp) center/contain no-repeat;display:grid;place-items:center;font-size:20px;font-weight:800;text-shadow:0 2px 2px #7a0040;cursor:pointer}
+#nov .nbk{position:absolute;width:130px;height:46px;border-radius:23px;background:linear-gradient(#ffe27a,#ffad2e);border:3px solid #fff3c4;color:#7a0040;font-size:19px;font-weight:800;display:grid;place-items:center;box-shadow:0 3px 0 #b25a00;cursor:pointer;white-space:nowrap}
+#nov .nr{position:absolute;left:42px;width:236px;height:76px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat}
+#nov .nr .i{position:absolute;left:28px;top:16px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:23px}
+#nov .nr .t{position:absolute;left:86px;right:24px;top:38px;transform:translateY(-50%);line-height:1.05}
+#nov .nr .t small{display:block;font-size:13px;font-weight:600;color:#ffe1f1;white-space:nowrap}
+#nov .nr .t b{display:block;font-size:22px;font-weight:800;text-shadow:0 2px 2px #7a0040;margin-top:2px}
+#nov .nr .t b span{font-size:14px;color:#ffd6ec}
+#nov .nl{position:absolute;left:44px;right:44px;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;line-height:1.25}
+#nov .nl i{flex:0 0 40px;height:40px;background:url(p/mn/ring_g.webp) center/contain no-repeat;display:grid;place-items:center;font-style:normal;font-size:18px}
+#nov .nsep{position:absolute;left:50px;right:50px;top:394px;height:34px;background:url(p/mn/bar_t.webp) center/100% 100% no-repeat;text-align:center;font-size:15px;font-weight:800;line-height:34px;text-shadow:0 2px 2px #7a0040}
+#nov .np{position:absolute;left:44px;right:44px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;padding:0 6px;height:30px;border-bottom:1px solid #ffc94a44}
+#nov .np b{color:#ffe27a;font-size:16px;white-space:nowrap}
+#nov .nz{position:absolute;left:30px;width:300px;height:88px;background:url(p/mn/pill_n.webp) center/100% 100% no-repeat;cursor:pointer}
+#nov .nz.g{background-image:url(p/mn/pill_g.webp);height:106px;margin-top:-9px}
+#nov .nz.d{background-image:url(p/mn/pill_d.webp);height:90px;cursor:default}
+#nov .nz .i{position:absolute;left:30px;top:18px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:28px}
+#nov .nz.g .i{top:27px}
+#nov .nz .n{position:absolute;left:100px;right:30px;top:25px;font-size:14px;font-weight:800;text-shadow:0 2px 2px #7a0040;white-space:nowrap}
+#nov .nz.g .n{top:34px}
+#nov .nz.g .b,#nov .nz.g .s{margin-top:9px}
+#nov .nz .s{position:absolute;right:32px;top:25px;display:flex;gap:1px}
+#nov .nz .s img{width:16px}
+#nov .nz .b{position:absolute;left:102px;right:36px;top:52px;height:12px;border-radius:7px;background:#5a0636;border:2px solid #ffc94a;overflow:hidden}
+#nov .nz .b u{display:block;height:100%;background:linear-gradient(90deg,#ffe27a,#ffad2e)}
+#nov .nz .bt{position:absolute;right:36px;top:66px;font-size:11px;font-weight:700;color:#ffe1f1}
+#nov .nz.d .n,#nov .nz.d .i{opacity:.75}
+#nov .nz .lk{position:absolute;right:34px;top:30px;width:32px}
+#nov .npg{position:absolute;left:0;right:0;top:620px;display:flex;justify-content:center;gap:14px;align-items:center;font-size:15px;font-weight:800}
+#nov .npg span{width:38px;height:38px;background:url(p/mn/gem.webp) center/contain no-repeat;display:grid;place-items:center;text-shadow:0 2px 2px #7a0040;cursor:pointer}
+#nov .npg span.off{opacity:.35;pointer-events:none}
+#nov /* Settings: Record ની જ ભૂમિતિ (pill_n 236×76: ગોળ મધ્ય 50/38,#nov ગુલાબી ખાનું x 80–206) */
+.nr.ss{cursor:pointer}
+#nov .nr.ss .t{right:30px}
+#nov .nr.ss .t b{font-size:16px;margin:0;white-space:nowrap}
+#nov .nr.ss .ns~.t,#nov .nr.ss .t:has(+.ns){right:72px}
+#nov .ns{position:absolute;right:30px;top:25px;min-width:34px;height:26px;padding:0 6px;box-sizing:border-box;border-radius:13px;background:#5a0636;border:2px solid #ffc94a88;color:#ffe1f1;font:800 12px/22px G,'Baloo Bhai 2',sans-serif;font-style:normal;text-align:center}
+#nov .ns.on{background:linear-gradient(#ffe27a,#ffad2e);border-color:#fff3c4;color:#7a0040}
+#nov .ns.rd{background:#d0213a;border-color:#ffc0c8;color:#fff}
+#nov .ng{position:absolute;top:478px;width:80px;margin-left:-40px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;line-height:1.1}
+#nov .ng i{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 4px;background:url(p/mn/ring_g.webp) center/contain no-repeat;font-style:normal;font-size:22px}
+#nov .ntx{position:absolute;left:44px;right:44px;top:150px;font-size:16px;font-weight:600;line-height:1.5;text-align:center}
 </style></head><body>
-<div id="ld"><div class="sw">🪷</div><div>લોડ થાય છે…</div><div class="lb"><i id="lbar"></i></div></div>
+<div id="ld"><div class="sw">🪷</div><div id="ldt">લોડ થાય છે…</div><div class="lb"><i id="lbar"></i></div></div>
 <div id="app">
  <div class="abs tt">ચિહ્ન ચેમ્પ</div>
  <div class="nx" id="nx"></div>
@@ -86,7 +133,7 @@ body.noanim .cur::before{animation:none}
  <div id="toast"></div>
  <div id="zr"></div>
  <div id="tb" style="display:none;position:absolute;left:300px;top:1366px;width:340px;text-align:center;font-size:26px;color:#ffe58a;text-shadow:0 2px 6px #000;pointer-events:none">🧪 ટેસ્ટ: બધા ચિહ્ન ખુલ્લા</div>
- <div class="dim" id="dim"></div>
+ <div class="dim" id="dim"></div><div id="nov"><div class="nw" id="nw"></div></div>
  <div class="glass card" id="card"></div>
 </div>
 <script>
@@ -94,22 +141,22 @@ const BW=941,BH=1671;const TEST=(()=>{try{return new URLSearchParams(location.se
 const W=772,H=854,WS=720; // ચરણ બોક્સ 772×854 (નવી મોટી ફ્રેમ), ચિહ્નનું કદ WS પ્રમાણે
 // ક્રમ અને જગ્યા: હબની charanvidhi ગેમ મુજબ (foot: R=જમણો પગ, L=ડાબો, B=બંને)
 const CH=[
- {id:'swastik',n:'સ્વસ્તિક',s:[[.308,.087,.09]]},
- {id:'ashtakon',n:'અષ્ટકોણ',s:[[.301,.212,.09]]},
- {id:'ankush',n:'અંકુશ',s:[[.157,.4,.11]]},
- {id:'kamal',n:'કમળ',s:[[.089,.624,.09]]},
- {id:'ketu',n:'ધ્વજ',s:[[.194,.651,.09]]},
- {id:'urdhva-rekha',n:'ઊર્ધ્વરેખા',s:[[.259,.732,.09],[.733,.772,.09]]},
- {id:'vajra',n:'વજ્ર',s:[[.365,.772,.09]]},
- {id:'jambu',n:'જાંબુ',s:[[.434,.698,.09]]},
- {id:'java',n:'જવ',s:[[.421,.902,.09]]},
- {id:'matsya',n:'મત્સ્ય',s:[[.697,.105,.12]]},
- {id:'trikon',n:'ત્રિકોણ',s:[[.713,.204,.09]]},
- {id:'gaupad',n:'ગોપદ',s:[[.869,.436,.09]]},
- {id:'dhanush',n:'ધનુષ',s:[[.781,.544,.09]]},
- {id:'vyom',n:'વ્યોમ',s:[[.908,.632,.09]]},
- {id:'ardha-chandra',n:'અર્ધચંદ્ર',s:[[.814,.713,.09]]},
- {id:'kalash',n:'કળશ',s:[[.613,.725,.12]]}
+ {id:'swastik',g:'સ્વસ્તિક',get n(){return CHL.cn(this.id,this.g)},s:[[.308,.087,.09]]},
+ {id:'ashtakon',g:'અષ્ટકોણ',get n(){return CHL.cn(this.id,this.g)},s:[[.301,.212,.09]]},
+ {id:'ankush',g:'અંકુશ',get n(){return CHL.cn(this.id,this.g)},s:[[.157,.4,.11]]},
+ {id:'kamal',g:'કમળ',get n(){return CHL.cn(this.id,this.g)},s:[[.089,.624,.09]]},
+ {id:'ketu',g:'ધ્વજ',get n(){return CHL.cn(this.id,this.g)},s:[[.194,.651,.09]]},
+ {id:'urdhva-rekha',g:'ઊર્ધ્વરેખા',get n(){return CHL.cn(this.id,this.g)},s:[[.259,.732,.09],[.733,.772,.09]]},
+ {id:'vajra',g:'વજ્ર',get n(){return CHL.cn(this.id,this.g)},s:[[.365,.772,.09]]},
+ {id:'jambu',g:'જાંબુ',get n(){return CHL.cn(this.id,this.g)},s:[[.434,.698,.09]]},
+ {id:'java',g:'જવ',get n(){return CHL.cn(this.id,this.g)},s:[[.421,.902,.09]]},
+ {id:'matsya',g:'મત્સ્ય',get n(){return CHL.cn(this.id,this.g)},s:[[.697,.105,.12]]},
+ {id:'trikon',g:'ત્રિકોણ',get n(){return CHL.cn(this.id,this.g)},s:[[.713,.204,.09]]},
+ {id:'gaupad',g:'ગોપદ',get n(){return CHL.cn(this.id,this.g)},s:[[.869,.436,.09]]},
+ {id:'dhanush',g:'ધનુષ',get n(){return CHL.cn(this.id,this.g)},s:[[.781,.544,.09]]},
+ {id:'vyom',g:'વ્યોમ',get n(){return CHL.cn(this.id,this.g)},s:[[.908,.632,.09]]},
+ {id:'ardha-chandra',g:'અર્ધચંદ્ર',get n(){return CHL.cn(this.id,this.g)},s:[[.814,.713,.09]]},
+ {id:'kalash',g:'કળશ',get n(){return CHL.cn(this.id,this.g)},s:[[.613,.725,.12]]}
 ];
 const $=id=>document.getElementById(id);
 const qs=new URLSearchParams(location.search);
@@ -151,8 +198,8 @@ function render(){
       else if(false)html+=`<div class="pr" style="left:${L.toFixed(1)}px;top:${(T+sz+2).toFixed(1)}px;width:${sz.toFixed(1)}px"><i style="width:${(p*100).toFixed(0)}%"></i></div>`;
     })});
   f.insertAdjacentHTML('beforeend',html);
-  const nxt=S.findIndex(s=>!s.rd),rnd=Math.min(11,S[0].m+1);$('nx').textContent=nxt<0?'🎉 બધા 11 સ્ટેજ પૂર્ણ':'🎯 સ્ટેજ '+rnd+': '+CH[nxt].n;
-  $('cnt').textContent=`⭐ સ્ટેજ ${Math.min(11,S[0].m+1)} · ${done} / 16 ચિહ્ન`;
+  const nxt=S.findIndex(s=>!s.rd),rnd=Math.min(11,S[0].m+1);$('nx').textContent=nxt<0?CHL.t('🎉 બધા 11 સ્ટેજ પૂર્ણ','🎉 All 11 stages done','🎉 Badha 11 stej purn'):'🎯 '+CHL.t('સ્ટેજ ','Stage ','Stej ')+rnd+': '+CH[nxt].n;
+  $('cnt').textContent=`⭐ ${CHL.t('સ્ટેજ','Stage','Stej')} ${Math.min(11,S[0].m+1)} · ${done} / 16 ${CHL.t('ચિહ્ન','chihna','chihna')}`;
   $('bar').style.width=(done/16*100)+'%';
   $('pts').textContent=getPts().toLocaleString('en-IN');
   window._stat={done,stages};
@@ -160,11 +207,11 @@ function render(){
 $('f').addEventListener('click',e=>{
   const el=e.target.closest('.c');if(!el)return;
   const i=+el.dataset.i,c=CH[i],st=status(getProg())[i];
-  if(!st.unlocked){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');tone(180,.25,0,.15,'square');toast('પહેલાં આગળનું ચિહ્ન પૂરું કરો');return}
+  if(!st.unlocked){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');tone(180,.25,0,.15,'square');toast(CHL.t('પહેલાં આગળનું ચિહ્ન પૂરું કરો','Finish the previous chihna first','Pahela aagalnu chihna puru karo'));return}
   tone(660,.15,0,.15);const go=q=>goPage('game','?c='+c.id+q+(TEST?'&test=1':''));
-  let CHL={},MG={};try{CHL=JSON.parse(lsGet('chihnaChal')||'{}')||{};MG=JSON.parse(lsGet('chihnaMega')||'{}')||{}}catch(e){}
-  if(st.state==='done'&&CHL[c.id]>=3){const nl=(MG[c.id]||0)+1,gn=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
-    openCard(`<h2>${c.n}</h2><div class="x" id="cx">✕</div><div class="row" id="m1" style="margin-top:40px;background:linear-gradient(#ffe27a,#d98a00);color:#5a0036">🏅 મહાચેમ્પ લેવલ ${gn(nl)} રમો</div><div class="row" id="m2">🏆 ચેલેન્જ ફરી</div><div class="row" id="m3">🧩 સ્ટેજ ફરી રમો</div>`);
+  let CH_L={},MG={};try{CH_L=JSON.parse(lsGet('chihnaChal')||'{}')||{};MG=JSON.parse(lsGet('chihnaMega')||'{}')||{}}catch(e){}
+  if(st.state==='done'&&CH_L[c.id]>=3){const nl=(MG[c.id]||0)+1,gn=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
+    openCard(`<h2>${c.n}</h2><div class="x" id="cx">✕</div><div class="row" id="m1" style="margin-top:40px;background:linear-gradient(#ffe27a,#d98a00);color:#5a0036">🏅 ${CHL.t('મહાચેમ્પ લેવલ '+gn(nl)+' રમો','Play MahaChamp level '+nl,'MahaChamp level '+nl+' ramo')}</div><div class="row" id="m2">🏆 ${CHL.t('ચેલેન્જ ફરી','Challenge again','Challenge fari')}</div><div class="row" id="m3">🧩 ${CHL.t('સ્ટેજ ફરી રમો','Replay stages','Stej fari ramo')}</div>`);
     $('cx').onclick=closeCard;$('m1').onclick=()=>go('&ch='+(3+nl));$('m2').onclick=()=>go('&ch=1');$('m3').onclick=()=>go('&s=1');return}
   if(st.state==='rd'){go('&s='+st.d);return}
   go('');
@@ -208,13 +255,13 @@ function checkFly(){
 
 
 // ===== ઝોન પૂરો: ચરણ ઇનામ (દરેક ઝોનનું અલગ ઇનામ: રંગની આભા, નામ, બેજ) =====
-const ZR=[{n:'Lotus Grove',c:'#ff7ac0',e:'🪷'},{n:'Tulsi Forest',c:'#6dff8a',e:'🌿'},{n:'Ganga Shore',c:'#6ad8ff',e:'🌊'},{n:'Sun City',c:'#ffb13a',e:'🌅'},{n:'Moon Garden',c:'#c6b8ff',e:'🌙'},{n:'Peacock Garden',c:'#3affd0',e:'🦚'},{n:'Diya City',c:'#ffd24a',e:'🪔'},{n:'Himalaya',c:'#e8f6ff',e:'🏔️'},{n:'Gau Lok',c:'#fff3b0',e:'🐄'},{n:'Akshar Nagar',c:'#ff9bff',e:'✨'},{n:'Akshardham',c:'#ffe27a',e:'👑'}];
+const ZR=[{n:{g:'કમળ વન',e:'Lotus Grove',r:'Kamal Van'},c:'#ff7ac0',e:'🪷'},{n:{g:'તુલસી વન',e:'Tulsi Forest',r:'Tulsi Van'},c:'#6dff8a',e:'🌿'},{n:{g:'ગંગા કિનારો',e:'Ganga Shore',r:'Ganga Kinaro'},c:'#6ad8ff',e:'🌊'},{n:{g:'સૂર્ય નગર',e:'Sun City',r:'Surya Nagar'},c:'#ffb13a',e:'🌅'},{n:{g:'ચંદ્ર બાગ',e:'Moon Garden',r:'Chandra Baag'},c:'#c6b8ff',e:'🌙'},{n:{g:'મોર બાગ',e:'Peacock Garden',r:'Mor Baag'},c:'#3affd0',e:'🦚'},{n:{g:'દીવા નગર',e:'Diya City',r:'Diva Nagar'},c:'#ffd24a',e:'🪔'},{n:{g:'હિમાલય',e:'Himalaya',r:'Himalay'},c:'#e8f6ff',e:'🏔️'},{n:{g:'ગૌ લોક',e:'Gau Lok',r:'Gau Lok'},c:'#fff3b0',e:'🐄'},{n:{g:'અક્ષર નગર',e:'Akshar Nagar',r:'Akshar Nagar'},c:'#ff9bff',e:'✨'},{n:{g:'અક્ષરધામ',e:'Akshardham',r:'Akshardham'},c:'#ffe27a',e:'👑'}];
 function zoneReward(z){const d=ZR[z-1];if(!d)return;const gn=n=>String(n).replace(/\d/g,x=>'0123456789'[x]);
   let B=[];try{B=JSON.parse(lsGet('chihnaBadges')||'[]')||[]}catch(e){}if(!B.includes(z)){B.push(z);lsSet('chihnaBadges',JSON.stringify(B))}
   const f=$('f');f.classList.add('aura');f.querySelector('.feet').style.filter=`drop-shadow(0 0 26px ${d.c}) drop-shadow(0 0 60px ${d.c}) drop-shadow(0 12px 22px #000a)`;
   const r=$('zr');r.style.display='block';document.body.classList.add('zrw');
-  r.innerHTML=`<div class="zt">${d.e} ઝોન ${gn(z)} પૂર્ણ! ${d.e}<small>${d.n} · બેજ મળ્યો 🏅 · 16 ચિહ્ન ચરણ પર</small></div>`+
-   (z<11?`<div class="zg" id="zgo">આગળના ઝોનમાં ચાલો 🚶 ▶</div>`:`<div class="zg" id="zgo">👑 ચેલેન્જ અને મહાચેમ્પ રમો</div><div class="zg zg2" id="zg2">ઝોનમાં પાછા</div>`);
+  r.innerHTML=`<div class="zt">${d.e} ${CHL.t('ઝોન '+gn(z)+' પૂર્ણ!','Zone '+z+' complete!','Zon '+z+' purn!')} ${d.e}<small>${d.n[CHL.L()]||d.n.g} · ${CHL.t('બેજ મળ્યો 🏅 · 16 ચિહ્ન ચરણ પર','Badge won 🏅 · 16 chihna on the charan','Badge malyo 🏅 · 16 chihna charan par')}</small></div>`+
+   (z<11?`<div class="zg" id="zgo">${CHL.t('આગળના ઝોનમાં ચાલો 🚶 ▶','On to the next zone 🚶 ▶','Aagalna zonma chalo 🚶 ▶')}</div>`:`<div class="zg" id="zgo">${CHL.t('👑 ચેલેન્જ અને મહાચેમ્પ રમો','👑 Play Challenge and MahaChamp','👑 Challenge ane MahaChamp ramo')}</div><div class="zg zg2" id="zg2">${CHL.t('ઝોનમાં પાછા','Back to the zone','Zonma pachha')}</div>`);
   if(z>=11){f.querySelector('.feet').style.filter+=' sepia(.6) saturate(2.2) brightness(1.1)'}
   // 16 ચિહ્ન એક પછી એક ચમકે
   const els=[...f.querySelectorAll('.c')];els.forEach((el,k)=>setTimeout(()=>{tone(523+k*40,.18,0,.12);if(animOn()){el.animate([{transform:'scale(1.8)',filter:'brightness(2)'},{transform:'scale(1)',filter:'none'}],{duration:600});
@@ -227,29 +274,45 @@ function zoneReward(z){const d=ZR[z-1];if(!d)return;const gn=n=>String(n).replac
 }
 // ===== સેટિંગ અને બીજા બોક્સ =====
 function openCard(html){const q=$('sp');if(q)q.style.display='none';const c=$('card');c.innerHTML=html;c.style.display='block';$('dim').style.display='block'}
-function closeCard(){const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none'}
+function closeCard(){const nv=$('nov');if(nv)nv.style.display='none';const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none'}
 $('dim').onclick=closeCard;
-const LANG={g:'ગુજરાતી',e:'English',r:'हिन्दी'};
-const SPY=[279,401,521,640,752,864,980];
-function panel(rows){let p=$('sp');if(!p){p=document.createElement('div');p.id='sp';$('app').appendChild(p)}
- p.innerHTML='<div class="spx" id="spx"></div>'+rows.map((r,i)=>`<div class="spl" style="top:${SPY[i]-40}px">${r.label}</div>`+(r.pill?`<div class="spp ${r.pill.c}" style="top:${SPY[i]-33}px">${r.pill.t}</div>`:'')+`<div class="sph" id="sh${i}" style="top:${SPY[i]-60}px"></div>`).join('');
- p.style.display='block';$('dim').style.display='block';$('card').style.display='none';$('spx').onclick=closeCard;rows.forEach((r,i)=>$('sh'+i).onclick=r.fn)}
-function settings(){
-  const lang=lsGet('satsangLang')||'g';const on=x=>x?{t:'ચાલુ',c:'on'}:{t:'બંધ',c:'off'};
-  panel([
-   {label:'અવાજ',pill:on(soundOn()),fn:()=>{lsSet('satsangSound',soundOn()?'0':'1');settings();tone(660,.15)}},
-   {label:'ભાષા',pill:{t:LANG[lang]||LANG.g,c:'lg'},fn:()=>{const o=['g','e','r'];lsSet('satsangLang',o[(o.indexOf(lang)+1)%3]);settings();toast('ભાષા હજુ ફક્ત ગુજરાતીમાં છે')}},
-   {label:'એનિમેશન',pill:on(animOn()),fn:()=>{lsSet('chihnaAnim',animOn()?'0':'1');document.body.classList.toggle('noanim',!animOn());settings()}},
-   {label:'આંકડા',fn:stats},{label:'નિયમો અને પોઇન્ટ',fn:rules},
-   {label:'જાહેરાત',fn:()=>sub('📣 જાહેરાત','<p>હાલ કોઈ નવી જાહેરાત નથી.</p>')},
-   {label:'પ્રગતિ ફરી શરૂ',pill:rc?{t:'ખરેખર?',c:'rd'}:null,fn:reset}])
-}
-function sub(t,body){openCard(`<h2>${t}</h2><div class="x" id="cx">✕</div><div class="txt">${body}</div><div class="row" id="bk" style="margin-top:28px">‹ પાછા<b class="g">⚙️</b></div>`);$('cx').onclick=closeCard;$('bk').onclick=settings}
-function stats(){const s=window._stat||{done:0,stages:0};sub('📊 આંકડા',`<p>⭐ ચિહ્ન પૂર્ણ: <b>${s.done} / 16</b></p><p>🧩 સ્ટેજ પૂર્ણ: <b>${s.stages} / 176</b></p><p>🏆 કુલ પોઇન્ટ: <b>${getPts().toLocaleString('en-IN')}</b></p>`)}
-function rules(){sub('📜 નિયમો અને પોઇન્ટ',`<p>• ખાલી ચરણ પર ચિહ્ન ટેપ કરો, તેના 11 સ્ટેજ રમો.</p><p>• સાચો ટુકડો 100 / 200 / 300 (કોમ્બો)</p><p>• ખોટો −20 · હિન્ટ −50</p><p>• ✨ ભૂલ વગર +200 · ⚡ અડધા સમયમાં +300</p><p>• 11 સ્ટેજ પછી ચિહ્ન ઊડીને ચરણ પર બેસે, +500</p>`)}
+let lastCard=null;
+function nOpen(fn,html){lastCard=fn;const q=$('sp');if(q)q.style.display='none';$('card').style.display='none';$('dim').style.display='none';$('nw').innerHTML=html;$('nov').style.display='block'}
+function nClose(){lastCard=null;$('nov').style.display='none';closeCard()}
+function settings(){const B=(x,c)=>`<i class="ns ${c||''}">${x}</i>`,on=x=>x?B('✓','on'):B('✕'),LG={g:'ગુ',e:'E',r:'ABC'};
+  const R=[['🔊',CHL.t('અવાજ','Sound','Avaj'),on(soundOn()),'snd'],['✨',CHL.t('એનિમેશન','Animation','Animation'),on(animOn()),'anm'],['🌐',CHL.t('ભાષા','Language','Bhasha'),B(LG[CHL.L()]||'ગુ','on'),'lng'],
+   ['↺',CHL.t('પ્રગતિ ફરી શરૂ','Reset progress','Fari sharu'),rc?B(CHL.t('ખરેખર?','Sure?','Kharekhar?'),'rd'):'','rst']];
+  const G=[['📊',CHL.t('રેકોર્ડ','Record','Record'),'rec'],['📜',CHL.t('નિયમો','Rules','Niyamo'),'rul'],['📣',CHL.t('જાહેરાત','Notice','Jaherat'),'ann']];
+  nOpen(settings,`<div class="nc" style="left:35px;top:110px;width:320px;height:607px"><div class="nt" style="top:75px">${CHL.t('સેટિંગ્સ','Settings','Settings')}</div><div class="nxx" data-x="1">✕</div>`+
+   R.map((r,k)=>`<div class="nr ss" data-sa="${r[3]}" style="top:${140+82*k}px"><div class="i">${r[0]}</div><div class="t"><b>${r[1]}</b></div>${r[2]}</div>`).join('')+
+   G.map((g,k)=>`<div class="ng" data-sa="${g[2]}" style="left:${80+80*k}px"><i>${g[0]}</i>${g[1]}</div>`).join('')+'</div>')}
+function stats(){const s=window._stat||{done:0,stages:0};
+  const R=(y,i,l,v,o)=>`<div class="nr" style="top:${y}px"><div class="i">${i}</div><div class="t"><small>${l}</small><b>${v}${o?` <span>/ ${o}</span>`:''}</b></div></div>`;
+  nOpen(stats,`<div class="nc" style="left:35px;top:150px;width:320px;height:525px"><div class="nt" style="top:66px">${CHL.t('રેકોર્ડ','Record','Record')}</div><div class="nxx" data-x="1">✕</div>`+
+   R(130,'⭐',CHL.t('ચિહ્ન પૂર્ણ','Chihna done','Chihna purn'),s.done,16)+R(212,'🧩',CHL.t('સ્ટેજ પૂર્ણ','Stages done','Stej purn'),s.stages,176)+R(294,'🏆',CHL.t('કુલ પોઇન્ટ','Total points','Kul point'),getPts().toLocaleString('en-IN'))+
+   `<div class="nbk" data-bk="1" style="left:95px;top:400px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
+function rules(){const P=CHL.t;const L=[['👣',P('ખાલી ચરણ પર ચિહ્ન ટેપ કરો, તેના 11 સ્ટેજ રમો','Tap a chihna on the charan and play its 11 stages','Khali charan par chihna tap karo, tena 11 stej ramo')],
+   ['🧩',P('સાચો ટુકડો 100 / 200 / 300 (કોમ્બો)','Correct piece 100 / 200 / 300 (combo)','Sacho tukdo 100 / 200 / 300 (combo)')],
+   ['💡',P('ખોટો −20 · હિન્ટ −50','Wrong −20 · hint −50','Khoto −20 · hint −50')],
+   ['⚡',P('✨ ભૂલ વગર +200 · અડધા સમયમાં +300','✨ No mistakes +200 · half the time +300','✨ Bhul vagar +200 · adha samayma +300')],
+   ['🕊️',P('11 સ્ટેજ પછી ચિહ્ન ઊડીને ચરણ પર બેસે, +500','After 11 stages the chihna flies to the charan, +500','11 stej pachhi chihna udine charan par bese, +500')]];
+  nOpen(rules,`<div class="nc" style="left:35px;top:95px;width:320px;height:640px"><div class="nt" style="top:78px">${P('નિયમો','Rules','Niyamo')}</div><div class="nxx" data-x="1">✕</div>`+
+   L.map((a,k)=>`<div class="nl" style="top:${140+68*k}px"><i>${a[0]}</i>${a[1]}</div>`).join('')+`<div class="nbk" data-bk="1" style="left:95px;top:520px">${P('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
+function sub(ti,body){nOpen(()=>sub(ti,body),`<div class="nc" style="left:35px;top:200px;width:320px;height:420px"><div class="nt" style="top:52px">${ti}</div><div class="nxx" data-x="1">✕</div><div class="ntx">${body}</div><div class="nbk" data-bk="1" style="left:95px;top:320px">${CHL.t('‹ પાછા','‹ Back','‹ Pachha')}</div></div>`)}
+function setAct(a){
+  if(a==='snd'){lsSet('satsangSound',soundOn()?'0':'1');settings();tone(660,.15)}
+  else if(a==='anm'){lsSet('chihnaAnim',animOn()?'0':'1');document.body.classList.toggle('noanim',!animOn());settings()}
+  else if(a==='lng'){const o=['g','e','r'],n=o[(o.indexOf(CHL.L())+1)%3];if(window.SatsangBox)SatsangBox.set('lang',n);else lsSet('satsangLang',n);settings()}
+  else if(a==='rst')reset();
+  else if(a==='rec')stats();
+  else if(a==='rul')rules();
+  else if(a==='ann')sub('📣 '+CHL.t('જાહેરાત','Notice','Jaherat'),CHL.t('હાલ કોઈ નવી જાહેરાત નથી.','No new notice right now.','Haal koi navi jaherat nathi.'))}
+$('nw').onclick=e=>{e.stopPropagation();const a=e.target.closest('[data-sa]');if(a){setAct(a.dataset.sa);return}if(e.target.closest('[data-x]'))nClose();else if(e.target.closest('[data-bk]'))settings()};
+$('nov').onclick=e=>{if(e.target.id==='nov')nClose()};
+window.SatsangBox&&SatsangBox.onChange(k=>{if(k!=='lang')return;render();if($('nov').style.display==='block'&&lastCard)lastCard()});
 let rc=false;
-function reset(){if(!rc){rc=true;settings();setTimeout(()=>{rc=false;const q=$('sp');if(q&&q.style.display==='block')settings()},3000);return}
-  rc=false;setProg({});mem.pts=0;lsSet('chihnaPts','0');lsSet('chihnaFly','');lsSet('chihnaChal','{}');closeCard();render();toast('પ્રગતિ ફરી શરૂ થઈ')}
+function reset(){if(!rc){rc=true;settings();setTimeout(()=>{rc=false;if(lastCard===settings&&$('nov').style.display==='block')settings()},3000);return}
+  rc=false;setProg({});mem.pts=0;lsSet('chihnaPts','0');lsSet('chihnaFly','');lsSet('chihnaChal','{}');closeCard();render();toast(CHL.t('પ્રગતિ ફરી શરૂ થઈ','Progress reset','Pragati fari sharu thai'))}
 $('set').onclick=settings;
 
 // ===== સ્ક્રીનમાં બેસાડવું =====
@@ -259,7 +322,7 @@ addEventListener('resize',fit);fit();
 document.body.classList.toggle('noanim',!animOn());
 // બધી છબીઓ આવી જાય પછી જ સ્ક્રીન બતાવવી (અધૂરું દેખાય નહીં)
 (function(){
-  const list=['p/home.jpg','p/set.jpg','h/feet.webp'].concat(CH.map(c=>'h/'+c.id+'.webp'));
+  const list=['p/home.jpg','h/feet.webp'].concat(CH.map(c=>'h/'+c.id+'.webp'));
   let n=0;const total=list.length;let shown=false;
   function show(){if(shown)return;shown=true;render();$('app').classList.add('on');$('ld').classList.add('off');if(qs.get('zone'))setTimeout(()=>zoneReward(+qs.get('zone')),400);else checkFly()}
   list.forEach(u=>{const im=new Image();const d=()=>{n++;$('lbar').style.width=(n/total*100)+'%';if(n>=total)show()};im.onload=d;im.onerror=d;im.src=u});
