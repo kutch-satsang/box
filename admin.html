@@ -211,7 +211,17 @@ function tabSw(){var l=S.sw;if(!l)return '<section class="card"><div class="sm">
  DEPT.forEach(function(d,i){var a=l.filter(function(g){return d[2].indexOf(g.game)>=0});a.forEach(function(g){used[g.game]=1});h+=folder(i,d[0],d[1],a)});
  var rest=l.filter(function(g){return !used[g.game]&&g.game.indexOf(":")<0});if(rest.length)h+=folder(9,"🆕","બીજી",rest);
  h+=autoCard(l);
+ h+=logCard();
  return h}
+/* 📜 ગેમ ON/OFF ઇતિહાસ: Supabase game_status_log (trigger નોંધે), છેલ્લા 30 */
+function logCard(){var o=S.swo===7,L=S.glog;
+ var h='<section class="card one fd"><button class="fdh" data-fd="7" aria-expanded="'+o+'"><span>'+(o?'📂':'📁')+' 📜 ON/OFF ઇતિહાસ</span><small>છેલ્લા '+gu(30)+' '+(o?'⌃':'⌄')+'</small></button>';
+ if(o){if(L===undefined){S.glog=null;window.AdminPage.gameLog(function(d){S.glog=d;draw()})}
+  if(!L)h+='<div class="sm">'+(L===false?'લાવી ન શકાયું. નેટ ચકાસો.':'લાવી રહ્યા છીએ…')+'</div>';
+  else if(!L.length)h+='<div class="sm">હજી કોઈ ફેરફાર નથી</div>';
+  else{h+='<div class="sm" style="margin:2px 0 6px">સમય '+esc(TZN)+' પ્રમાણે</div>'+L.map(function(r){var k=r.game.split(":"),nm=k[1]?(SECN[k[1]]||k[1])+' <small>(સત્સંગ પ્રશ્ન)</small>':esc(GAMES[r.game]||r.game);
+   return '<div class="swr"><span><b>'+nm+'</b><small>'+when(r.at)+', '+clock(r.at)+'</small></span><span style="flex:none;min-width:58px;padding:5px 0;border-radius:999px;text-align:center;font-weight:700;font-size:14px;'+(r.enabled?'background:#2e8b57;color:#fff':'background:#e7d9c6;color:#7a6650')+'">'+(r.enabled?'ON':'OFF')+'</span></div>'}).join("")}}
+ return h+'</section>'}
 /* 💌 ઑટો સંદેશ: ભક્ત ગેમ પહેલી વાર પૂરી કરે ત્યારે આપોઆપ */
 function autoCard(l){var A=S.auto||{},gs=l.filter(function(g){return g.game.indexOf(":")<0}),o=S.swo===8,on=gs.filter(function(g){return A[g.game]&&A[g.game].enabled}).length;
  var h='<section class="card one fd"><button class="fdh" data-fd="8" aria-expanded="'+o+'"><span>'+(o?'📂':'📁')+' 💌 ઑટો સંદેશ</span><small>'+gu(on)+'/'+gu(gs.length)+' ચાલુ '+(o?'⌃':'⌄')+'</small></button>';
@@ -238,9 +248,9 @@ function draw(){var el=document.getElementById("pg"),h;el.style.overflow="auto";
  [].forEach.call(el.querySelectorAll("[data-bu]"),function(b){b.addEventListener("click",function(){var n=S.bell[+b.dataset.bu],u=(S.users||[]).filter(function(x){return x.id===n.user_id})[0];if(u)openUser(u)})});
  [].forEach.call(el.querySelectorAll("[data-rd]"),function(b){b.addEventListener("click",function(){var r=(S.rep||[])[+b.dataset.rd];b.disabled=true;window.AdminPage.replyRead(r,function(ok){if(ok){r.reply_read=true;draw()}else b.disabled=false})})});
  [].forEach.call(el.querySelectorAll("[data-sec]"),function(b){b.addEventListener("click",function(){S.seco=!S.seco;draw()})});
- [].forEach.call(el.querySelectorAll("[data-fd]"),function(b){b.addEventListener("click",function(){var i=+b.dataset.fd;S.swo=S.swo===i?-1:i;draw()})});
+ [].forEach.call(el.querySelectorAll("[data-fd]"),function(b){b.addEventListener("click",function(){var i=+b.dataset.fd;S.swo=S.swo===i?-1:i;if(i===7)S.glog=undefined;draw()})});
  [].forEach.call(el.querySelectorAll("[data-au],[data-as]"),function(b){b.addEventListener("click",function(){var g=b.dataset.au||b.dataset.as,a=(S.auto||{})[g]||{},inp=el.querySelector('[data-at="'+g+'"]'),v=b.dataset.au?!a.enabled:!!a.enabled,t=inp?inp.value.trim():"";b.disabled=true;window.AdminPage.setAuto(g,v,t,function(ok){if(ok){S.auto=S.auto||{};S.auto[g]={enabled:v,body:t||null};if(b.dataset.as){b.textContent="✓";setTimeout(draw,700);return}}else alertErr();draw()})})});
- [].forEach.call(el.querySelectorAll("[data-sw]"),function(b){b.addEventListener("click",function(){var g=S.sw[+b.dataset.sw],v=!g.enabled;b.disabled=true;window.AdminPage.setGame(g.game,v,function(ok){if(ok)g.enabled=v;else alertErr();draw()})})});
+ [].forEach.call(el.querySelectorAll("[data-sw]"),function(b){b.addEventListener("click",function(){var g=S.sw[+b.dataset.sw],v=!g.enabled;b.disabled=true;window.AdminPage.setGame(g.game,v,function(ok){if(ok)S.glog=undefined;if(ok)g.enabled=v;else alertErr();draw()})})});
  [].forEach.call(el.querySelectorAll("[data-top]"),function(b){b.addEventListener("click",function(){var a=(S.users||[]).slice().sort(function(x,y){return (y.plays||0)-(x.plays||0)});openUser(a[+b.dataset.top])})});[].forEach.call(el.querySelectorAll("[data-det]"),function(c){c.addEventListener("click",function(){openDet(c.dataset.det)})});
  [].forEach.call(el.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){go(b.dataset.go)})})}
 /* સારાંશ એક સ્ક્રીનમાં ન સમાય તો સરકવાને બદલે પાનું 1 / 2 */
@@ -340,6 +350,7 @@ function load(c){
  window.AdminPage.setAuto=function(g,v,t,cb){call("admin_set_auto",{g:g,turn_on:v,txt:t||null}).then(function(){cb(true)},function(){cb(false)})};
  call("admin_auto_messages").then(function(d){var m={};(d||[]).forEach(function(r){m[r.game]=r});S.auto=m;if(S.tab==="sw")draw()},function(){S.auto={}});
  window.AdminPage.setGame=function(g,v,cb){call("admin_set_game",{target:g,turn_on:v}).then(function(){cb(true)},function(){cb(false)})};
+window.AdminPage.gameLog=function(cb){call("admin_game_log",{lim:30}).then(function(d){cb(d||[])},function(){cb(false)})};
  Promise.all([call("admin_stats"),call("admin_users"),call("admin_extra_stats"),call("admin_feedback")]).then(function(r){
   render(r[0]);renderExtra(r[2],r[3]);renderUsers(r[1]);
   document.getElementById("upd").textContent="સમય "+TZN+" પ્રમાણે · "+when(new Date().toISOString())+", "+clock(new Date().toISOString())
