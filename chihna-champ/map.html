@@ -130,7 +130,7 @@ body.noanim .bt.cur{animation:none}
  <div class="pill" id="bot"><span id="pts">⭐ 0</span><span class="s" id="stt">★ 0 / 48</span></div>
  <div class="rb" id="b1" style="left:640px;top:1548px;width:100px;height:100px;font-size:46px">📊</div>
  <div class="rb" id="b2" style="left:775px;top:1548px;width:100px;height:100px;font-size:46px">📜</div>
- <div id="tb">🧩 TEST: all houses open · ‹ › for all zones</div>
+ <div id="tb">🧩 TEST: all palaces open · ‹ › for all zones</div>
  <div id="zn"></div>
  <div id="toast"></div>
  <div id="zov"><div class="nw" id="znw"></div></div>
@@ -153,11 +153,11 @@ const $=id=>document.getElementById(id);
 
 const L=()=>{try{return window.SatsangBox?SatsangBox.lang():(localStorage.getItem('satsangLang')||'g')}catch(e){return 'g'}};
 const TX={
-g:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zone',back:'‹ પાછા',s1:'Zone પૂર્ણ',s2:'આ ઝોનનાં ઘર',s3:'Stage પૂર્ણ',s4:'કુલ Points',pts:'Points',lang:'ભાષા',lg:'ગુ',
- r:['દરેક ઝોનમાં 16 ઘર, દરેક ઘરમાં એક ચિહ્નની પઝલ','લીલું ▶ દબાવો: અવતાર ઘરમાં જાય, પઝલ ખૂલે','પૂરું ઘર દબાવો: તારા, Points અને સમય','16 ઘર પછી ગેટ ખૂલે, ચરણ પર ઇનામ'],
+g:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zone',back:'‹ પાછા',s1:'Zone પૂર્ણ',s2:'આ ઝોનના દિવ્ય મહેલ',s3:'Stage પૂર્ણ',s4:'કુલ Points',pts:'Points',lang:'ભાષા',lg:'ગુ',
+ r:['દરેક ઝોનમાં 16 દિવ્ય મહેલ, દરેક મહેલમાં એક ચિહ્નની પઝલ','લીલું ▶ દબાવો: અવતાર મહેલમાં જાય, પઝલ ખૂલે','પૂરો મહેલ દબાવો: તારા, Points અને સમય','16 મહેલ પછી ગેટ ખૂલે, ચરણ પર ઇનામ'],
  p:['સાચો ટુકડો','ખોટો ટુકડો','ભૂલ વગર','અડધા સમયમાં']},
-e:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zones',back:'‹ Back',s1:'Zones done',s2:'Houses in this zone',s3:'Stages done',s4:'Total points',pts:'Points',lang:'Language',lg:'E',
- r:['16 houses in every zone, one chihna puzzle in each house','Press the green ▶: avatar enters the house, puzzle opens','Press a finished house: stars, points and time','After 16 houses the gate opens, prize on the charan'],
+e:{zone:'Zone',stats:'Record',rules:'Rules',zones:'Zones',back:'‹ Back',s1:'Zones done',s2:'Divine Palaces in this zone',s3:'Stages done',s4:'Total points',pts:'Points',lang:'Language',lg:'E',
+ r:['16 Divine Palaces in every zone, one chihna puzzle in each palace','Press the green ▶: avatar enters the palace, puzzle opens','Press a finished palace: stars, points and time','After 16 palaces the gate opens, prize on the charan'],
  p:['Correct','Wrong','No mistakes','Half the time']},
 r:null};
 TX.r=Object.assign({},TX.e,{lg:'ABC'});
@@ -258,14 +258,14 @@ function avAtCurrent(){const c=ST.findIndex(s=>s.s==='cur');const k=c<0?(ST.ever
 // ===== બબલ =====
 function bubble(i){
   const c=CH[i],s=ST[i].s,r=res(c.id,Z),st=stars(c.id,Z),b=$('bub');tone(700,.08,0,.12);
-  let h=`<div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="nm">${CHL.t('ઘર','House','Ghar')} ${GN(i+1)} · ${c.n}</div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
+  let h=`<div class="hd"><img src="h/${c.id}.webp" alt=""><div><div class="nm">${CHL.t('દિવ્ય મહેલ','Divine Palace','Divine Palace')} ${GN(i+1)} · ${c.n}</div><div class="st">${Z>NB?(s==='lock'?'🔒':(s==='done'?'✓':'▶')):(s==='done'?'★'.repeat(st)+'☆'.repeat(3-st):(s==='cur'?'☆☆☆':'🔒'))}</div></div></div>`;
   if(Z>NB){const ch3=Z<=NB+3,r=Z-NB,L=Z-NB-3;
     if(s==='lock')h+=`<div class="sm" style="font-size:28px">${minDone(getProg())<NB?CHL.t('પહેલાં બધા 11 Zone પૂરા કરો 🙏','Finish all 11 zones first 🙏','Pahela badha 11 zon pura karo 🙏'):(ch3?CHL.t('પહેલાં આગળનો રાઉન્ડ પૂરો કરો 🙏','Finish the previous round first 🙏','Pahela aagalno round puro karo 🙏'):CHL.t('પહેલાં આગળનું Level પૂરું કરો 🙏','Finish the previous level first 🙏','Pahela aagalnu level puru karo 🙏'))}</div>`;
     else h+=`<div class="sm">${ch3?'🏆 '+CHL.t('Challenge · રાઉન્ડ ','Challenge · round ','Challenge · round ')+r:'🏅 '+CHL.t('MahaChamp · Level ','MahaChamp · level ','MahaChamp · level ')+L}</div><div class="bb" id="bgo">${s==='done'?CHL.t('↻ Play again','↻ Play again','↻ Fari ramo'):CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`;
   }else if(s==='done'){
     h+=`<div class="rw"><span>⭐ ${CHL.t('Points','Points','Point')}: ${r?r.p.toLocaleString('en-IN'):'—'}</span><span>⏱ ${r?fmt(r.t):'—'}</span></div><div class="sm">${CHL.t('શ્રેષ્ઠ સમય','Best time','Shreshth samay')} ${r?fmt(r.b):'—'}</div><div class="bb g" id="bgo">${CHL.t('↻ Play again','↻ Play again','↻ Fari ramo')}</div>`;
-  }else if(s==='cur'||TEST){h+=`<div class="sm">${CHL.t('Zone '+GN(Z)+' નો Stage '+GN(Z)+' · આ ઘરમાં '+c.n+' ની પઝલ','Zone '+Z+', stage '+Z+' · '+c.n+' puzzle in this house','Zon '+Z+' no stej '+Z+' · aa gharma '+c.n+' ni puzzle')}</div><div class="bb" id="bgo">${CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`}
-  else h+=`<div class="sm" style="font-size:28px">${CHL.t('પહેલાં આગળનું ઘર પૂરું કરો 🙏','Finish the previous house first 🙏','Pahela aagalnu ghar puru karo 🙏')}</div>`;
+  }else if(s==='cur'||TEST){h+=`<div class="sm">${CHL.t('Zone '+GN(Z)+' નો Stage '+GN(Z)+' · આ મહેલમાં '+c.n+' ની પઝલ','Zone '+Z+', stage '+Z+' · '+c.n+' puzzle in this palace','Zon '+Z+' no stej '+Z+' · aa mahelma '+c.n+' ni puzzle')}</div><div class="bb" id="bgo">${CHL.t('Play ▶','Play ▶','Ramo ▶')}</div>`}
+  else h+=`<div class="sm" style="font-size:28px">${CHL.t('પહેલાં આગળનો મહેલ પૂરો કરો 🙏','Finish the previous palace first 🙏','Pahela aagalno mahel puro karo 🙏')}</div>`;
   b.innerHTML=h+'<div class="tip"></div>';b.style.display='block';
   const x=HX(i),hy=HY(i)-250*328/260+30;let L=Math.max(20,Math.min(941-560,x-270));b.style.left=L+'px';
   const bh=b.offsetHeight;b.style.top=Math.max(10,hy-bh-20)+'px';b.querySelector('.tip').style.left=(x-L-34)+'px';
@@ -281,10 +281,10 @@ function enter(i,replay){if(busy)return;busy=true;hideBub();
   if(Math.abs(PTS[ti].y-avY)>4&&ci>=0)walk(ci,ti,go);else go()}
 $('hz').addEventListener('click',e=>{const el=e.target.closest('[data-i]');if(!el)return;e.stopPropagation();const i=+el.dataset.i,s=ST[i].s;
   if(el.classList.contains('bt')){if(s==='cur'||(TEST&&s!=='done')){enter(i,false);return}
-    if(s==='lock'){el.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});tone(180,.25,0,.15,'square');toast(CHL.t('પહેલાં આગળનું ઘર પૂરું કરો','Finish the previous house first','Pahela aagalnu ghar puru karo'))}else bubble(i);return}
+    if(s==='lock'){el.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});tone(180,.25,0,.15,'square');toast(CHL.t('પહેલાં આગળનો મહેલ પૂરો કરો','Finish the previous palace first','Pahela aagalno mahel puro karo'))}else bubble(i);return}
   bubble(i)});
 $('mp').addEventListener('click',e=>{if(!e.target.closest('#bub'))hideBub()});
-$('gate').onclick=()=>{if(Z>NB)return;if(ST.every(s=>s.s==='done'))goPage('charan','?zone='+Z+PQ);else toast(CHL.t('16 ઘર પૂરાં થાય પછી ગેટ ખૂલશે 🚪','The gate opens after 16 houses 🚪','16 ghar puraa thay pachhi gate khulshe 🚪'))};
+$('gate').onclick=()=>{if(Z>NB)return;if(ST.every(s=>s.s==='done'))goPage('charan','?zone='+Z+PQ);else toast(CHL.t('16 દિવ્ય મહેલ પૂરા થાય પછી ગેટ ખૂલશે 🚪','The gate opens after 16 palaces 🚪','16 mahel pura thay pachhi gate khulshe 🚪'))};
 $('zl').onclick=()=>{if(VIEW>1){VIEW--;hideBub();render();avAtCurrent();showZN()}};
 $('zr').onclick=()=>{if(VIEW<maxView(getProg())){VIEW++;hideBub();render();avAtCurrent();showZN()}};
 
@@ -304,7 +304,7 @@ $('znw').onclick=e=>{e.stopPropagation();
   const g=e.target.closest('[data-pg]');if(g){zpg+=+g.dataset.pg;zRender();tone(660,.08,0,.12);return}
   const el=e.target.closest('.nz');if(!el||el.classList.contains('d'))return;VIEW=+el.dataset.z;$('zov').style.display='none';hideBub();render();avAtCurrent();showZN();tone(660,.08,0,.12)};
 $('zp').onclick=openZones;$('zov').onclick=e=>{if(e.target.id==='zov')$('zov').style.display='none'};
-function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} ${t().zone} ${Z}: ${zname(z)}<small>${sub||CHL.t('16 ઘર · ','16 houses · ','16 ghar · ')+(Z<=NB?CHL.t('Stage ','Stage ','Stej ')+Z:(Z<=NB+3?CHL.t('Challenge રાઉન્ડ ','Challenge round ','Challenge round ')+(Z-NB):CHL.t('MahaChamp Level ','MahaChamp level ','MahaChamp level ')+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
+function showZN(sub){const z=ZN[Z-1],e=$('zn');e.innerHTML=`${z.e} ${t().zone} ${Z}: ${zname(z)}<small>${sub||CHL.t('16 દિવ્ય મહેલ · ','16 palaces · ','16 palaces · ')+(Z<=NB?CHL.t('Stage ','Stage ','Stej ')+Z:(Z<=NB+3?CHL.t('Challenge રાઉન્ડ ','Challenge round ','Challenge round ')+(Z-NB):CHL.t('MahaChamp Level ','MahaChamp level ','MahaChamp level ')+(Z-NB-3)))}</small>`;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
 
 // ===== જીત પછી પાછા આવ્યા: અવતાર આગળના ઘરે ચાલે / ગામ પૂરું: ગેટ =====
 function afterReturn(){
@@ -322,7 +322,7 @@ function afterReturn(){
   if(i>=0&&i<15&&ST[i].s==='done'&&ST[i+1].s==='cur'){ // ઘર i જીત્યા → i+1
     const p=PTS[IDX[i]];placeAv(p.x,p.y,'m/av_cheer.webp');follow(p.y);
     const hs=$('h'+i);if(hs&&animOn())hs.animate([{filter:'brightness(2.2)'},{filter:'none'}],{duration:900});chime();
-    setTimeout(()=>walk(IDX[i],IDX[i+1],()=>toast('🏠 '+CHL.t('ઘર ','House ','Ghar ')+GN(i+2)+': '+CH[i+1].n)),1100);return}
+    setTimeout(()=>walk(IDX[i],IDX[i+1],()=>toast('🏠 '+CHL.t('દિવ્ય મહેલ ','Divine Palace ','Divine Palace ')+GN(i+2)+': '+CH[i+1].n)),1100);return}
   {const at=lsGet('chihnaAt');if(at){lsSet('chihnaAt','');const ai=+at,c=ST.findIndex(s=>s.s==='cur');
     if(c>=0&&ai!==c&&Z===MAXZ&&animOn()&&PTS[IDX[ai]]){const p=PTS[IDX[ai]];placeAv(p.x,p.y,'m/av_idle.webp');follow(p.y);setTimeout(()=>walk(IDX[ai],IDX[c]),900);return}}}
   avAtCurrent();
