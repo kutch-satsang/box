@@ -398,7 +398,7 @@ const FORM_POOL=[2,1,8,6,3,7,5,9,10,4,0];
 function spawnWave(w){const d=G.d,set=pickSet(d,w),form=w===0&&d.fresh.length?1:FORM_POOL[hsh(d.n,w+50)%d.forms],sd=hsh(d.n,w+9)%2?1:-1;
   const cnt=d.per,vy=(72+d.s*.45)*d.speed;
   for(let i=0;i<cnt;i++){const k=set[i%set.length];const hp=d.lo+(hsh(d.n*7+w,i)%(d.hi-d.lo+1));
-    G.spawnQ.push({at:G.t+i*0.28,o:{k,hp,max:hp,r:27,form,i,cnt,vy,born:0,ax:0,ay:-40,sd}})}
+    G.spawnQ.push({at:G.t+i*0.28,o:{k,hp,max:hp,r:27,form,i,cnt,vy,born:0,ax:0,ay:-40,sd,pdive:(!G.sp&&form!==9&&(hsh(d.n,w+70)%cnt===i||(d.n>=6&&w>=2&&hsh(d.n,w+71)%cnt===i)))?1:0}})}   // દર મોજામાં 1-2 દોષ ટોળામાંથી છૂટા પડી ઝપટ મારે (Galaga જેવું)
   if(w%2===1)for(let i=0;i<d.thick;i++){const k=set[(i+1)%set.length];G.spawnQ.push({at:G.t+cnt*0.28+0.6+i*0.8,o:{k,hp:d.thickHP,max:d.thickHP,r:36,form:2,i:i,cnt:2,vy:vy*.8,thick:1,ay:-50}})}
   for(let i=0;i<d.minions;i++)G.spawnQ.push({at:G.t+0.4+i*1.1,o:{min:hsh(d.n+w,i)%5,hp:1,max:1,r:19,form:2,i:i+3,cnt:6,vy:vy*1.25,ay:-30}});
 }
