@@ -418,8 +418,10 @@ function enemyPos(e,dt){const t=e.born,F=e.form,cx0=CW/2,sp=Math.min(CW-60,300);
       if(e.dv){e.ay+=e.vy*dt*2.2;y=e.ay;x=e.xs+(e.dx-e.xs)*Math.min(1,(t-e.dt)/.9)}else x=bx;break}
     case 10:{const a=t*1.8+e.i*1.2,R=Math.max(30,95-t*8);x=cx0+Math.cos(a)*R*(e.sd||1);y+=Math.sin(a)*R*.45;break}  // ગોળ ફરતા ઊતરે
     default:x=cx0+(e.i%2?1:-1)*(70+Math.floor(e.i/2)%2*40)+Math.sin(t*3+e.i)*16;y-=Math.floor(e.i/2)*24;}
-  if(F!==9||!e.dv)x+=Math.sin(t*1.1+e.i*2.1)*10;                                               // હળવો ડોલન — કડક સીધી લાઇન નહીં
-  if(!(F===9&&e.dv)&&G.ship){const k=Math.max(0,Math.min(1,(e.ay-CH*.12)/(CH*.45)));x+=(G.ship.x-cx0)*.8*k}   // ખૂણામાં સંતાઈ ન શકાય: નીચે આવતાં દોષ યાન તરફ ઢળે
+  if(!e.dv)x+=Math.sin(t*1.1+e.i*2.1)*10;                                               // હળવો ડોલન — કડક સીધી લાઇન નહીં
+  if(G.edgeT>1.5&&e.min==null&&F!==9)e.pdive=1;                                                  // ખૂણામાં સંતાયા હોય તો દોષ ઝપટ મારે (જેમ ફોર્મ 9)
+  if(e.pdive&&!e.dv&&e.ay>band*.9){e.dv=1;e.dt=t;e.xs=x;e.dx=G.ship.x}
+  if(e.pdive&&e.dv){e.ay+=e.vy*dt*2.2;y=e.ay;x=e.xs+(e.dx-e.xs)*Math.min(1,(t-e.dt)/.9)}
   x=Math.max(e.r+6,Math.min(CW-e.r-6,x));
   e.x=x;e.y=y}
 function spawnBoss(){const d=G.d,big=d.boss!=='mini';const k=pickBossFault(d);
@@ -455,6 +457,7 @@ function update(dt){const g=G,d=g.d;g.t+=dt;g.bgY+=dt*18;
   // spawn queue
   for(let i=g.spawnQ.length-1;i>=0;i--){if(g.spawnQ[i].at<=g.t){const o=g.spawnQ[i].o;o.born=0;if(o.min==null)g.spn=(g.spn||0)+1;g.en.push(o);g.spawnQ.splice(i,1)}}
   // enemies
+  {const sx=g.ship.x;g.edgeT=(sx<75||sx>CW-75)?(g.edgeT||0)+dt:Math.max(0,(g.edgeT||0)-dt*2)}
   for(const e of g.en){e.born+=dt;enemyPos(e,dt)}
   for(let i=g.en.length-1;i>=0;i--){const e=g.en[i];
     if(e.y>CH+40){g.en.splice(i,1);if(sp&&sp.id==='lamps'){if(e.min==null)lampOut();}else hurt(4,false);if(!G||G.state!=='play')return;continue}
