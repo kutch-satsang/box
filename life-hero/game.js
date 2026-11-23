@@ -660,7 +660,7 @@ function win(){const g=G;if(!g||g.state!=='play')return;g.state='end';SFX.win();
   if(firstWin&&n%10===0){gAdd+=10;treasure=`<div class="tre"><img class="chestS" src="${A2.gift_open}"><span><img class=ic src="${UI.gem}"> +10 ખજાનો!</span></div>`}
   P.gems+=gAdd;pushEvent({kind:'stage',stage:n,stars:st,gems:gAdd,dur:Math.round(g.t)});
   winStats(g,st);
-  try{window.sbTrack&&sbTrack.finish({mode:'stage',count:n,punya:g.score,mistakes:g.hurtN})}catch(e){}   // હબ: પુણ્ય = સ્ટેજનો સ્કોર, ભૂલ = લાગેલા ઘા
+  try{window.sbTrack&&sbTrack.finish({mode:'stage',count:n,punya:g.score,mistakes:g.hurtN,stars:st})}catch(e){}   // હબ: પુણ્ય = સ્ટેજનો સ્કોર, ભૂલ = લાગેલા ઘા
   const cards=g.newCards.length?'<div class="nc">નવાં કાર્ડ: '+g.newCards.map(k=>`<span><img src="${A.f[k]}">→<img src="${A.v[k]}">${FN[k][1]}</span>`).join('')+'</div>':'';
   setTimeout(()=>openOv(`<div class="wint">શાબાશ, ${hubName()||'હીરો'}!</div>${titleLine()}<img class="wav" src="${A.h[Math.max(0,P.avatar)]}">
    <div class="bigstars">${[0,1,2].map(j=>starSvg(j<st)).join('')}</div>
