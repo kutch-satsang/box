@@ -398,7 +398,7 @@ const FORM_POOL=[2,1,8,6,3,7,5,9,10,4,0];
 function spawnWave(w){const d=G.d,set=pickSet(d,w),form=w===0&&d.fresh.length?1:FORM_POOL[hsh(d.n,w+50)%d.forms],sd=hsh(d.n,w+9)%2?1:-1;
   const cnt=d.per,vy=(72+d.s*.45)*d.speed;
   for(let i=0;i<cnt;i++){const k=set[i%set.length];const hp=d.lo+(hsh(d.n*7+w,i)%(d.hi-d.lo+1));
-    G.spawnQ.push({at:G.t+i*0.28,o:{k,hp,max:hp,r:27,form,i,cnt,vy,born:0,ax:0,ay:-40,sd}})}
+    G.spawnQ.push({at:G.t+i*0.28,o:{k,hp,max:hp,r:27,form,i,cnt,vy,born:0,ax:0,ay:-40,sd,pdive:(!G.sp&&form!==9&&(hsh(d.n,w+70)%cnt===i||(d.n>=6&&w>=2&&hsh(d.n,w+71)%cnt===i)))?1:0}})}   // દર મોજામાં 1-2 દોષ ટોળામાંથી છૂટા પડી ઝપટ મારે (Galaga જેવું)
   if(w%2===1)for(let i=0;i<d.thick;i++){const k=set[(i+1)%set.length];G.spawnQ.push({at:G.t+cnt*0.28+0.6+i*0.8,o:{k,hp:d.thickHP,max:d.thickHP,r:36,form:2,i:i,cnt:2,vy:vy*.8,thick:1,ay:-50}})}
   for(let i=0;i<d.minions;i++)G.spawnQ.push({at:G.t+0.4+i*1.1,o:{min:hsh(d.n+w,i)%5,hp:1,max:1,r:19,form:2,i:i+3,cnt:6,vy:vy*1.25,ay:-30}});
 }
@@ -418,7 +418,10 @@ function enemyPos(e,dt){const t=e.born,F=e.form,cx0=CW/2,sp=Math.min(CW-60,300);
       if(e.dv){e.ay+=e.vy*dt*2.2;y=e.ay;x=e.xs+(e.dx-e.xs)*Math.min(1,(t-e.dt)/.9)}else x=bx;break}
     case 10:{const a=t*1.8+e.i*1.2,R=Math.max(30,95-t*8);x=cx0+Math.cos(a)*R*(e.sd||1);y+=Math.sin(a)*R*.45;break}  // ગોળ ફરતા ઊતરે
     default:x=cx0+(e.i%2?1:-1)*(70+Math.floor(e.i/2)%2*40)+Math.sin(t*3+e.i)*16;y-=Math.floor(e.i/2)*24;}
-  if(F!==9||!e.dv)x+=Math.sin(t*1.1+e.i*2.1)*10;                                               // હળવો ડોલન — કડક સીધી લાઇન નહીં
+  if(!e.dv)x+=Math.sin(t*1.1+e.i*2.1)*10;                                               // હળવો ડોલન — કડક સીધી લાઇન નહીં
+  if(G.edgeT>1.5&&e.min==null&&F!==9)e.pdive=1;                                                  // ખૂણામાં સંતાયા હોય તો દોષ ઝપટ મારે (જેમ ફોર્મ 9)
+  if(e.pdive&&!e.dv&&e.ay>band*.9){e.dv=1;e.dt=t;e.xs=x;e.dx=G.ship.x}
+  if(e.pdive&&e.dv){e.ay+=e.vy*dt*2.2;y=e.ay;x=e.xs+(e.dx-e.xs)*Math.min(1,(t-e.dt)/.9)}
   x=Math.max(e.r+6,Math.min(CW-e.r-6,x));
   e.x=x;e.y=y}
 function spawnBoss(){const d=G.d,big=d.boss!=='mini';const k=pickBossFault(d);
@@ -452,8 +455,9 @@ function update(dt){const g=G,d=g.d;g.t+=dt;g.bgY+=dt*18;
   if(g.helper)helperFire(dt);
   if(g.wing)wingUpdate(dt);
   // spawn queue
-  for(let i=g.spawnQ.length-1;i>=0;i--){if(g.spawnQ[i].at<=g.t){const o=g.spawnQ[i].o;o.born=0;g.en.push(o);g.spawnQ.splice(i,1)}}
+  for(let i=g.spawnQ.length-1;i>=0;i--){if(g.spawnQ[i].at<=g.t){const o=g.spawnQ[i].o;o.born=0;if(o.min==null)g.spn=(g.spn||0)+1;g.en.push(o);g.spawnQ.splice(i,1)}}
   // enemies
+  {const sx=g.ship.x;g.edgeT=(sx<75||sx>CW-75)?(g.edgeT||0)+dt:Math.max(0,(g.edgeT||0)-dt*2)}
   for(const e of g.en){e.born+=dt;enemyPos(e,dt)}
   for(let i=g.en.length-1;i>=0;i--){const e=g.en[i];
     if(e.y>CH+40){g.en.splice(i,1);if(sp&&sp.id==='lamps'){if(e.min==null)lampOut();}else hurt(4,false);if(!G||G.state!=='play')return;continue}
@@ -482,7 +486,7 @@ function update(dt){const g=G,d=g.d;g.t+=dt;g.bgY+=dt*18;
   if(!d.boss&&sp&&sp.T){if(g.cleared){}else{const live=g.en.length+g.spawnQ.length;g.waveT+=dt;   // સમયવાળા ખાસ સ્ટેજ: મોજાં સતત
     if((live<=2&&g.waveT>1)||g.waveT>d.waveLen)nextWave()}}
   else if(!d.boss){const live=g.en.length+g.spawnQ.length;g.waveT+=dt;
-    if((live===0&&g.waveT>1.5)||(g.waveT>d.waveLen+6&&live<=2)||g.waveT>d.waveLen+25){if(g.wave>=d.waves-1){if(live===0&&!g.cleared){g.cleared=true;setTimeout(()=>win(),900)}}else nextWave()}}
+    if((live===0&&g.waveT>1.5)||(g.waveT>d.waveLen+6&&live<=2)||g.waveT>d.waveLen+25){if(g.wave>=d.waves-1){if(live===0&&!g.cleared){if(!g.trial&&!sp&&(g.spn||0)>=4&&g.mala<Math.ceil(g.spn*.5)){lose('દોષો ભાગી ગયા! અડધા તો હરાવો 🗡')}else{g.cleared=true;setTimeout(()=>win(),900)}}}else nextWave()}}
   if(g.tut>0){g.tut-=dt;if(g.tut<=0){P.tut=1;saveP()}}
   if(g.shake>0)g.shake-=dt;if(g.flash>0)g.flash-=dt;if(g.sad>0)g.sad-=dt;
   updHud();
@@ -490,7 +494,7 @@ function update(dt){const g=G,d=g.d;g.t+=dt;g.bgY+=dt*18;
 function nextWave(){const g=G,sp=g.sp;
   if(g.wave>=0&&!(sp&&(sp.id==='weapons'||sp.id==='gems'))&&!(sp&&sp.T&&g.wave%3!==2)){ // wave drop (સમયવાળા ખાસ સ્ટેજમાં દર 3 મોજે)
     const w=g.wave;dropWeapon(CW/2+(hsh(g.n,w)%120-60),-20)}
-  g.wave++;g.waveT=0;g.ck={wave:g.wave,score:g.score,mala:g.mala};spawnWave(g.wave);
+  g.wave++;g.waveT=0;g.ck={wave:g.wave,score:g.score,mala:g.mala,spn:g.spn||0};spawnWave(g.wave);
   if(g.wave>0&&!(sp&&sp.T))bigText('મોજું '+(g.wave+1)+'/'+g.d.waves,'#bfe3ff',.9)}
 function lampOut(){const g=G;g.lamps--;SFX.wrong();g.shake=.3;vib(80);
   g.fx.push({type:'txt',s:'🪔 દીવો ઓલવાયો!',x:CW/2,y:CH-90,col:'#ffb36a',t:0,life:1.2});if(g.lamps<=0)lose('દીવા ઓલવાઈ ગયા!')}
@@ -674,7 +678,7 @@ function lose(msg){const g=G;if(!g||g.state!=='play')return;g.state='end';SFX.lo
   openOv(`<div class="wint" style="color:#ffb3b3">${msg||'ઊર્જા પૂરી!'}</div><div class="row">હાર્યા નથી — ફરી પ્રયત્ન કરો 💪</div>
   <div class="brow"><button class="btn sec" onclick="showMap()">નકશો</button><button class="btn" onclick="retry()">${g.d.boss?'ફરી બોસ':g.sp?'ફરી ખાસ સ્ટેજ':'મોજું '+(g.ck.wave+1)+' થી ફરી'}</button></div>`)}
 function retry(){const g=G;closeOv();if(g.d.boss||g.sp){startStage(g.n,{trial:g.trial});return}
-  g.en.length=0;g.eb.length=0;g.spawnQ.length=0;g.drops.length=0;g.energy=100;g.pw.dhal=Math.max(g.pw.dhal||0,g.shieldT||0);g.score=g.ck.score;g.mala=g.ck.mala;g.wave=g.ck.wave-1;g.state='play';g.ship.inv=1.5;g.cleared=false;g.combo=0;g.mult=1;nextWave()}
+  g.en.length=0;g.eb.length=0;g.spawnQ.length=0;g.drops.length=0;g.energy=100;g.pw.dhal=Math.max(g.pw.dhal||0,g.shieldT||0);g.score=g.ck.score;g.mala=g.ck.mala;g.spn=g.ck.spn||0;g.wave=g.ck.wave-1;g.state='play';g.ship.inv=1.5;g.cleared=false;g.combo=0;g.mult=1;nextWave()}
 
 // ---------- ઇનપુટ ----------
 const keys={};addEventListener('keydown',e=>{if(e.key==='ArrowLeft')keys.l=1;if(e.key==='ArrowRight')keys.r=1});addEventListener('keyup',e=>{if(e.key==='ArrowLeft')keys.l=0;if(e.key==='ArrowRight')keys.r=0});
