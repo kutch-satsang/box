@@ -669,7 +669,7 @@ function win(){const g=G;if(!g||g.state!=='play')return;g.state='end';SFX.win();
    <div class="row small sync" id="syncL">${syncLine()}</div>
    <div class="brow"><button class="btn sec" onclick="showMap()">નકશો</button><button class="btn" onclick="goStage(${n+1})">આગળ ▶</button></div>`),600);sync();setTimeout(checkAch,1500)}
 function lose(msg){const g=G;if(!g||g.state!=='play')return;g.state='end';SFX.lose();vib(200);saveP();
-  if(!g.trial)try{window.sbTrack&&sbTrack.finish({mode:'stage',count:g.n,punya:0,mistakes:g.hurtN})}catch(e){}   // હબ: હાર = પુણ્ય 0
+  // હારમાં finish નથી બોલાવતા (પોઇન્ટ ફક્ત સાચી પૂરી રમત પર); છોડી દે તો analytics quit નોંધે છે
  
   openOv(`<div class="wint" style="color:#ffb3b3">${msg||'ઊર્જા પૂરી!'}</div><div class="row">હાર્યા નથી — ફરી પ્રયત્ન કરો 💪</div>
   <div class="brow"><button class="btn sec" onclick="showMap()">નકશો</button><button class="btn" onclick="retry()">${g.d.boss?'ફરી બોસ':g.sp?'ફરી ખાસ સ્ટેજ':'મોજું '+(g.ck.wave+1)+' થી ફરી'}</button></div>`)}
