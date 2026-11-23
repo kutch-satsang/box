@@ -139,7 +139,7 @@ html.cl .chs span{background:rgba(43,52,69,.07)}
 <script src="auth.js"></script>
 <script>
 (function(){
-var GAMES={"prashn-leela":"સત્સંગ પ્રશ્ન","dhyan-murti":"ધ્યાન દર્શન","antahshatru-vijay":"અંતઃશત્રુ વિજય","fal-ful-memory":"ફળ ફૂલ મેમરી","chihna-champ":"ચિહ્ન ચેમ્પ","ekadashi":"એકાદશી","charanvidhi":"ચરણ ચિહ્ન માસ્ટર"};
+var GAMES={"prashn-leela":"સત્સંગ પ્રશ્ન","dhyan-murti":"ધ્યાન દર્શન","life-hero":"Life Hero","fal-ful-memory":"ફળ ફૂલ મેમરી","chihna-champ":"ચિહ્ન ચેમ્પ","ekadashi":"એકાદશી","charanvidhi":"ચરણ ચિહ્ન માસ્ટર"};
 var LANGS={g:"ગુજરાતી",e:"English",r:"ABC"},THEMES={mati:"આધ્યાત્મિક",kaach:"ક્લાસિક"},UNK="નોંધાયું નથી";
 var MON=["જાન્યુ","ફેબ્રુ","માર્ચ","એપ્રિ","મે","જૂન","જુલા","ઑગ","સપ્ટે","ઑક્ટો","નવે","ડિસે"];
 function gu(n){return String(n)}
@@ -199,7 +199,7 @@ function tabMore(){var d=S.d,x=S.x||{},total=d.total_users||0,c=byCountry(x),h="
 function tabRep(){var r=(S.rep||[]).filter(function(x){return !x.reply_read});return r.length?'<section class="card"><h2>💌 ભક્તોના જવાબ <small>'+gu(r.length)+' નવા</small></h2>'+r.map(function(x){return '<div class="msr"><small>'+esc(x.name||x.email||"મહેમાન")+(x.game?" · "+esc(GAMES[x.game]||x.game):"")+" · "+when(x.replied_at)+'</small><span class="rp">'+esc(x.reply)+'</span><button class="msb sent" style="width:auto;height:30px;padding:0 10px;font-size:13px;margin-top:4px;cursor:pointer" data-rd="'+S.rep.indexOf(x)+'">વાંચ્યું</button></div>'}).join("")+'</section>':""}
 function tabFb(){var fb=S.fb||[],I={idea:"💡",bug:"🐞",thanks:"🙏"},pg=pager("fp",fb.length,FP),page=fb.slice(S.fp*FP,S.fp*FP+FP);
  return tabRep()+'<section class="card"><h2>💬 ફીડબેક <small>'+num((S.x||{}).unread_feedback)+' નવા</small></h2>'+(page.length?page.map(function(f,i){return '<div class="hd fb'+(f.is_read?" rd":"")+'" data-i="'+i+'"><span class="ic">'+(I[f.kind]||"💬")+'</span><span class="tx"><b>'+esc(f.name||f.email||"નામ નથી")+(f.game?" · "+esc(GAMES[f.game]||f.game):"")+'</b><small class="ms">'+esc(f.message)+'</small>'+(f.is_read?'':'<button class="mk">✓ વાંચ્યું</button>')+'</span><span class="tm">'+when(f.created_at)+", "+clock(f.created_at)+(country(f.time_zone)?'<small class="ct">📍 '+esc(country(f.time_zone))+'</small>':'')+'</span></div>'}).join(""):'<div class="sm">હજી કોઈ ફીડબેક નથી</div>')+pg+'</section>'}
-var DEPT=[["📚","જ્ઞાન-પ્રશ્ન",["prashn-leela","ekadashi"]],["🙏","ધ્યાન-ભક્તિ",["dhyan-murti"]],["🧠","યાદશક્તિ",["fal-ful-memory","chihna-champ"]],["🎉","મજાની રમત",["antahshatru-vijay","charanvidhi"]]];
+var DEPT=[["📚","જ્ઞાન-પ્રશ્ન",["prashn-leela","ekadashi"]],["🙏","ધ્યાન-ભક્તિ",["dhyan-murti"]],["🧠","યાદશક્તિ",["fal-ful-memory","chihna-champ"]],["🎉","મજાની રમત",["life-hero","charanvidhi"]]];
 var SECN={ram:"રામાયણ",maha:"મહાભારત",krishna:"કૃષ્ણ લીલા",hanu:"હનુમાનજી",swami:"સ્વામિનારાયણ ચરિત્ર",guru:"ગુરુ પરંપરા",math:"ગણિત સીડી"};
 function tabSw(){var l=S.sw;if(!l)return '<section class="card"><div class="sm">લાવી રહ્યા છીએ…</div></section>';
  var used={},h='';
