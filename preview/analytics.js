@@ -14,7 +14,7 @@
 (function(){
   if(window.sbTrack) return;
   var ID = 'G-4G2T8EMR6V';
-  var m = location.pathname.match(/\/(prashn-leela|dhyan-murti|antahshatru-vijay|fal-ful-memory|ekadashi|charanvidhi)(\/|$)/);
+  var m = location.pathname.match(/\/(prashn-leela|dhyan-murti|life-hero|fal-ful-memory|ekadashi|charanvidhi|chihna-champ)(\/|$)/);
   var GAME = m ? m[1] : 'hub';
   var LIVE = /(^|\.)github\.io$/.test(location.hostname);
   var st = {on:0, done:0, t0:0, where:'', quit:0}, errs = 0;
@@ -106,7 +106,7 @@
     if(x){
       if(x.stars >= 1 && x.stars <= 5) r.stars = Math.round(x.stars);
       var d = {}, n = 0;
-      ['mode','correct','mistakes','count','punya','hints'].forEach(function(k){ if(x[k] != null){ d[k] = x[k]; n++; } });
+      ['mode','correct','mistakes','count','punya','hints','points','stage','level','section','step','questions'].forEach(function(k){ if(x[k] != null){ d[k] = x[k]; n++; } });
       if(n) r.detail = d;
     }
     queue('game_events', r, keep);
@@ -119,8 +119,9 @@
   var NM = {
     'prashn-leela':{g:'સત્સંગ પ્રશ્ન',e:'Satsang Prashn',r:'Satsang Prashn'},
     'dhyan-murti':{g:'ધ્યાન દર્શન',e:'Dhyan Darshan',r:'Dhyan Darshan'},
-    'antahshatru-vijay':{g:'અંતઃશત્રુ વિજય',e:'Antahshatru Vijay',r:'Antahshatru Vijay'},
+    'life-hero':{g:'લાઇફ હીરો',e:'Life Hero',r:'Life Hero'},
     'fal-ful-memory':{g:'ફળ ફૂલ મેમરી',e:'Fruit & Flower Memory',r:'Fal Ful Memory'},
+    'chihna-champ':{g:'ચિહ્ન ચેમ્પ',e:'Chihna Champ',r:'Chihna Champ'},
     'ekadashi':{g:'એકાદશી',e:'Ekadashi',r:'Ekadashi'},
     'charanvidhi':{g:'ચરણ ચિહ્ન માસ્ટર',e:'Charan Chihna Master',r:'Charan Chihna Master'}
   };
@@ -221,8 +222,9 @@
     if(first){
       record('finish', p.sec, false, p);
       if(p.mode !== 'practice'){
-        if(myName()) pill((WELL[lang()] || WELL.g).replace('{n}', myName()), 1700);
-        setTimeout(askStars, 1800);
+        var pts = '🏆 +10' + (p.stars >= 1 && p.stars <= 5 ? '  ⭐ +' + Math.round(p.stars) : '');
+        pill((myName() ? (WELL[lang()] || WELL.g).replace('{n}', myName()) + '  ' : '') + pts, 2200);
+        setTimeout(askStars, 2300);
       }
     }
   };
