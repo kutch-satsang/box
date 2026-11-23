@@ -1016,7 +1016,8 @@ d.steps.forEach(function(_,k){if(pool(DEP,k).length===0)return;var b=document.cr
 if(k<u)b.className="ok";if(k===STEP)b.setAttribute("aria-current","step");b.setAttribute("aria-label",t.stp+" "+num(k+1)+(k>u?" · "+t.locked:""));b.title=k>u?t.locked:"";
 b.addEventListener("click",function(){STEP=k;newGame(true);paintAll()});sb.appendChild(b)})}
 function checkStep(){if(N===0)return;var opened=0,need=isStep()?2:1;for(var i=0;i<N;i++)if(st[i]>=need)opened++;if(opened<N)return;
-window.sbTrack&&sbTrack.finish({mode:isStep()?"step":"round",section:String(DEP),step:isStep()?STEP+1:RNDIX+1,teams:TEAMS.length,questions:N});
+var okc=0;for(var q=0;q<N;q++)if(st[q]===2)okc++;var rt=okc/N,stars=rt>=1?5:rt>=.8?4:rt>=.6?3:rt>=.4?2:1;
+window.sbTrack&&sbTrack.finish({mode:isStep()?"step":"round",section:String(DEP),step:isStep()?STEP+1:RNDIX+1,teams:TEAMS.length,questions:N,correct:okc,stars:stars});
 if(!isStep()){if(rtot()>1){var tt=T[L],lastR=RNDIX>=rtot()-1;el("donet").textContent=lastR?tt.rdAll:tt.rdDone.replace("{a}",num(RNDIX+1)).replace("{b}",num(RNDIX+2));el("donebtn").textContent=lastR?tt.again:tt.rdNext;el("donebar").hidden=false}return}
 var t=T[L],d=findDept(DEP),last=lastQ(d);if(STEP>=unlocked(DEP)&&STEP<last){PROG[DEP]=STEP+1;saveProg()}
 el("donet").textContent=STEP<last?t.sdone.replace("{a}",num(STEP+1)).replace("{b}",num(STEP+2)):t.adone;
