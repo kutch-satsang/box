@@ -1,12 +1,12 @@
 /* સત્સંગ બોક્સ 🏆 ટોપ ૧૦
    boxTop10.button(cls) → 🏆 બટન,  boxTop10.open() → યાદી ખોલે
-   પોઇન્ટ: દરેક પૂરી રમત = 10 (એક ગેમમાં દિવસના વધુમાં વધુ 20 વાર). ⭐: ગેમમાંથી મળેલા સ્ટાર.
+   પોઇન્ટ: દરેક પૂરી રમત = 100 (એક ગેમમાં દિવસના વધુમાં વધુ 20 વાર). ⭐: ગેમમાંથી મળેલા સ્ટાર.
    ડેટા: Supabase RPC box_top10(kind, period) */
 (function(){
   var TX = {
-    g:{h:'🏆 ટોપ ૧૦', p:'પોઇન્ટ', s:'⭐ સ્ટાર', w:'આ અઠવાડિયું', a:'બધો સમય', you:'તમે', load:'લાવી રહ્યા છીએ…', net:'નેટ ચાલુ કરીને ફરી ખોલો', none:'હજી કોઈ નથી. પહેલા તમે બનો!', np:'દરેક પૂરી રમત = 10 પોઇન્ટ', ns:'ગેમમાં મળેલા ⭐ ગણાય છે', cl:'બંધ'},
-    e:{h:'🏆 Top 10', p:'Points', s:'⭐ Stars', w:'This week', a:'All time', you:'You', load:'Loading…', net:'Turn on the internet and open again', none:'No one yet. Be the first!', np:'Every finished game = 10 points', ns:'Stars earned in games are counted', cl:'Close'},
-    r:{h:'🏆 Top 10', p:'Point', s:'⭐ Star', w:'Aa athvadiyu', a:'Badho samay', you:'Tame', load:'Lavi rahya chhiye…', net:'Net chalu kari ne fari kholo', none:'Haji koi nathi. Pahela tame bano!', np:'Darek puri ramat = 10 point', ns:'Game ma malela ⭐ ganay chhe', cl:'Bandh'}
+    g:{h:'🏆 ટોપ ૧૦', p:'પોઇન્ટ', s:'⭐ સ્ટાર', w:'આ અઠવાડિયું', a:'બધો સમય', you:'તમે', load:'લાવી રહ્યા છીએ…', net:'નેટ ચાલુ કરીને ફરી ખોલો', none:'હજી કોઈ નથી. પહેલા તમે બનો!', np:'દરેક પૂરી રમત = 100 પોઇન્ટ', ns:'ગેમમાં મળેલા ⭐ ગણાય છે', cl:'બંધ'},
+    e:{h:'🏆 Top 10', p:'Points', s:'⭐ Stars', w:'This week', a:'All time', you:'You', load:'Loading…', net:'Turn on the internet and open again', none:'No one yet. Be the first!', np:'Every finished game = 100 points', ns:'Stars earned in games are counted', cl:'Close'},
+    r:{h:'🏆 Top 10', p:'Point', s:'⭐ Star', w:'Aa athvadiyu', a:'Badho samay', you:'Tame', load:'Lavi rahya chhiye…', net:'Net chalu kari ne fari kholo', none:'Haji koi nathi. Pahela tame bano!', np:'Darek puri ramat = 100 point', ns:'Game ma malela ⭐ ganay chhe', cl:'Bandh'}
   };
   function L(){ try{ var l = localStorage.getItem('satsangLang'); return TX[l] ? l : 'g'; }catch(e){ return 'g'; } }
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }

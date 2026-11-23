@@ -222,7 +222,7 @@
     if(first){
       record('finish', p.sec, false, p);
       if(p.mode !== 'practice'){
-        var pts = '🏆 +10' + (p.stars >= 1 && p.stars <= 5 ? '  ⭐ +' + Math.round(p.stars) : '');
+        var pts = '🏆 +100' + (p.stars >= 1 && p.stars <= 5 ? '  ⭐ +' + Math.round(p.stars) : '');
         pill((myName() ? (WELL[lang()] || WELL.g).replace('{n}', myName()) + '  ' : '') + pts, 2200);
         setTimeout(askStars, 2300);
       }
