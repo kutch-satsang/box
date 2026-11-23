@@ -106,7 +106,7 @@
     if(x){
       if(x.stars >= 1 && x.stars <= 5) r.stars = Math.round(x.stars);
       var d = {}, n = 0;
-      ['mode','correct','mistakes','count','punya','hints'].forEach(function(k){ if(x[k] != null){ d[k] = x[k]; n++; } });
+      ['mode','correct','mistakes','count','punya','hints','points','stage','level','section','step','questions'].forEach(function(k){ if(x[k] != null){ d[k] = x[k]; n++; } });
       if(n) r.detail = d;
     }
     queue('game_events', r, keep);
@@ -222,8 +222,9 @@
     if(first){
       record('finish', p.sec, false, p);
       if(p.mode !== 'practice'){
-        if(myName()) pill((WELL[lang()] || WELL.g).replace('{n}', myName()), 1700);
-        setTimeout(askStars, 1800);
+        var pts = '🏆 +100' + (p.stars >= 1 && p.stars <= 5 ? '  ⭐ +' + Math.round(p.stars) : '');
+        pill((myName() ? (WELL[lang()] || WELL.g).replace('{n}', myName()) + '  ' : '') + pts, 2200);
+        setTimeout(askStars, 2300);
       }
     }
   };

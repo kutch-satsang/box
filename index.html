@@ -31,7 +31,7 @@ body{min-height:100vh;background:var(--page);color:var(--ink);font-family:'Noto 
 .lng3d{flex:none;width:42px;height:42px;border-radius:50%;border:0;padding:0;cursor:pointer;position:relative;display:grid;place-items:center;align-content:center;color:#4a2a0a;background:radial-gradient(circle at 32% 26%,#fff4d2 0%,#f1c66b 38%,#c9852a 100%);box-shadow:0 4px 0 #8a5a1b,0 8px 12px rgba(90,53,36,.45),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 5px rgba(120,70,10,.35);transition:transform .12s,box-shadow .12s}
 .lng3d:active{transform:translateY(3px);box-shadow:0 1px 0 #8a5a1b,0 3px 6px rgba(90,53,36,.4),inset 0 2px 3px rgba(255,255,255,.6),inset 0 -2px 4px rgba(120,70,10,.35)}
 .lng3d .le{font-size:18px;line-height:1}.lng3d .ll{font:800 9.5px/1 'Baloo Bhai 2',sans-serif;margin-top:1px}
-.lng3d.hm{position:absolute;top:3.4cqw;right:3cqw;z-index:5;width:11.5cqw;height:11.5cqw}.lng3d.hm .le{font-size:5.4cqw}.lng3d.hm .ll{font-size:2.5cqw}
+.lng3d.hm{position:absolute;top:3.4cqw;right:3cqw;z-index:5;width:11.5cqw;height:11.5cqw}.lng3d.hm .le{font-size:5.4cqw}.lng3d.hm .ll{font-size:2.5cqw}.lng3d.hm.t10p{right:16.5cqw}
 .lng3d.flash::after{content:"";position:absolute;inset:-7px;border-radius:50%;background:radial-gradient(circle,rgba(255,246,196,.95) 0%,rgba(255,222,120,.55) 45%,rgba(255,222,120,0) 72%);animation:lngf .75s ease-out forwards;pointer-events:none}
 @keyframes lngf{0%{opacity:0;transform:scale(.6)}30%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
 .lgc{display:flex;justify-content:center;padding:4px 0 8px}
@@ -136,6 +136,7 @@ html.homef,html.homef body{overflow:hidden;height:100%}
 <script src="oldcss.js"></script>
 <script src="box.js"></script>
 <script src="auth.js"></script>
+<script src="top10.js"></script>
 <style>/* V48 ક્લે 3D મંદિર (હોમપેજ → જ્ઞાન-પ્રશ્ન વચ્ચે) */
 .mand{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 16px calc(20px + env(safe-area-inset-bottom,0px));box-sizing:border-box;background:radial-gradient(120% 70% at 50% 35%,rgba(251,241,227,.9),rgba(241,220,192,.6) 70%,rgba(233,207,172,.4))}
 .mand .ihead{width:100%;max-width:560px}
@@ -314,7 +315,7 @@ function lab(txt,top,size,left,w){var s=el("span","st",txt);s.style.top=px(top);
 function home(t){
   if(CLS())return homeClassic(t);
   var st=el("div","stage");themeVars(st);
-  st.appendChild(mkLang("hm"));st.appendChild(mkGear());
+  st.appendChild(mkLang("hm"));st.appendChild(mkGear());if(window.boxTop10)st.appendChild(boxTop10.button("lng3d hm t10p"));
   var sc=el("div","sc");st.appendChild(sc);var stm=st;st=sc;
   var om=el("div","el om");box(om,T0.om);om.appendChild(img("themes/"+TD()+"/om.webp"));st.appendChild(om);
   var ti=lab(t.h1,T0.ti[0],T0.ti[1]);ti.className="st ti";st.appendChild(ti);
@@ -333,7 +334,7 @@ function home(t){
 }
 function homeClay(t){
   var st=el("div","stage");themeVars(st);
-  st.appendChild(mkLang("hm"));st.appendChild(mkGear());
+  st.appendChild(mkLang("hm"));st.appendChild(mkGear());if(window.boxTop10)st.appendChild(boxTop10.button("lng3d hm t10p"));
   var sc=el("div","sc");st.appendChild(sc);
   var bg=img("themes/adhyatmik/mati/home.webp");bg.style.cssText="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none";sc.appendChild(bg);
   var cv=el("div","cov");box(cv,[284,165,286,307]);cv.style.borderRadius=px(44);sc.appendChild(cv);
@@ -365,7 +366,7 @@ function homeClassic(t){
   lg.addEventListener("click",function(){setLang(O[(O.indexOf(L)+1)%3])});
   var gr=el("button","clbtn clg");gr.type="button";gr.setAttribute("aria-label","Settings");gr.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#5b6b85" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>';gr.appendChild(el("small",null,{g:"સેટિંગ",e:"Settings",r:"Setting"}[L]));
   gr.addEventListener("click",function(){go("set")});
-  rb.appendChild(lg);rb.appendChild(gr);tp.appendChild(rb);w.appendChild(tp);
+  if(window.boxTop10)rb.appendChild(boxTop10.button("clbtn clg"));rb.appendChild(lg);rb.appendChild(gr);tp.appendChild(rb);w.appendChild(tp);
   var hr=el("div","clhero clg"),sc=img("themes/classic/kaach/scene.svg");sc.className="clscene";hr.appendChild(sc);
   var hw=el("div","clhrow"),hx=el("div");hx.appendChild(el("h1",null,t.h1));hx.appendChild(el("small",null,{g:"રમતાં રમતાં શીખો",e:"Learn while you play",r:"Ramta ramta shikho"}[L]));hw.appendChild(hx);hw.appendChild(el("span","clom clg","ૐ"));hr.appendChild(hw);w.appendChild(hr);
   var g=el("nav","clgrid");g.setAttribute("aria-label","Menu");
