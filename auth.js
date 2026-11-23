@@ -3,6 +3,11 @@
    ગેમમાં: <script src="../auth.js"></script> (લૉગિન ન હોય તો હબ પર પાછા)
    એક વાર લૉગિન થયા પછી સત્ર ફોનમાં સચવાય, એટલે નેટ વગર પણ ગેમ ચાલે.
    અહીંની ચાવી publishable છે, ખાનગી નથી. સુરક્ષા Supabase ના નિયમોમાં છે. */
+/* ડિફોલ્ટ ભાષા (વપરાશકર્તાએ ભાષા ન બદલી હોય ત્યારે જ): હબ, મેમરી, મજાની રમત = English; પ્રશ્ન (પ્રશ્ન લીલા, એકાદશી) અને ધ્યાન = G.a (ABC).
+   વપરાશકર્તા ભાષા બદલે એટલે satsangLangAuto થી અલગ થાય → પછી કોઈ ગેમ ભાષા બદલે નહીં. */
+(function(){try{var K="satsangLang",A="satsangLangAuto",d=/\/(prashn-leela|ekadashi|dhyan-murti)\//.test(location.pathname)?"r":"e",v=localStorage.getItem(K),a=localStorage.getItem(A);
+if(v===null||v===a){if(v!==d)localStorage.setItem(K,d);localStorage.setItem(A,d)}}catch(e){}})();
+
 (function(){
 var URL_="https://fexjcqyaopfilwixwfpn.supabase.co";
 var KEY="sb_publishable_RCGMIsbR27_gu6aUZ_3pUg_OajpxBhL";

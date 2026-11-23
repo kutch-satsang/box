@@ -119,7 +119,7 @@
   var NM = {
     'prashn-leela':{g:'સત્સંગ પ્રશ્ન',e:'Satsang Prashn',r:'Satsang Prashn'},
     'dhyan-murti':{g:'ધ્યાન દર્શન',e:'Dhyan Darshan',r:'Dhyan Darshan'},
-    'life-hero':{g:'Life Hero',e:'Life Hero',r:'Life Hero'},
+    'life-hero':{g:'લાઇફ હીરો',e:'Life Hero',r:'Life Hero'},
     'fal-ful-memory':{g:'ફળ ફૂલ મેમરી',e:'Fruit & Flower Memory',r:'Fal Ful Memory'},
     'chihna-champ':{g:'ચિહ્ન ચેમ્પ',e:'Chihna Champ',r:'Chihna Champ'},
     'ekadashi':{g:'એકાદશી',e:'Ekadashi',r:'Ekadashi'},

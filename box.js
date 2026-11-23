@@ -6,7 +6,7 @@
 (function(){
 var VERSION="v1 · 2026-11-02";
 var KEYS={lang:"satsangLang",sound:"satsangSound",time:"satsangTime",theme:"satsangTheme"};
-var DEF={lang:"g",sound:"1",time:"30",theme:"mati"};
+var DEF={lang:"e",sound:"1",time:"30",theme:"mati"};
 var OK={lang:["g","e","r"],sound:["1","0"],time:["15","30","45","60","90"],theme:["mati","kaach"]};
 var subs=[];
 function get(k){var v=null;try{v=localStorage.getItem(KEYS[k])}catch(e){}return OK[k].indexOf(v)>=0?v:DEF[k]}
