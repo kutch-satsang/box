@@ -1,0 +1,524 @@
+[
+ {
+  "n": 1,
+  "src": 1,
+  "row": [
+   "લક્ષ્મણજીનાં પત્નીનું નામ?",
+   "માતા ઉર્મિલા",
+   "Lakshman's wife?",
+   "Mata Urmila",
+   "Lakshmanna patni nu naam?",
+   "Mata Urmila"
+  ],
+  "wrong_g": [
+   "ઉર્વશી",
+   "ઉમેશ્વરી",
+   "માંડવી"
+  ],
+  "note": ""
+ },
+ {
+  "n": 2,
+  "src": 4,
+  "row": [
+   "દશરથની કઈ રાણી તેમની સાથે યુદ્ધમાં જતી?",
+   "માતા કૈકેયી",
+   "Which queen of Dashrath went with him to war?",
+   "Mata Kaikeyi",
+   "Dashrathni kai rani temni sathe yuddhma jati?",
+   "Mata Kaikeyi"
+  ],
+  "wrong_g": [
+   "માતા કૌશલ્યા",
+   "માતા સુમિત્રા",
+   "મંદોદરી"
+  ],
+  "note": "મંદોદરી ઓપ્શન રામાયણની જ છે, રાણી નથી"
+ },
+ {
+  "n": 3,
+  "src": 5,
+  "row": [
+   "રામ-સીતાને કેટલા પુત્ર હતા?",
+   "૨",
+   "How many sons did Ram and Sita have?",
+   "2",
+   "Ram-Sitane ketla putra hata?",
+   "2"
+  ],
+  "wrong_g": [
+   "૧",
+   "૩",
+   "૪"
+  ],
+  "note": ""
+ },
+ {
+  "n": 4,
+  "src": 8,
+  "row": [
+   "રાવણની સેનાનો સેનાપતિ કોણ?",
+   "પ્રહસ્ત",
+   "Who was the commander of Ravan's army?",
+   "Prahast",
+   "Ravanni senano senapati kon?",
+   "Prahast"
+  ],
+  "wrong_g": [
+   "અગ્નિબાહુ",
+   "મહિષાસુર",
+   "અહિરાવણ"
+  ],
+  "note": "ઓપ્શન ચકાસવા (મહિષાસુર/અહિરાવણ રામાયણ બહારના)"
+ },
+ {
+  "n": 5,
+  "src": 9,
+  "row": [
+   "ઉર્મિલાનાં માતા-પિતા કોણ?",
+   "જનક અને સુનયના",
+   "Who were Urmila's parents?",
+   "Janak and Sunayana",
+   "Urmilana mata-pita kon?",
+   "Janak ane Sunayana"
+  ],
+  "wrong_g": [
+   "ભરત અને માંડવી",
+   "ધૃતરાષ્ટ્ર અને ગાંધારી",
+   "બૃહસ્પતિ અને સુકન્યા"
+  ],
+  "note": "ઓપ્શન બદલવા (મહાભારતના જોડા)"
+ },
+ {
+  "n": 6,
+  "src": 10,
+  "row": [
+   "રામની આજ્ઞાથી સીતાજીને વનમાં કોણ મૂકી આવ્યા?",
+   "લક્ષ્મણજી",
+   "On Ram's order, who left Sita in the forest?",
+   "Lakshmanji",
+   "Ramni agyathi Sitajine vanma kon muki avya?",
+   "Lakshmanji"
+  ],
+  "wrong_g": [
+   "ભરતજી",
+   "શત્રુઘ્નજી",
+   "હનુમાનજી"
+  ],
+  "note": ""
+ },
+ {
+  "n": 7,
+  "src": 12,
+  "row": [
+   "રાક્ષસી બનતાં પહેલાં તાડકા શું હતી?",
+   "યક્ષિણી",
+   "What was Tadaka before she became a demoness?",
+   "A Yakshini",
+   "Rakshasi banta pahela Tadaka shu hati?",
+   "Yakshini"
+  ],
+  "wrong_g": [
+   "દાનવી",
+   "દેવી",
+   "ગંધર્વી"
+  ],
+  "note": ""
+ },
+ {
+  "n": 8,
+  "src": 13,
+  "row": [
+   "મંદોદરી કોનાં પત્ની હતાં?",
+   "રાવણનાં",
+   "Whose wife was Mandodari?",
+   "Ravan's",
+   "Mandodari konan patni hatan?",
+   "Ravananan"
+  ],
+  "wrong_g": [
+   "કુંભકર્ણનાં",
+   "વિભીષણનાં",
+   "મેઘનાદનાં"
+  ],
+  "note": ""
+ },
+ {
+  "n": 9,
+  "src": 15,
+  "row": [
+   "વાલીના મૃત્યુ પછી રામે સુગ્રીવને ક્યાંના રાજા બનાવ્યા?",
+   "કિષ્કિંધાના",
+   "After Vali's death, Ram made Sugriv king of where?",
+   "Kishkindha",
+   "Valina mrutyu pachhi Rame Sugrivne kyanna raja banavya?",
+   "Kishkindhana"
+  ],
+  "wrong_g": [
+   "સરીલાપુરીના",
+   "કંધારના",
+   "પંચવટીના"
+  ],
+  "note": "ઓપ્શન ચકાસવા (સરીલાપુરી/કંધાર)"
+ },
+ {
+  "n": 10,
+  "src": 16,
+  "row": [
+   "રામ-લક્ષ્મણને જનકપુરી કયા ઋષિ લઈ ગયા?",
+   "મહર્ષિ વિશ્વામિત્ર",
+   "Which sage took Ram and Lakshman to Janakpuri?",
+   "Maharshi Vishwamitra",
+   "Ram-Lakshmanne Janakpuri kaya rushi lai gaya?",
+   "Maharshi Vishwamitra"
+  ],
+  "wrong_g": [
+   "મહર્ષિ વાલ્મીકિ",
+   "મહર્ષિ વેદવ્યાસ",
+   "બૃહસ્પતિ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 11,
+  "src": 17,
+  "row": [
+   "ભરતજીનાં પત્નીનું નામ?",
+   "માંડવી",
+   "Bharat's wife?",
+   "Mandavi",
+   "Bharatjina patni nu naam?",
+   "Mandavi"
+  ],
+  "wrong_g": [
+   "શ્રુતકીર્તિ",
+   "તારા",
+   "કવિતા"
+  ],
+  "note": ""
+ },
+ {
+  "n": 12,
+  "src": 20,
+  "row": [
+   "વાલ્મીકિ રામાયણમાં કુલ કેટલા શ્લોક છે?",
+   "૨૪,૦૦૦",
+   "How many shlokas are in Valmiki Ramayan?",
+   "24,000",
+   "Valmiki Ramayanma kul ketla shlok chhe?",
+   "24,000"
+  ],
+  "wrong_g": [
+   "૨૧,૦૦૦",
+   "૨૨,૦૦૦",
+   "૨૩,૦૦૦"
+  ],
+  "note": ""
+ },
+ {
+  "n": 13,
+  "src": 21,
+  "row": [
+   "રામાયણ મૂળ કઈ ભાષામાં લખાયું?",
+   "સંસ્કૃત",
+   "In which language was Ramayan originally written?",
+   "Sanskrit",
+   "Ramayan mul kai bhashama lakhayu?",
+   "Sanskrit"
+  ],
+  "wrong_g": [
+   "દેવનાગરી",
+   "અવધી",
+   "તમિલ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 14,
+  "src": 22,
+  "row": [
+   "ગૌતમ ઋષિના શાપમાંથી અહલ્યાનો ઉદ્ધાર કોણે કર્યો?",
+   "શ્રીરામે",
+   "Who freed Ahalya from Sage Gautam's curse?",
+   "Shri Ram",
+   "Gautam rushina shapmathi Ahalyano uddhar kone karyo?",
+   "Shri Rame"
+  ],
+  "wrong_g": [
+   "લક્ષ્મણજીએ",
+   "ભરતજીએ",
+   "શત્રુઘ્નજીએ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 15,
+  "src": 23,
+  "row": [
+   "ક્ષત્રિય તરીકે જન્મી બ્રહ્મર્ષિ કોણ બન્યા?",
+   "વિશ્વામિત્ર",
+   "Who was born a kshatriya and became a Brahmarshi?",
+   "Vishwamitra",
+   "Kshatriya tarike janmi Brahmarshi kon banya?",
+   "Vishwamitra"
+  ],
+  "wrong_g": [
+   "ગૌતમ",
+   "વાલ્મીકિ",
+   "વશિષ્ઠ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 16,
+  "src": 24,
+  "row": [
+   "હનુમાનજીને તેમની ભુલાયેલી શક્તિ કોણે યાદ કરાવી?",
+   "જાંબવાને",
+   "Who reminded Hanumanji of his forgotten powers?",
+   "Jambavan",
+   "Hanumanjine temni bhulayeli shakti kone yad karavi?",
+   "Jambavane"
+  ],
+  "wrong_g": [
+   "વિભીષણે",
+   "લક્ષ્મણજીએ",
+   "શ્રીરામે"
+  ],
+  "note": ""
+ },
+ {
+  "n": 17,
+  "src": 27,
+  "row": [
+   "સમુદ્ર પાર કરતાં હનુમાનજીનો રસ્તો કોણે રોક્યો?",
+   "સુરસાએ",
+   "Who blocked Hanumanji's path while crossing the sea?",
+   "Surasa",
+   "Samudra par kartan Hanumanjino rasto kone rokyo?",
+   "Surasae"
+  ],
+  "wrong_g": [
+   "તાડકાએ",
+   "શૂર્પણખાએ",
+   "ત્રિજટાએ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 18,
+  "src": 28,
+  "row": [
+   "લંકાદહનમાં હનુમાનજીએ કોનું ઘર બચાવ્યું?",
+   "વિભીષણનું",
+   "Whose house did Hanumanji spare in the burning of Lanka?",
+   "Vibhishan's",
+   "Lankadahanma Hanumanjie konu ghar bachavyu?",
+   "Vibhishannu"
+  ],
+  "wrong_g": [
+   "ત્રિજટાનું",
+   "કુંભકર્ણનું",
+   "રાવણનું"
+  ],
+  "note": ""
+ },
+ {
+  "n": 19,
+  "src": 37,
+  "row": [
+   "લંકામાં હનુમાનજીને કયા અસ્ત્રથી બાંધ્યા?",
+   "બ્રહ્માસ્ત્રથી",
+   "With which weapon was Hanumanji bound in Lanka?",
+   "Brahmastra",
+   "Lankama Hanumanjine kaya astrathi bandhya?",
+   "Brahmastrathi"
+  ],
+  "wrong_g": [
+   "નાગપાશથી",
+   "વજ્રથી",
+   "ખડગથી"
+  ],
+  "note": "નાગપાશ ઓપ્શન ચકાસવા"
+ },
+ {
+  "n": 20,
+  "src": 43,
+  "row": [
+   "યુદ્ધ પહેલાં રામે શિવલિંગ ક્યાં સ્થાપ્યું?",
+   "રામેશ્વરમાં",
+   "Where did Ram install the Shivling before the war?",
+   "Rameshwaram",
+   "Yuddh pahela Rame Shivling kyan sthapyu?",
+   "Rameshwarma"
+  ],
+  "wrong_g": [
+   "કન્યાકુમારીમાં",
+   "મેંગલોરમાં",
+   "મદુરાઈમાં"
+  ],
+  "note": ""
+ },
+ {
+  "n": 21,
+  "src": 44,
+  "row": [
+   "લવ-કુશે કયા યજ્ઞનો ઘોડો પકડ્યો?",
+   "અશ્વમેધ યજ્ઞનો",
+   "Whose sacrificial horse did Luv-Kush capture?",
+   "Ashwamedh Yagna's",
+   "Luv-Kushe kaya yagnano ghodo pakadyo?",
+   "Ashwamedh yagnano"
+  ],
+  "wrong_g": [
+   "ચંડી યજ્ઞનો",
+   "રુદ્ર યજ્ઞનો",
+   "ગાયત્રી યજ્ઞનો"
+  ],
+  "note": ""
+ },
+ {
+  "n": 22,
+  "src": 45,
+  "row": [
+   "દેવર્ષિ કોણ કહેવાય?",
+   "નારદજી",
+   "Who is called Devarshi?",
+   "Naradji",
+   "Devarshi kon kahevay?",
+   "Naradji"
+  ],
+  "wrong_g": [
+   "વાલ્મીકિ",
+   "વિશ્વામિત્ર",
+   "ગૌતમ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 23,
+  "src": 46,
+  "row": [
+   "રામાયણમાં શેષનાગનો અવતાર કોણ?",
+   "લક્ષ્મણજી",
+   "Who is the incarnation of Sheshnag in Ramayan?",
+   "Lakshmanji",
+   "Ramayanma Sheshnagno avtar kon?",
+   "Lakshmanji"
+  ],
+  "wrong_g": [
+   "ભરતજી",
+   "શત્રુઘ્નજી",
+   "વિભીષણ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 24,
+  "src": 47,
+  "row": [
+   "મરતી વખતે મારીચે કોનું નામ પોકાર્યું?",
+   "લક્ષ્મણનું",
+   "Whose name did Marich call out as he died?",
+   "Lakshman's",
+   "Marti vakhte Mariche konu naam pokaryu?",
+   "Lakshmannu"
+  ],
+  "wrong_g": [
+   "મેઘનાદનું",
+   "રામનું",
+   "રાવણનું"
+  ],
+  "note": "રામ ઓપ્શન ગૂંચવે (રામના અવાજમાં બોલ્યો) — તમે રાખવા કહ્યું"
+ },
+ {
+  "n": 25,
+  "src": 48,
+  "row": [
+   "રામે ત્યાગ કર્યા પછી સીતાજી કોના આશ્રમમાં રહ્યાં?",
+   "વાલ્મીકિના",
+   "After Ram abandoned her, in whose ashram did Sita stay?",
+   "Valmiki's",
+   "Rame tyag karya pachhi Sitaji kona ashramma rahyan?",
+   "Valmikina"
+  ],
+  "wrong_g": [
+   "વિશ્વામિત્રના",
+   "બૃહસ્પતિના",
+   "સાંદીપનિના"
+  ],
+  "note": ""
+ },
+ {
+  "n": 26,
+  "src": 53,
+  "row": [
+   "લંકામાં જેનો પગ કોઈ હલાવી ન શક્યું તે વાનર કોણ?",
+   "અંગદ",
+   "Which vanar's foot could no one move in Lanka?",
+   "Angad",
+   "Lankama jeno pag koi halavi na shakyu te vanar kon?",
+   "Angad"
+  ],
+  "wrong_g": [
+   "નલ",
+   "નીલ",
+   "જાંબવાન"
+  ],
+  "note": ""
+ },
+ {
+  "n": 27,
+  "src": 54,
+  "row": [
+   "વાલીના પિતા કોણ?",
+   "ઇન્દ્રદેવ",
+   "Who was Vali's father?",
+   "Indradev",
+   "Valina pita kon?",
+   "Indradev"
+  ],
+  "wrong_g": [
+   "બ્રહ્મા",
+   "અગ્નિદેવ",
+   "સૂર્યદેવ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 28,
+  "src": 55,
+  "row": [
+   "સુગ્રીવના પિતા કોણ?",
+   "સૂર્યદેવ",
+   "Who was Sugriv's father?",
+   "Suryadev",
+   "Sugrivna pita kon?",
+   "Suryadev"
+  ],
+  "wrong_g": [
+   "ઇન્દ્રદેવ",
+   "અગ્નિદેવ",
+   "વાયુદેવ"
+  ],
+  "note": ""
+ },
+ {
+  "n": 29,
+  "src": 56,
+  "row": [
+   "રાવણના નાના (માતાના પિતા) કોણ?",
+   "સુમાલી",
+   "Who was Ravan's maternal grandfather?",
+   "Sumali",
+   "Ravanna nana (matana pita) kon?",
+   "Sumali"
+  ],
+  "wrong_g": [
+   "પુલસ્ત્ય ઋષિ",
+   "ઋષિ વિશ્રવા",
+   "મયાસુર"
+  ],
+  "note": ""
+ }
+]
